@@ -1,0 +1,312 @@
+---
+output: 
+  html_document:
+    theme: yeti
+    highlight: pygments
+---
+
+# Introduction to linear regression
+
+_by Heather Kropp_
+_for ENVST 206: Introduction to Environmental Data_
+_Hamilton College_
+
+## Learning objectives
+1. Work with data collected from satellites to examine the impact of beavers on the tundra
+2. Use citizen science data examine the timing of spring leaf out
+3. Learn how to conduct a linear regression in R
+4. Interpret statistical output in R
+5. Use the `ifelse` and `par` function for formatting data and plots
+
+```{r warning=FALSE,echo=FALSE, message=FALSE}
+library(imager)
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(comment = NA, class.output="bg-info" )
+```
+
+
+## New functions & syntax
+`par`, `ifelse`,`lm`, `rstandard`, `qqnorm`, `qqline`, `plot( ~ x1 + x2 + .. xn)`, `par`, `ifelse`
+
+## Simple linear regression: Are beavers flooding the Arctic?
+
+### _The data_ 
+Measures of surface water, vegetation, and land cover/use are commonly derived from satellite observations. Once these features are quantified from the imagery, these repeated observations over time can be used to examine changes in water and the land surface. 
+
+Throughout the last couple decades, beavers have notably been moving outside of their typical habitats and colonizing the Arctic tundra. You will start by working with a data collected by Jones _et al._ using measurements of surface water area taken from satellite imagery and surveys of beaver dams. Beaver dams result in flooding around the bodies of water, and this increase in beaver populations may affect the hydrology and carbon cycling in the Arctic. Below you can see an example of how these measurements were collected.
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_5/Selawik_Lake_by_Sentinel-2.jpg)
+
+
+_Example of Satellite imagery that can be used to measure and characterize lakes and surface water. Image credit: Contains modified Copernicus Sentinel data 2018, CC BY-SA 3.0 IGO, via Wikimedia Commons._
+</center>
+
+Surface water can be seen as the black areas in the photographs. Above the red arrow indicates the presence of the beaver dam that appeared in 2012 and the subsequent flooding. Yellow arrows indicate the areas where the frozen ground (permafrost) is beginning to thaw due to the newly formed surface water coverage. 
+
+Jones and his coauthors analyzed satellite imagery to identify the presence of beaver dams and changes in surface water in the Baldwin Peninsula Alaska. We will work with the data that examines the surface water area and the number of beaver dams over almost two decades in the tundra.
+
+```{r eval = FALSE}
+datB <- read.csv("/cloud/project/activity05/beaver_dam.csv")
+head(datB)
+```
+
+```{r echo = FALSE}
+datB <- read.csv("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/data/tutorial_5/beaver_dam.csv")
+head(datB)
+```
+
+Here, we are interested in evaluating whether the presence of beaver dams is increasing surface water in the tundra. You will want to focus on the `dams.n` column which contains the total number of beaver dams in the area and the total area of surface water in hectares: `area.ha`. 
+
+
+Let's start by taking a look at the data. Here you will make a **scatter plot** to visualize the data. You can use the `plot` function with to generate a scatter plot with x and y data. You will also notice that I am labeling the axes (with units!!!) and specifying that filled in points should be used.
+
+```{r echo = TRUE}
+plot(datB$dams.n, datB$area.h, 
+     pch = 19, 
+     col = "royalblue4",
+     ylab = "Surface water area (ha)",
+     xlab =  "Number of beaver dams")
+```
+
+
+### _Set up the regression_
+Just by looking at the scatter plot, the relationship looks fairly linear. The `lm` argument is used to specify a linear model. This is the function that will run the linear regression and provide all of the test information. Many of the linear regression assumptions are related to the **residuals**. You have to run the regression in order to look at the residuals. Note that this is a little different than previous hypothesis tests that required running the assumption checks before running the test. The `rstandand` function returns standardized residuals. 
+
+```{r echo=TRUE}
+#set up regression
+dam.mod <- lm(datB$area.ha ~ datB$dams.n)
+#get standardized residuals
+dam.res <- rstandard(dam.mod)
+
+```
+
+### _Checking assumptions_
+
+Let's assess all assumptions of the regression before interpreting results. First we'll check normality of the residuals:
+
+```{r echo=TRUE}
+#set up qq plot
+qqnorm(dam.res)
+#add qq line
+qqline(dam.res)
+```
+
+You'll notice that the points in the QQ plot mostly follow the line, but the last couple points deviate more from the line. You can also use the Shapiro-Wilks test if you are feeling unsure about whether this is significant enough to be non-normal. 
+
+```{r echo = TRUE}
+shapiro.test(dam.res)
+```
+
+Next let's check the residual plot. The `abline` function adds a line to a graph, and can be useful for visualizing patterns in residuals. A line at a residual value of zero can be used to assess if there are any trends in the residuals.
+
+```{r echo = TRUE}
+#make residual plot
+plot(datB$dams.n, dam.res, 
+     xlab = "beaver damns", 
+     ylab = "standardized residual")
+#add a horizontal line at zero
+abline(h=0)
+```
+
+You can see that there are no major concerns about the regression assumptions around the residuals. You can go ahead and interpret the results.
+
+### _Interpreting results_
+
+You can use the `summary` function to print out the regression table. 
+
+```{r echo=TRUE}
+summary(dam.mod )
+```
+
+It can also be helpful to view your regression line on your plot. Putting the regression model in the _abline_ function will automatically draw the regression line.
+
+```{r echo = TRUE}
+#make plot of beaver dams and surface water
+plot(datB$dams.n, datB$area.h, 
+     pch = 19, 
+     col = "royalblue4",
+     ylab = "Surface water area (ha)",
+     xlab =  "Number of beaver dams")
+#add regression line
+#make line width thicker
+abline(dam.mod, lwd=2)
+```
+
+<center>
+```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
+par(bg = rgb(229/255,214/255,232/255), mai=c(0,0.2,0,7))
+plot(load.image("/Users/hkropp/Documents/GitHub/Intro_EnvData/bookdown/IntroEnvData/photos/tutorial_5/Leaf5.png"),   axes=FALSE)
+a <- strwrap("What does a slope = 0 mean? Why is it still a meaningful result to report?",width=70)
+text(1300,75, "Check your understanding:", font=2, xpd=T, cex=1.25,adj = c(0,0))
+for(i in 1:length(a)){
+  text(1300,75+(i*400),paste(a[i]), xpd=T, cex=1.25,adj = c(0,0))
+}
+```
+
+## Multiple linear regression: What makes an early spring? 
+
+### _The data_
+The time that leaves on deciduous trees unfurl from the leaf bud in the spring can impact forest temperatures, water cycling, and the overall productivity of forests. This unfurling of leaves in the spring is called **leaf out**. Warmer spring temperatures under climate change may result in deciduous plants becoming active earlier. The _United States Geological Survey's National Phenology Network_ collects data on the timing of plant activity and growth (aka **phenology**). The NPN relies on the work of plant scientists and interested volunteers, called _citizen scientists_. Many people can readily identify when leaf out is occurring, and dedicated citizen scientists help document where and when leaf out happens. This greatly increases the amount and spatial coverage of leaf out data beyond what research scientists are able to go out and observe themselves.
+
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_5/leaf_bud.jpg){width=33%}
+
+_Leaves beginning to unfurl from the leaf bud in the spring. Friedrich Haag / Wikimedia Commons / CC BY-SA 4.0_
+</center>
+
+
+We will focus on the leaf out of the _red maple_, a tree common throughout the eastern United States.
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_5/Acer_rubrum_range_map.png){width=33%}
+
+_By U.S. Geological Survey - Digital representation of &quot;Atlas of United States Trees&quot; by Elbert L. Little, Jr. [1], Public Domain_
+
+</center>
+
+Read in the data:
+
+```{r eval=FALSE}
+
+pheno <- read.csv("/cloud/project/red_maple_pheno.csv")
+
+```
+
+```{r echo=FALSE}
+
+pheno <- read.csv("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/data/tutorial_5/red_maple_pheno.csv")
+
+```
+
+The data contains the day of year (`doy`) that leaf out occured and the year (`year`) of occurrence. Day of year counts the days in the year where January 1st is day of year 1 and December 31st (non-leap year) is day of year 365. There are also latitude (`Lat`) and longitude (`Long`) observations for each leaf out event. Latitude can be associated with differences in solar radiation and temperature. Longitude lower values of longitude will be further west in the continental US and higher values will represent more eastern areas up to the Atlantic coast. There are meteorological data that describes the general environmental conditions including the maximum temperature (`Tmax`, $^\circ$ C ), minimum temperature (`Tmin`, $^\circ$ C ), precipitation (`Prcp`, mm) for each location of measurement. There is also an elevation observation (`elev`, m). Higher elevations can be associated with colder temperatures and longer periods of snow cover. There is also a description of whether the site is urban or rural (`siteDesc`, "Urban" or "Rural"). The main variable of interest is the `doy` variable that describes when the leaf out occurred. Let's take a look at how that is related to to variables like the maximum temperature and precipitation. 
+
+## _Panels of bivariate plots_ 
+Sometimes it useful to view bivariate plots (two variables) side by side for a multiple regression. You can look at plots side by side using the `par` function. `par` specifies parameters around plotting and you can use arguments like `mfrow` to specify showing multiple plots in a panel. The `mfrow` argument needs a vector of two numbers for input. The first number should be the number of rows of plots in the panel and second is the number of columns of plots.
+
+
+```{r echo = TRUE, fig.width=8}
+#set up panel of plots with one row and two columns
+par(mfrow=c(1,2))
+plot(pheno$Tmax,pheno$doy, 
+     pch = 19, 
+     col = "royalblue4",
+     ylab = "Day of leaf out",
+     xlab =  "Maximum temperature (C)")
+plot(pheno$Lat,pheno$doy, 
+     pch = 19, 
+     col = "royalblue4",
+     ylab = "Day of leaf out",
+     xlab =  "Latitude (degrees)")
+
+```
+
+
+Rstudio will automatically default to using this `par` argument until you tell it to stop. You can either hit the `broom button` above the plot to clear your plotting area or you can also run the command:
+
+```{r eval=FALSE, echo=TRUE}
+dev.off()
+```
+
+
+## _Check for multi-collinearity_
+Temperature appears to have an impact on the timing of leaf out, but we will want to see if other variables such as precipitation or elevation of the site may impact the timing of leaf out. Let's see if there will be any issues looking at multiple variables at once. Let's check for correlations. We'll do a visual assessment and look at the correlations. You can use the plot function to generate a series of **covariance plots**. Covariance plots set up a matrix of plots and compares all possible combinations of variables. Notice that there is a formula used here, but there is no dependent variable only many independent variables that could be used in the regression.
+
+```{r echo = TRUE}
+plot( ~  pheno$Lat + pheno$Tmax+ pheno$Tmin +pheno$Prcp + pheno$elev + pheno$siteDesc)
+```
+
+You'll notice that there are no real patterns between temperature and precipitation variables. However, variables such as latitude and both temperature variables look to have a tight linear relationship. Just visually you can see that including both latitude and the maximum temperature would be problematic. This is not surprising given that solar radiation plays a major role in warming the earth's surface, and the input of solar radiation varies with latitude. In this case, we will want choose the variable that best represents the process and makes the most sense. Here, we know that temperature directly impacts metabolic activity and the ability of plants to come out of dormancy. Any patterns with latitude would likely be reflecting differences in temperature across latitude, and temperature is known to directly impact leaf out. 
+
+## _Run the regression_
+Let's build a multiple regression that investigates the relationship between leaf out phenology and latitude, precipitation, longitude, and the urban/rural designation. You'll notice the urban/rural designation is a character. You will want to code this as a zero and one for the regression. You can use the `ifelse` function to make this variable. `ifelse` uses three arguments: the first one is a logical statement to be evaluated, the second is a value to include in the vector if the statement is true, and the last is a value to include in the vector if statement is false.
+
+```{r echo=TRUE}
+pheno$urID <- ifelse(pheno$siteDesc == "Urban",1,0)
+```
+
+
+Note that this will be a binary variable in our regression.You will think a little bit more about how to interpret those results after you run the regression.
+
+The multiple regression set up in R will look similar to the simple linear regression:
+
+```{r echo=TRUE}
+mlr <- lm(pheno$doy ~  pheno$Lat + pheno$Prcp + pheno$Long + pheno$urID)
+```
+
+Notice how instead of one variable there is now an added plus sign for each new variable. Now you can evaluate the assumptions just like the simple linear regression (assuming you already looked at multicollinearity before running the regression). 
+
+Note that there are 1,244 observations in this data and the Shapiro Wilks test is not meant for data with more than 1,000 observations. You will want to use the qqnorm evaluation:
+
+```{r echo=TRUE}
+#get residuals
+mlr.res <- rstandard(mlr)
+#check normality
+qqnorm(mlr.res)
+qqline(mlr.res)
+```
+
+You also will want to use the fitted values for your regression in your residual plot given that there are multiple covariates in this case. You can calculate the **fitted values** from the regression line for each observation using the `fitted` function:
+
+```{r echo = TRUE}
+#get fitted values
+mlFitted <- fitted(mlr)
+
+#make residual plot
+plot(mlFitted,mlr.res,pch=19, 
+     xlab="regression fitted values",
+     ylab="residual")
+abline(h=0)
+```
+
+_Does it seem strange to you that there are many data points at the same x value in this graph? What about in the bivariate plots of temperature? If it does seem strange, good eye! We will cover these issues in the homework._
+
+## _Interpret the regression_
+Next let's look at the regression table to evaluate the relationships with leaf out.
+```{r echo = TRUE}
+summary(mlr)
+```
+
+Let's think a little more about how this urban/rural variable and how to interpret it in a regression. Keep in mind that urban built environments can have surfaces that are typically much warmer than surrounding natural vegetated environments. Dark paved surfaces and buildings absorb greater levels of solar radiation, resulting in higher temperatures in the immediate urban area. Remember urban sites will be marked with a one and rural areas are marked with a zero.  Consider the interpretation of the slope coefficient _x~1~_ versus _x~0~_.  Remember urban sites will be marked with a one and rural areas are marked with a zero. 
+
+<center>
+```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
+par(bg = rgb(229/255,214/255,232/255), mai=c(0,0.2,0,7))
+plot(load.image("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_5/Leaf5.png"),   axes=FALSE)
+a <- strwrap("How would you determine whether a simple or multiple linear regression is the best approach?",width=70)
+text(1300,75, "Check your understanding:", font=2, xpd=T, cex=1.25,adj = c(0,0))
+for(i in 1:length(a)){
+  text(1300,75+(i*400),paste(a[i]), xpd=T, cex=1.25,adj = c(0,0))
+}
+```
+</center>
+
+<center>
+```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
+par(bg = rgb(229/255,214/255,232/255), mai=c(0,0.2,0,7))
+plot(load.image("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_5/Leaf5.png"),   axes=FALSE)
+a <- strwrap("Why do you have to run a regression model and then check the assumptions?",width=70)
+text(1300,75, "Check your understanding:", font=2, xpd=T, cex=1.25,adj = c(0,0))
+for(i in 1:length(a)){
+  text(1300,75+(i*400),paste(a[i]), xpd=T, cex=1.25,adj = c(0,0))
+}
+```
+</center>
+
+## Citations
+
+**_Beavers & surface water_**
+
+
+Jones, Benjamin M., et al. "Increase in beaver dams controls surface water and thermokarst dynamics in an Arctic tundra region, Baldwin Peninsula, northwestern Alaska." _Environmental Research Letters_ 15.7 (2020): 075005.
+
+**_Red maple phenology_**
+
+
+USA-NPN National Coordinating Office. 2016. USA National
+Phenology Network data product development framework and data product
+catalog, v 1.1. USA-NPN Technical Series 2016-001. www.usanpn.org. 
+

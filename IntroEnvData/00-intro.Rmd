@@ -1,0 +1,35 @@
+---
+output: 
+  html_document:
+    theme: yeti
+    highlight: pygments
+---
+# Introduction
+
+
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png)
+
+ Data plays a critical role in addressing major environmental issues related to climate change, conservation, and water security. We gain a critical understanding of the role of observation, the scientific method, environmental sensors, and citizen science in describing the environment. Topics will include data life cycles, statistics, visualization, and statistical programming for
+environmental data. This book mainly focuses on a basic introduction to the tools used to analyze and interpret giving common types of data associated with the environment.
+
+In these tutorials, you will learn about types of data that are core to many environmental topics. Much of the data are observations that directly impact carbon, water, and nutrient cycling. You will work with real world data and problems. You will practice learning data basics and statistics on the following types of data:
+*weather and climate observations
+*greenhouse gas fluxes in ecosystems
+*species abundance and biodiversity
+*data sourced from citizen science
+*soil observations that are critical for the water cycle, agriculture, and plant health
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/PXL_20201212_142447471.jpg)
+_Weather and soil micrometereological measurements are collected every 15 minutes from sensors. The abundance of data that is enabled by many sensors and observation platforms necessitates coding-based, reproducible tools._  
+</center>
+
+## Course Learning objectives
+
+1. Gain an understanding of environmental data
+2. Apply statistical analysis and critically interpret data
+3. Use code-based, reproducible computational tools
+
+
+
+

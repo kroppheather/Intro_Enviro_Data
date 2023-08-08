@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction to R Statistical Software | Introduction to Environmental Data and R</title>
+  <meta name="description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction to R Statistical Software | Introduction to Environmental Data and R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="github-repo" content="kroppheather/Intro_Enviro_data" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction to R Statistical Software | Introduction to Environmental Data and R" />
+  
+  <meta name="twitter:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  
+
+<meta name="author" content="Heather Kropp" />
+
+
+<meta name="date" content="2023-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to Environmental Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#course-learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Course Learning objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html"><i class="fa fa-check"></i><b>2</b> Introduction to R Statistical Software</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#new-functions-syntax"><i class="fa fa-check"></i><b>2.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#first-some-terms"><i class="fa fa-check"></i><b>2.3</b> First some terms:</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#getting-to-know-rstudio-cloud"><i class="fa fa-check"></i><b>2.4</b> Getting to know Rstudio Cloud</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#introduction-to-r-rstudio"><i class="fa fa-check"></i><b>2.5</b> Introduction to R &amp; RStudio</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#r-basics"><i class="fa fa-check"></i><b>2.6</b> R basics</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#a-fancy-calculator"><i class="fa fa-check"></i><b>2.6.1</b> <em>A fancy calculator</em></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#variables"><i class="fa fa-check"></i><b>2.6.2</b> <em>Variables</em></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#vectors"><i class="fa fa-check"></i><b>2.6.3</b> <em>Vectors</em></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#data-frames"><i class="fa fa-check"></i><b>2.6.4</b> <em>Data frames</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><i class="fa fa-check"></i><b>3</b> Is this normal? Evaluating historical weather data to understand extremes, changes, and climate.</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#new-functions-syntax-1"><i class="fa fa-check"></i><b>3.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="3.3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-1-the-problem.-how-weird-was-yesterdays-heatwave-using-long-term-weather-data-to-understand-normals-and-climate."><i class="fa fa-check"></i><b>3.3</b> <strong>Section 1:</strong> The problem. How weird was yesterday’s heatwave? Using long-term weather data to understand normals and climate.</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-summary-summary-statistics-to-summarize-weather"><i class="fa fa-check"></i><b>3.3.1</b> <em>Using summary summary statistics to summarize weather</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-2-the-data."><i class="fa fa-check"></i><b>3.4</b> <strong>Section 2:</strong> The Data.</a></li>
+<li class="chapter" data-level="3.5" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-packages-in-r"><i class="fa fa-check"></i><b>3.5</b> Using packages in R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#reading-in-data"><i class="fa fa-check"></i><b>3.5.1</b> <em>Reading in data</em></a></li>
+<li class="chapter" data-level="3.5.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#subsetting"><i class="fa fa-check"></i><b>3.5.2</b> <em>Subsetting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3a-the-approach.-summary-statistics-and-visualizing-data-distributions."><i class="fa fa-check"></i><b>3.6</b> <strong>Section 3a:</strong> The approach. Summary statistics and visualizing data distributions.</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#histograms"><i class="fa fa-check"></i><b>3.6.1</b> <em>Histograms</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3b-probability-distributions"><i class="fa fa-check"></i><b>3.7</b> <strong>Section 3b:</strong> Probability distributions</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
+<li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualizing-data.html"><a href="visualizing-data.html"><i class="fa fa-check"></i><b>4</b> Visualizing data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualizing-data.html"><a href="visualizing-data.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="visualizing-data.html"><a href="visualizing-data.html#new-functions-syntax-2"><i class="fa fa-check"></i><b>4.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="4.3" data-path="visualizing-data.html"><a href="visualizing-data.html#fundamentals-of-plotting-data"><i class="fa fa-check"></i><b>4.3</b> Fundamentals of plotting data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualizing-data.html"><a href="visualizing-data.html#representation-of-data"><i class="fa fa-check"></i><b>4.3.1</b> <em>1. Representation of data</em></a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualizing-data.html"><a href="visualizing-data.html#layout"><i class="fa fa-check"></i><b>4.3.2</b> <em>2. Layout</em></a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualizing-data.html"><a href="visualizing-data.html#encoding"><i class="fa fa-check"></i><b>4.3.3</b> <em>3. Encoding</em></a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualizing-data.html"><a href="visualizing-data.html#simplicity"><i class="fa fa-check"></i><b>4.3.4</b> <em>4. Simplicity</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-data-in-base-r"><i class="fa fa-check"></i><b>4.4</b> Plotting data in base R</a></li>
+<li class="chapter" data-level="4.5" data-path="visualizing-data.html"><a href="visualizing-data.html#using-packages-in-r-1"><i class="fa fa-check"></i><b>4.5</b> Using packages in R</a></li>
+<li class="chapter" data-level="4.6" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-in-ggplot2"><i class="fa fa-check"></i><b>4.6</b> Plotting in ggplot2</a></li>
+<li class="chapter" data-level="4.7" data-path="visualizing-data.html"><a href="visualizing-data.html#exploring-different-visualizations-in-ggplot2"><i class="fa fa-check"></i><b>4.7</b> Exploring different visualizations in ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Introduction to hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#new-functions-syntax-3"><i class="fa fa-check"></i><b>5.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-two-sample-t-tests"><i class="fa fa-check"></i><b>5.3</b> Introduction to two sample t-tests</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data"><i class="fa fa-check"></i><b>5.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#study-goals-and-statistical-hypotheses"><i class="fa fa-check"></i><b>5.3.2</b> <em>Study goals and statistical hypotheses</em></a></li>
+<li class="chapter" data-level="5.3.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#checking-assumptions-of-test"><i class="fa fa-check"></i><b>5.3.3</b> <em>Checking assumptions of test</em></a></li>
+<li class="chapter" data-level="5.3.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#two-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.3.4</b> <em>Two sample t-test in R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#one-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.4</b> One sample t-test in R</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-chi-squared-test"><i class="fa fa-check"></i><b>5.5</b> Introduction to chi-squared test</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data-1"><i class="fa fa-check"></i><b>5.5.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#chi-squared-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>Chi squared test</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#citations-1"><i class="fa fa-check"></i><b>5.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html"><i class="fa fa-check"></i><b>6</b> Introduction to linear regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#learning-objectives-4"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#new-functions-syntax-4"><i class="fa fa-check"></i><b>6.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="6.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#simple-linear-regression-are-beavers-flooding-the-arctic"><i class="fa fa-check"></i><b>6.3</b> Simple linear regression: Are beavers flooding the Arctic?</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-2"><i class="fa fa-check"></i><b>6.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="6.3.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#set-up-the-regression"><i class="fa fa-check"></i><b>6.3.2</b> <em>Set up the regression</em></a></li>
+<li class="chapter" data-level="6.3.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>6.3.3</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="6.3.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpreting-results"><i class="fa fa-check"></i><b>6.3.4</b> <em>Interpreting results</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#multiple-linear-regression-what-makes-an-early-spring"><i class="fa fa-check"></i><b>6.4</b> Multiple linear regression: What makes an early spring?</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-3"><i class="fa fa-check"></i><b>6.4.1</b> <em>The data</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#panels-of-bivariate-plots"><i class="fa fa-check"></i><b>6.5</b> <em>Panels of bivariate plots</em></a></li>
+<li class="chapter" data-level="6.6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#check-for-multi-collinearity"><i class="fa fa-check"></i><b>6.6</b> <em>Check for multi-collinearity</em></a></li>
+<li class="chapter" data-level="6.7" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#run-the-regression"><i class="fa fa-check"></i><b>6.7</b> <em>Run the regression</em></a></li>
+<li class="chapter" data-level="6.8" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpret-the-regression"><i class="fa fa-check"></i><b>6.8</b> <em>Interpret the regression</em></a></li>
+<li class="chapter" data-level="6.9" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#citations-2"><i class="fa fa-check"></i><b>6.9</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html"><i class="fa fa-check"></i><b>7</b> Introduction to Analysis of Variance (ANOVA)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#learning-objectives-5"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#new-functions-syntax-5"><i class="fa fa-check"></i><b>7.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="7.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#measuring-biodiversity-the-data"><i class="fa fa-check"></i><b>7.3</b> Measuring biodiversity: the data</a></li>
+<li class="chapter" data-level="7.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-overview"><i class="fa fa-check"></i><b>7.4</b> ANOVA overview</a></li>
+<li class="chapter" data-level="7.5" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-in-r"><i class="fa fa-check"></i><b>7.5</b> ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#checking-assumptions-1"><i class="fa fa-check"></i><b>7.5.1</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#running-the-anova"><i class="fa fa-check"></i><b>7.5.2</b> <em>Running the ANOVA</em></a></li>
+<li class="chapter" data-level="7.5.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#post-hoc-comparisons"><i class="fa fa-check"></i><b>7.5.3</b> <em>Post hoc comparisons </em></a></li>
+<li class="chapter" data-level="7.5.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#interpreting-the-results"><i class="fa fa-check"></i><b>7.5.4</b> <em>Interpreting the results </em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#citations-3"><i class="fa fa-check"></i><b>7.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><i class="fa fa-check"></i><b>8</b> Advanced data wrangling. Linking soil moisture with landcover and rainfall.</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#learning-objectives-6"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#new-functions-syntax-6"><i class="fa fa-check"></i><b>8.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="8.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture"><i class="fa fa-check"></i><b>8.3</b> Soil moisture</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture-in-different-types-of-land-cover"><i class="fa fa-check"></i><b>8.3.1</b> Soil moisture in different types of land cover</a></li>
+<li class="chapter" data-level="8.3.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-data-soil-moisture"><i class="fa fa-check"></i><b>8.3.2</b> The data: soil moisture</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#working-with-dates"><i class="fa fa-check"></i><b>8.4</b> Working with dates</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-lubridate-package"><i class="fa fa-check"></i><b>8.4.1</b> The lubridate package</a></li>
+<li class="chapter" data-level="8.4.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#parsing-datetime"><i class="fa fa-check"></i><b>8.4.2</b> Parsing date/time</a></li>
+<li class="chapter" data-level="8.4.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#extracting-information-from-dates"><i class="fa fa-check"></i><b>8.4.3</b> Extracting information from dates</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>8.5</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#filtering-data"><i class="fa fa-check"></i><b>8.5.1</b> Filtering data</a></li>
+<li class="chapter" data-level="8.5.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#joining-data-tables"><i class="fa fa-check"></i><b>8.5.2</b> Joining data tables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#conclusions"><i class="fa fa-check"></i><b>8.6</b> Conclusions</a></li>
+<li class="chapter" data-level="8.7" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4"><i class="fa fa-check"></i><b>8.7</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Environmental Data and R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-r-statistical-software" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to R Statistical Software<a href="introduction-to-r-statistical-software.html#introduction-to-r-statistical-software" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>by Heather Kropp</em>
+<em>for ENVST 206: Introduction to Environmental Data</em>
+<em>Hamilton College</em></p>
+<div id="learning-objectives" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Learning objectives<a href="introduction-to-r-statistical-software.html#learning-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Learn about RStudio Cloud</li>
+<li>Introduction to R &amp; Rstudio</li>
+<li>Learn the basics</li>
+</ol>
+</div>
+<div id="new-functions-syntax" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> New functions &amp; syntax<a href="introduction-to-r-statistical-software.html#new-functions-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>c</code>, <code>data.frame</code>,<code>[]</code> <code>$</code></p>
+</div>
+<div id="first-some-terms" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> First some terms:<a href="introduction-to-r-statistical-software.html#first-some-terms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>R</strong>: a statistical programming software that can be used to analyze data</p>
+<p><strong>RStudio</strong>: a user friendly interface for running R</p>
+<p><strong>Cloud computing</strong> a remote computer that you access using your browser.</p>
+<p><strong>RStudio Cloud</strong> runs RStudio in a cloud computing environment. Each assignment or activity you do will open up in this virtual computer.</p>
+</div>
+<div id="getting-to-know-rstudio-cloud" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Getting to know Rstudio Cloud<a href="introduction-to-r-statistical-software.html#getting-to-know-rstudio-cloud" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>RStudio Cloud helps create a standardized computing environment for us as a class that is specifically meant to support working in R. This means that you can access the same computing environment and you only need to run a web browser on a personal or Hamilton computer. This will allow coursework to be readily completed from any computer whether you are on or off campus. It also means that you don’t have to worry about installing R or storing data on your own personal computer.</p>
+<p>You will have received an invitation to join the ENVST206-F21 <strong>workspace</strong> on RStudio Cloud through your Hamilton email. Once you have joined the workspace, you can access the projects section. A <strong>project</strong> is a collection of related R files and data. <strong>Assignments</strong> are projects that are set up to be read only and you will make your own copy when you open it. Your copy will automatically be set up with your user profile once you save it. You will see a blue box next to the project name indicating that it is an assignment. You will have the option to start the assignment for the first time or continue if you already started it.</p>
+<center>
+<img src="photos/tutorial_1/Assignment.png" style="width:50.0%" />
+</center>
+<p>Once you open the assignment, you will see an interface that looks something like this:</p>
+<center>
+<p><img src="photos/tutorial_1/Rstudio.PNG" /></p>
+</center>
+<p>The Rstudio interface has 4 main components: <strong>1. script window, 2. console, 3. environment, 4. viewer &amp; information tabs</strong>. In the next section, you will learn more about each of these parts of the interface.</p>
+</div>
+<div id="introduction-to-r-rstudio" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Introduction to R &amp; RStudio<a href="introduction-to-r-statistical-software.html#introduction-to-r-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R is essentially a giant calculator with many options for plotting and built in functions for data analysis. The <strong>console</strong> runs your R code. It’s the calculator! You can type code into the console and it will run. However, you won’t be able to access that code later, just like many calculators. That’s why we use <strong>scripts</strong>.</p>
+<p>R scripts allow you to save code in a text file to run in R. R scripts all have a .r extension. By itself, the script will do nothing. You need to actually tell R to run your code in the console. When you first open a Rstudio, there is often a blank work space with just the console unless I have set up some existing files to open for you. You can tell you are looking at the console by checking the tabs, and you will see information about your R version at the start.</p>
+<center>
+<img src="photos/tutorial_1/console%20open.png" style="width:100.0%" />
+</center>
+<p>New scripts can be created by going to <em>New File</em> and clicking on Rscript. If you wanted to open an existing Rscript, you can go to <em>Open File</em>.</p>
+<center>
+<img src="photos/tutorial_1/new%20script.png" style="width:50.0%" />
+</center>
+<p>Clicking a new script will prompt you to save into the file system created in our project computer:</p>
+<center>
+<img src="photos/tutorial_1/save%20prompt.png" style="width:50.0%" />
+</center>
+<p>You will see that saving your script will create a new file in the Files tab in the bottom right corner. This tab will be important when we start working with more data files.</p>
+<center>
+<img src="photos/tutorial_1/file%20system.png" style="width:25.0%" />
+</center>
+<p>The script opens up above the console and is ready for you to code!</p>
+<center>
+<img src="photos/tutorial_1/Rstudio%20open.png" style="width:75.0%" />
+</center>
+<p>You can get a better idea for the script/console set up by writing a simple line of code in the script and running it. Using the function <code>print</code>, any text within the function will be returned in the console. You can also use hashes <code>#</code> to make a <strong>comment</strong> so that you can document code. Let’s take a look at how this works before getting into the details. Here is the code in my script:</p>
+<center>
+<img src="photos/tutorial_1/first%20code.png" style="width:50.0%" />
+</center>
+<p>Nothing happens with this code until I run it in the console.You can run a line of code clicking in the line or a selection of code by highlighting it and pressing the run button (shown in the black circle).</p>
+<center>
+<img src="photos/tutorial_1/running.png" style="width:50.0%" />
+</center>
+<p>There’s a few things to pay attention to in the console when you run code. The <code>&gt;</code> symbol always indicates a new line of code. The <code>+</code> symbol means your line of code has not ended and will continue on to the next line. Your results will have numbers in brackets to describe the output. <code>[1]</code> indicates the start of the output.</p>
+<center>
+<img src="photos/tutorial_1/Running%20explain.png" style="width:50.0%" />
+</center>
+<p>Any variables run in the console are part of your <strong>working environment</strong>. Variables allow you to refer to the same data or calculations throughout your current R session the computer’s temporary memory. You’ll learn more about R code in the next section to fully understand the utility of the working environment.</p>
+<center>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+</center>
+</div>
+<div id="r-basics" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> R basics<a href="introduction-to-r-statistical-software.html#r-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-fancy-calculator" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> <em>A fancy calculator</em><a href="introduction-to-r-statistical-software.html#a-fancy-calculator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since R is just like a sophisticated calculator, you can read in numerical operations and will get the calculations as output. Type a few different operations like the one below that follow typical mathematical notation on a keyboard. Note I’ve included both the code (grey boxes) and outputs (blue boxes) here for an example.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-to-r-statistical-software.html#cb1-1" tabindex="-1"></a><span class="co"># remember this is a comment so it won&#39;t do anything. R just ignores it.</span></span>
+<span id="cb1-2"><a href="introduction-to-r-statistical-software.html#cb1-2" tabindex="-1"></a><span class="co"># you need to use these to document code and write notes</span></span>
+<span id="cb1-3"><a href="introduction-to-r-statistical-software.html#cb1-3" tabindex="-1"></a><span class="co"># 6 raised to the 6 power</span></span>
+<span id="cb1-4"><a href="introduction-to-r-statistical-software.html#cb1-4" tabindex="-1"></a><span class="dv">6</span><span class="sc">^</span><span class="dv">6</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] 46656</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-r-statistical-software.html#cb3-1" tabindex="-1"></a><span class="co"># 5 plus 210</span></span>
+<span id="cb3-2"><a href="introduction-to-r-statistical-software.html#cb3-2" tabindex="-1"></a><span class="dv">5</span><span class="sc">+</span><span class="dv">210</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] 215</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-r-statistical-software.html#cb5-1" tabindex="-1"></a><span class="co"># 3 minus 10</span></span>
+<span id="cb5-2"><a href="introduction-to-r-statistical-software.html#cb5-2" tabindex="-1"></a><span class="dv">3-10</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] -7</code></pre>
+</div>
+<div id="variables" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> <em>Variables</em><a href="introduction-to-r-statistical-software.html#variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Typing in calculations can quickly become redundant and difficult when you have many observations. Creating a <strong>variable</strong> allows you to refer to the same object by typing its name. You can create a variable by first typing a name, then typing the assigner <code>&lt;-</code> (<code>=</code> also works, but is not R convention). Anything to the right of the assigner will be refered to with the name you give. Below is an example where I know I will want to use the number 244435600 many times so I will give it a shorter, easier to remember name.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-r-statistical-software.html#cb7-1" tabindex="-1"></a><span class="co"># name my number</span></span>
+<span id="cb7-2"><a href="introduction-to-r-statistical-software.html#cb7-2" tabindex="-1"></a>aNumber <span class="ot">&lt;-</span> <span class="dv">244435600</span></span>
+<span id="cb7-3"><a href="introduction-to-r-statistical-software.html#cb7-3" tabindex="-1"></a><span class="co"># multiply my number by 5</span></span>
+<span id="cb7-4"><a href="introduction-to-r-statistical-software.html#cb7-4" tabindex="-1"></a><span class="dv">5</span><span class="sc">*</span>aNumber</span></code></pre></div>
+<pre class="bg-info"><code>[1] 1222178000</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-r-statistical-software.html#cb9-1" tabindex="-1"></a><span class="co"># divide my number by 2</span></span>
+<span id="cb9-2"><a href="introduction-to-r-statistical-software.html#cb9-2" tabindex="-1"></a>aNumber<span class="sc">/</span><span class="dv">2</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] 122217800</code></pre>
+</div>
+<div id="vectors" class="section level3 hasAnchor" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> <em>Vectors</em><a href="introduction-to-r-statistical-software.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A vector is a one dimensional array of data. You can make a vector in R using the function <code>c()</code>. <code>c</code> stands for combine values into a vector where each value is separated by a comma. For example, here’s a vector with the elevation of the three highest peaks in the Adirondacks.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-r-statistical-software.html#cb11-1" tabindex="-1"></a><span class="co"># make a vector of numbers</span></span>
+<span id="cb11-2"><a href="introduction-to-r-statistical-software.html#cb11-2" tabindex="-1"></a><span class="co"># elevation in ft</span></span>
+<span id="cb11-3"><a href="introduction-to-r-statistical-software.html#cb11-3" tabindex="-1"></a>peaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5344</span>,<span class="dv">5114</span>,<span class="dv">4960</span>)</span></code></pre></div>
+<p>You will notice that both functions <code>print</code> and <code>c</code> are text followed by parentheses. This is a detail to pay attention to for the R <strong>syntax</strong>. Syntax refers to the rulues and structure of a coding language. What you learned about <code>#</code> and <code>&lt;-</code> are examples of R syntax since these symbols have a specific meaning. Any time you see the format <code>anyName()</code> you can know this is a <strong>function</strong>. Functions are a key part of R. You already used functions by runnidn <code>c</code> and <code>print</code>. They expect certain inputs called <strong>arguments</strong> (like our numbers in the <em>c</em> function used to create peaks vector). Functions will also perform a task that saves you a lot of extra coding. You can immediately see the utility of functions by running summary statistics functions like: <code>mean</code> (average value of a vector), <code>min</code> (minimum value in a vector), <code>max</code> (maximum value in a vector).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-r-statistical-software.html#cb12-1" tabindex="-1"></a><span class="co"># calculate the mean of peaks</span></span>
+<span id="cb12-2"><a href="introduction-to-r-statistical-software.html#cb12-2" tabindex="-1"></a><span class="fu">mean</span>(peaks)</span></code></pre></div>
+<pre class="bg-info"><code>[1] 5139.333</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-r-statistical-software.html#cb14-1" tabindex="-1"></a><span class="co"># calculate the minimum peak</span></span>
+<span id="cb14-2"><a href="introduction-to-r-statistical-software.html#cb14-2" tabindex="-1"></a><span class="fu">min</span>(peaks)</span></code></pre></div>
+<pre class="bg-info"><code>[1] 4960</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-r-statistical-software.html#cb16-1" tabindex="-1"></a><span class="co"># save the maximum as a variable</span></span>
+<span id="cb16-2"><a href="introduction-to-r-statistical-software.html#cb16-2" tabindex="-1"></a>maxPeak <span class="ot">&lt;-</span> <span class="fu">max</span>(peaks)</span></code></pre></div>
+<p>When you create a variable like <code>maxPeak</code> there is no output shown in the console. It can look alarming, but it is actually a good sign! It means your code worked! The variable <code>maxPeak</code> was simply created. You can always run the name of variable with nothing else to get a print out:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introduction-to-r-statistical-software.html#cb17-1" tabindex="-1"></a>maxPeak</span></code></pre></div>
+<pre class="bg-info"><code>[1] 5344</code></pre>
+<p>If you look to your environment section of RStudio, you will see <code>peaks</code> and <code>maxPeak</code> are shown in the global environment. <code>peaks</code> is a data type <strong>numeric</strong> and it has 3 total objects. Numeric data are all numbers and can include numbers on both sides of the decimal. This is where watching your environment section is useful to check that your code is working as you expect.</p>
+<center>
+<img src="photos/tutorial_1/environment.png" style="width:50.0%" />
+</center>
+<p>You can now do calculations on each object in your vector. For example, if you want to convert the peak elevation to meters, you simply need to type in one calculation. You’ll notice, this calculation was not assigned as a named variable, and a vector of output is returned but not stored in the environment.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introduction-to-r-statistical-software.html#cb19-1" tabindex="-1"></a><span class="co"># convert to meters</span></span>
+<span id="cb19-2"><a href="introduction-to-r-statistical-software.html#cb19-2" tabindex="-1"></a>peaks<span class="sc">/</span><span class="fl">3.281</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] 1628.772 1558.671 1511.734</code></pre>
+<p>You can also apply vector operations on vectors that are the same length and a calculation for the element in each vector makes sense. For example, I can make a vector of the prominence (height from the base) and calculate the difference to find the difference between the elevation of the mountain and the prominence.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-r-statistical-software.html#cb21-1" tabindex="-1"></a><span class="co"># prominence in ft</span></span>
+<span id="cb21-2"><a href="introduction-to-r-statistical-software.html#cb21-2" tabindex="-1"></a>prom <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4914</span>,<span class="dv">2100</span>,<span class="dv">840</span>)</span>
+<span id="cb21-3"><a href="introduction-to-r-statistical-software.html#cb21-3" tabindex="-1"></a><span class="co"># difference between height and prominence</span></span>
+<span id="cb21-4"><a href="introduction-to-r-statistical-software.html#cb21-4" tabindex="-1"></a>peaks <span class="sc">-</span> prom</span></code></pre></div>
+<pre class="bg-info"><code>[1]  430 3014 4120</code></pre>
+<p>You can also make vectors with other types of data beyond numeric. R supports data types such as dates, character strings, and integers. A <strong>character</strong> is any mixture of letters, numbers, and symbols. You can’t apply mathematical calculations to character. You can set up a vector of the mountain names by using quotes around each character element in the vector:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-r-statistical-software.html#cb23-1" tabindex="-1"></a><span class="co"># quotes denote a character data type</span></span>
+<span id="cb23-2"><a href="introduction-to-r-statistical-software.html#cb23-2" tabindex="-1"></a>peakNames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mount Marcy&quot;</span>, <span class="st">&quot;Algonquin Peak&quot;</span>, <span class="st">&quot;Mount Haystack&quot;</span>)</span></code></pre></div>
+<p>You can <strong>subset</strong> a vector using <code>[]</code> syntax. If you want to refer to just the first item in a vector, you can subset as follows:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-r-statistical-software.html#cb24-1" tabindex="-1"></a><span class="co"># elevation of first peak</span></span>
+<span id="cb24-2"><a href="introduction-to-r-statistical-software.html#cb24-2" tabindex="-1"></a>peaks[<span class="dv">1</span>]</span></code></pre></div>
+<pre class="bg-info"><code>[1] 5344</code></pre>
+</div>
+<div id="data-frames" class="section level3 hasAnchor" number="2.6.4">
+<h3><span class="header-section-number">2.6.4</span> <em>Data frames</em><a href="introduction-to-r-statistical-software.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The final basic type of data that will be useful to keep in mind is a data frame. <strong>Data frames</strong> are a matrix with column names and sometimes row names. All observations in a row are associated. Each column will have the same type of data. For example, you can make a dataframe with all of the high peaks information using the ‘data.frame’ function. For the <code>data.frame</code> arguments, you specify each vector to include as a column and the name of the column (left side of each equal sign).</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-r-statistical-software.html#cb26-1" tabindex="-1"></a><span class="co"># make a datframee</span></span>
+<span id="cb26-2"><a href="introduction-to-r-statistical-software.html#cb26-2" tabindex="-1"></a><span class="co"># you must include the column name = data vector</span></span>
+<span id="cb26-3"><a href="introduction-to-r-statistical-software.html#cb26-3" tabindex="-1"></a><span class="co"># seperating multiple columns with commas</span></span>
+<span id="cb26-4"><a href="introduction-to-r-statistical-software.html#cb26-4" tabindex="-1"></a>highPeaks <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elev =</span> peaks,</span>
+<span id="cb26-5"><a href="introduction-to-r-statistical-software.html#cb26-5" tabindex="-1"></a>                        <span class="at">prom =</span> prom,</span>
+<span id="cb26-6"><a href="introduction-to-r-statistical-software.html#cb26-6" tabindex="-1"></a>                        <span class="at">name =</span> peakNames)</span></code></pre></div>
+<p>A helpful way to check that your code ran as expected is to track the objects in your global environment. Vectors show up under <em>values</em> and data frames are shown under <em>data</em>. If you click the blue arrow button you will get a preview of the data frame.</p>
+<p>You can subset a data frame using the <code>[]</code> syntax, but you need to account for the two dimensional nature of data frames. If you are taking all observations for a row or column, it can simply be left empty. You can also refer to columns in a data frame in this format: <code>dataframe$columnName</code>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-r-statistical-software.html#cb27-1" tabindex="-1"></a><span class="co"># subset 2 row in highPeaks</span></span>
+<span id="cb27-2"><a href="introduction-to-r-statistical-software.html#cb27-2" tabindex="-1"></a>highPeaks[<span class="dv">2</span>,]</span></code></pre></div>
+<pre class="bg-info"><code>  elev prom           name
+2 5114 2100 Algonquin Peak</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introduction-to-r-statistical-software.html#cb29-1" tabindex="-1"></a><span class="co"># view only the names column</span></span>
+<span id="cb29-2"><a href="introduction-to-r-statistical-software.html#cb29-2" tabindex="-1"></a>highPeaks[,<span class="dv">3</span>]</span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;Mount Marcy&quot;    &quot;Algonquin Peak&quot; &quot;Mount Haystack&quot;</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introduction-to-r-statistical-software.html#cb31-1" tabindex="-1"></a><span class="co"># look at elevation for 3rd highest mountain</span></span>
+<span id="cb31-2"><a href="introduction-to-r-statistical-software.html#cb31-2" tabindex="-1"></a>highPeaks[<span class="dv">1</span>,<span class="dv">3</span>]</span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;Mount Marcy&quot;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introduction-to-r-statistical-software.html#cb33-1" tabindex="-1"></a><span class="co"># refer to a column in a data frame using this notation</span></span>
+<span id="cb33-2"><a href="introduction-to-r-statistical-software.html#cb33-2" tabindex="-1"></a>highPeaks<span class="sc">$</span>elev</span></code></pre></div>
+<pre class="bg-info"><code>[1] 5344 5114 4960</code></pre>
+<center>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="768" /></p>
+</center>
+<center>
+<p><img src="photos/tutorial_1/peaks2.png" style="width:40.0%" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="768" /></p>
+</center>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro-to-R.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Advanced data wrangling. Linking soil moisture with landcover and rainfall. | Introduction to Environmental Data and R</title>
+  <meta name="description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Advanced data wrangling. Linking soil moisture with landcover and rainfall. | Introduction to Environmental Data and R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="github-repo" content="kroppheather/Intro_Enviro_data" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Advanced data wrangling. Linking soil moisture with landcover and rainfall. | Introduction to Environmental Data and R" />
+  
+  <meta name="twitter:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  
+
+<meta name="author" content="Heather Kropp" />
+
+
+<meta name="date" content="2023-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-analysis-of-variance-anova.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to Environmental Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#course-learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Course Learning objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html"><i class="fa fa-check"></i><b>2</b> Introduction to R Statistical Software</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#new-functions-syntax"><i class="fa fa-check"></i><b>2.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#first-some-terms"><i class="fa fa-check"></i><b>2.3</b> First some terms:</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#getting-to-know-rstudio-cloud"><i class="fa fa-check"></i><b>2.4</b> Getting to know Rstudio Cloud</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#introduction-to-r-rstudio"><i class="fa fa-check"></i><b>2.5</b> Introduction to R &amp; RStudio</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#r-basics"><i class="fa fa-check"></i><b>2.6</b> R basics</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#a-fancy-calculator"><i class="fa fa-check"></i><b>2.6.1</b> <em>A fancy calculator</em></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#variables"><i class="fa fa-check"></i><b>2.6.2</b> <em>Variables</em></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#vectors"><i class="fa fa-check"></i><b>2.6.3</b> <em>Vectors</em></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#data-frames"><i class="fa fa-check"></i><b>2.6.4</b> <em>Data frames</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><i class="fa fa-check"></i><b>3</b> Is this normal? Evaluating historical weather data to understand extremes, changes, and climate.</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#new-functions-syntax-1"><i class="fa fa-check"></i><b>3.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="3.3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-1-the-problem.-how-weird-was-yesterdays-heatwave-using-long-term-weather-data-to-understand-normals-and-climate."><i class="fa fa-check"></i><b>3.3</b> <strong>Section 1:</strong> The problem. How weird was yesterday’s heatwave? Using long-term weather data to understand normals and climate.</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-summary-summary-statistics-to-summarize-weather"><i class="fa fa-check"></i><b>3.3.1</b> <em>Using summary summary statistics to summarize weather</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-2-the-data."><i class="fa fa-check"></i><b>3.4</b> <strong>Section 2:</strong> The Data.</a></li>
+<li class="chapter" data-level="3.5" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-packages-in-r"><i class="fa fa-check"></i><b>3.5</b> Using packages in R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#reading-in-data"><i class="fa fa-check"></i><b>3.5.1</b> <em>Reading in data</em></a></li>
+<li class="chapter" data-level="3.5.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#subsetting"><i class="fa fa-check"></i><b>3.5.2</b> <em>Subsetting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3a-the-approach.-summary-statistics-and-visualizing-data-distributions."><i class="fa fa-check"></i><b>3.6</b> <strong>Section 3a:</strong> The approach. Summary statistics and visualizing data distributions.</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#histograms"><i class="fa fa-check"></i><b>3.6.1</b> <em>Histograms</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3b-probability-distributions"><i class="fa fa-check"></i><b>3.7</b> <strong>Section 3b:</strong> Probability distributions</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
+<li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualizing-data.html"><a href="visualizing-data.html"><i class="fa fa-check"></i><b>4</b> Visualizing data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualizing-data.html"><a href="visualizing-data.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="visualizing-data.html"><a href="visualizing-data.html#new-functions-syntax-2"><i class="fa fa-check"></i><b>4.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="4.3" data-path="visualizing-data.html"><a href="visualizing-data.html#fundamentals-of-plotting-data"><i class="fa fa-check"></i><b>4.3</b> Fundamentals of plotting data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualizing-data.html"><a href="visualizing-data.html#representation-of-data"><i class="fa fa-check"></i><b>4.3.1</b> <em>1. Representation of data</em></a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualizing-data.html"><a href="visualizing-data.html#layout"><i class="fa fa-check"></i><b>4.3.2</b> <em>2. Layout</em></a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualizing-data.html"><a href="visualizing-data.html#encoding"><i class="fa fa-check"></i><b>4.3.3</b> <em>3. Encoding</em></a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualizing-data.html"><a href="visualizing-data.html#simplicity"><i class="fa fa-check"></i><b>4.3.4</b> <em>4. Simplicity</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-data-in-base-r"><i class="fa fa-check"></i><b>4.4</b> Plotting data in base R</a></li>
+<li class="chapter" data-level="4.5" data-path="visualizing-data.html"><a href="visualizing-data.html#using-packages-in-r-1"><i class="fa fa-check"></i><b>4.5</b> Using packages in R</a></li>
+<li class="chapter" data-level="4.6" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-in-ggplot2"><i class="fa fa-check"></i><b>4.6</b> Plotting in ggplot2</a></li>
+<li class="chapter" data-level="4.7" data-path="visualizing-data.html"><a href="visualizing-data.html#exploring-different-visualizations-in-ggplot2"><i class="fa fa-check"></i><b>4.7</b> Exploring different visualizations in ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Introduction to hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#new-functions-syntax-3"><i class="fa fa-check"></i><b>5.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-two-sample-t-tests"><i class="fa fa-check"></i><b>5.3</b> Introduction to two sample t-tests</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data"><i class="fa fa-check"></i><b>5.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#study-goals-and-statistical-hypotheses"><i class="fa fa-check"></i><b>5.3.2</b> <em>Study goals and statistical hypotheses</em></a></li>
+<li class="chapter" data-level="5.3.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#checking-assumptions-of-test"><i class="fa fa-check"></i><b>5.3.3</b> <em>Checking assumptions of test</em></a></li>
+<li class="chapter" data-level="5.3.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#two-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.3.4</b> <em>Two sample t-test in R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#one-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.4</b> One sample t-test in R</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-chi-squared-test"><i class="fa fa-check"></i><b>5.5</b> Introduction to chi-squared test</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data-1"><i class="fa fa-check"></i><b>5.5.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#chi-squared-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>Chi squared test</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#citations-1"><i class="fa fa-check"></i><b>5.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html"><i class="fa fa-check"></i><b>6</b> Introduction to linear regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#learning-objectives-4"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#new-functions-syntax-4"><i class="fa fa-check"></i><b>6.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="6.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#simple-linear-regression-are-beavers-flooding-the-arctic"><i class="fa fa-check"></i><b>6.3</b> Simple linear regression: Are beavers flooding the Arctic?</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-2"><i class="fa fa-check"></i><b>6.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="6.3.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#set-up-the-regression"><i class="fa fa-check"></i><b>6.3.2</b> <em>Set up the regression</em></a></li>
+<li class="chapter" data-level="6.3.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>6.3.3</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="6.3.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpreting-results"><i class="fa fa-check"></i><b>6.3.4</b> <em>Interpreting results</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#multiple-linear-regression-what-makes-an-early-spring"><i class="fa fa-check"></i><b>6.4</b> Multiple linear regression: What makes an early spring?</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-3"><i class="fa fa-check"></i><b>6.4.1</b> <em>The data</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#panels-of-bivariate-plots"><i class="fa fa-check"></i><b>6.5</b> <em>Panels of bivariate plots</em></a></li>
+<li class="chapter" data-level="6.6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#check-for-multi-collinearity"><i class="fa fa-check"></i><b>6.6</b> <em>Check for multi-collinearity</em></a></li>
+<li class="chapter" data-level="6.7" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#run-the-regression"><i class="fa fa-check"></i><b>6.7</b> <em>Run the regression</em></a></li>
+<li class="chapter" data-level="6.8" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpret-the-regression"><i class="fa fa-check"></i><b>6.8</b> <em>Interpret the regression</em></a></li>
+<li class="chapter" data-level="6.9" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#citations-2"><i class="fa fa-check"></i><b>6.9</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html"><i class="fa fa-check"></i><b>7</b> Introduction to Analysis of Variance (ANOVA)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#learning-objectives-5"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#new-functions-syntax-5"><i class="fa fa-check"></i><b>7.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="7.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#measuring-biodiversity-the-data"><i class="fa fa-check"></i><b>7.3</b> Measuring biodiversity: the data</a></li>
+<li class="chapter" data-level="7.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-overview"><i class="fa fa-check"></i><b>7.4</b> ANOVA overview</a></li>
+<li class="chapter" data-level="7.5" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-in-r"><i class="fa fa-check"></i><b>7.5</b> ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#checking-assumptions-1"><i class="fa fa-check"></i><b>7.5.1</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#running-the-anova"><i class="fa fa-check"></i><b>7.5.2</b> <em>Running the ANOVA</em></a></li>
+<li class="chapter" data-level="7.5.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#post-hoc-comparisons"><i class="fa fa-check"></i><b>7.5.3</b> <em>Post hoc comparisons </em></a></li>
+<li class="chapter" data-level="7.5.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#interpreting-the-results"><i class="fa fa-check"></i><b>7.5.4</b> <em>Interpreting the results </em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#citations-3"><i class="fa fa-check"></i><b>7.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><i class="fa fa-check"></i><b>8</b> Advanced data wrangling. Linking soil moisture with landcover and rainfall.</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#learning-objectives-6"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#new-functions-syntax-6"><i class="fa fa-check"></i><b>8.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="8.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture"><i class="fa fa-check"></i><b>8.3</b> Soil moisture</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture-in-different-types-of-land-cover"><i class="fa fa-check"></i><b>8.3.1</b> Soil moisture in different types of land cover</a></li>
+<li class="chapter" data-level="8.3.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-data-soil-moisture"><i class="fa fa-check"></i><b>8.3.2</b> The data: soil moisture</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#working-with-dates"><i class="fa fa-check"></i><b>8.4</b> Working with dates</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-lubridate-package"><i class="fa fa-check"></i><b>8.4.1</b> The lubridate package</a></li>
+<li class="chapter" data-level="8.4.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#parsing-datetime"><i class="fa fa-check"></i><b>8.4.2</b> Parsing date/time</a></li>
+<li class="chapter" data-level="8.4.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#extracting-information-from-dates"><i class="fa fa-check"></i><b>8.4.3</b> Extracting information from dates</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>8.5</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#filtering-data"><i class="fa fa-check"></i><b>8.5.1</b> Filtering data</a></li>
+<li class="chapter" data-level="8.5.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#joining-data-tables"><i class="fa fa-check"></i><b>8.5.2</b> Joining data tables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#conclusions"><i class="fa fa-check"></i><b>8.6</b> Conclusions</a></li>
+<li class="chapter" data-level="8.7" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4"><i class="fa fa-check"></i><b>8.7</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Environmental Data and R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall." class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Advanced data wrangling. Linking soil moisture with landcover and rainfall.<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall." class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>by Heather Kropp</em>
+<em>for ENVST 206: Introduction to Environmental Data</em>
+<em>Hamilton College</em></p>
+<div id="learning-objectives-6" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Learning objectives<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#learning-objectives-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Parse dates and extract timestamp information</li>
+<li>Filter and summarize data using tidy data functions</li>
+<li>Join data tables</li>
+</ol>
+</div>
+<div id="new-functions-syntax-6" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> New functions &amp; syntax<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#new-functions-syntax-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>ymd_hm</code>, <code>yday</code>, <code>hour</code>, <code>%&gt;%</code>, <code>left_join</code>, <code>right_join</code>, <code>full_join</code>, <code>inner_join</code></p>
+</div>
+<div id="soil-moisture" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Soil moisture<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Soil is a porous layer composed of small particles of organic and mineral materials. The air spaces (pores) in between these particles hold water, roots, microbes, and invertebrates. <strong>Soil moisture</strong> refers to the amount of water stored in the pores surrounding soil particles. Soil moisture is a major component of the terrestrial water cycle. The water at the surface of the soil evaporates or is taken up by plant roots for transpiration. The total loss of water through these processes is referred to as <strong>evapotranspiration</strong>, adding water vapor to the atmosphere.</p>
+<center>
+<p><img src="photos/tutorial_7/water_cycle.png" style="width:70.0%" /></p>
+<em>source: USGS Data VizLab</em>
+</center>
+<p>Soil moisture is essential for plant growth and survival. Too little soil moisture will limit photosynthesis as plants try to conserve water losses, reducing plant growth. Soil moisture also affects the activity of soil biota, affecting carbon and nutrient cycling in the soil. Excess soil moisture drains deeper into the ground resulting in recharge of deeper soil layers and ground water. Under saturated levels of soil moisture, all pores are filled with water. Until the excess water drains gravitationally, any additional rainfall will cause ponding at the surface or runoff. This can result in flooding.</p>
+<center>
+<img src="photos/tutorial_7/soil%20water3.png" style="width:70.0%" />
+</center>
+<div id="soil-moisture-in-different-types-of-land-cover" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Soil moisture in different types of land cover<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture-in-different-types-of-land-cover" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The soil moisture at a given point in time depends on the temperature and dryness of the air, the amount of precipitation, the amount of water plants are using, soil type, and the amount of leaf area that can intercept precipitation before it makes it to the ground. Many agricultural operations use irrigation to maintain enough soil moisture to encourage greater levels of plant growth.</p>
+<p>Flooding is a common issue around Clinton, NY. Mild droughts are also becoming more common in the northeastern United States under climate change, leading to plant stress, limitations in plant growth, and vulnerability to pests and disease. Soil moisture is the critical link between precipitation and conditions associated with flooding and plant stress.</p>
+<p><strong>Land cover</strong> describes the characteristics of the land surface and vegetative cover. Differences in leaf area and transpiration in different types of vegetative land cover can affect soil moisture. We’ll look at soil moisture data in the upper 12 cm of the soil collected in three different types of land cover on Hamilton’s campus: a fallow agricultural field (fallow corn field near Rogers estate), a deciduous leaf forest (beech-maple forest in Rogers glen), and a mowed lawn (turf grass near Ferguson Parking lot).</p>
+<center>
+<img src="photos/tutorial_7/sites.png" style="width:90.0%" />
+</center>
+</div>
+<div id="the-data-soil-moisture" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> The data: soil moisture<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-data-soil-moisture" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>soil_moisture.csv</code> file contains hourly soil moisture for each location.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb168-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
+<span id="cb168-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb168-2" tabindex="-1"></a>soil <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/soil_moisture.csv&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>  location doy hour soil.moist
+1 ag field 190    0  0.3469002
+2 ag field 190    1  0.3456291
+3 ag field 190    2  0.3443037
+4 ag field 190    3  0.3434466
+5 ag field 190    4  0.3423160
+6 ag field 190    5  0.3412638</code></pre>
+<p>The <code>location</code> column labels the type of land cover at the location of measurement. <code>doy</code> contains the day of year and <code>hour</code> is the hour in the day (0- 23) that the data was collected. The <code>soil.moist</code> column contains the volumetric soil moisture (cm <sup>3</sup> water cm <sup>-3</sup> soil).</p>
+<p>The <code>campus.csv</code> contains data from the campus weather station. You will use the <code>na.strings</code> argument to account formatting of the weather station data logger. Missing data is stored as <code>#N/A</code> rather than <code>NA</code>. The <code>na.strings</code> argument will convert these characters to NA in R.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb170-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
+<span id="cb170-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb170-2" tabindex="-1"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/campus.csv&quot;</span>,</span>
+<span id="cb170-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb170-3" tabindex="-1"></a>                 <span class="at">na.strings=</span> <span class="st">&quot;#N/A&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>           Timestamps Solar.Rad.W.m2 Precipitation.mm wind.m.s air.temp.c
+1 2022-05-31 19:00:00          122.4                0     0.64       27.8
+2 2022-05-31 19:15:00           65.7                0     0.77       27.2
+3 2022-05-31 19:30:00           47.1                0     0.58       26.7
+4 2022-05-31 19:45:00           33.9                0     0.62       25.9
+5 2022-05-31 20:00:00           21.1                0     0.57       25.0
+6 2022-05-31 20:15:00           12.7                0     0.54       24.2</code></pre>
+<p>The weather data is collected every 15 minutes. The <code>Timestamps</code> columns contains the date and time information. <code>Solar.Rad.W.m2</code> column contains the solar radiation (W m<sup>-2</sup>), <code>Precipitation.mm</code> contains the precipitation data. We will only look at data in the summer of 2022. During the summer, the only form of precipitation is rainfall (no hail or snow). <code>wind.m.s</code> contains the average wind speed (m s<sup>-1</sup>). <code>air.temp.c</code> is the air temperature (degrees C).</p>
+</div>
+</div>
+<div id="working-with-dates" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Working with dates<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#working-with-dates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-lubridate-package" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> The lubridate package<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-lubridate-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lubridate makes working with dates easier than base R. Let’s install and load the package:</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb172-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lubridate&quot;</span>)</span>
+<span id="cb172-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb172-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<p><a href="https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf" class="uri">https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf</a></p>
+</div>
+<div id="parsing-datetime" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Parsing date/time<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#parsing-datetime" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In base R, you had to specify the date formatting with <code>as.Date</code> to convert the vector from characters to date. <code>lubridate</code> makes standardizing dates easier with the function that is named based on the order of your date formatting where <code>y</code>=year, <code>m</code>= month, <code>d</code> = day, <code>h</code> = hour, <code>m</code>=minute, <code>s</code>. The function works by combing the date and time elements that are in your date data. If both are in the same column then you separate the date and time letters with an underscore. You can set the timezone with the argument <code>tz</code></p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-1" tabindex="-1"></a>exampleDate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2021-01-10 05:23:30&quot;</span>)</span>
+<span id="cb173-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-2" tabindex="-1"></a><span class="co">#parse date with year, month, day hour:minute:second</span></span>
+<span id="cb173-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate)</span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-1" tabindex="-1"></a><span class="co">#parse date with timezone so that it is always in NY time</span></span>
+<span id="cb175-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-2" tabindex="-1"></a><span class="co">#will account for daylight savings. Time local to NY</span></span>
+<span id="cb175-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 EST&quot;</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb177-1" tabindex="-1"></a><span class="co">#eastern standard time (note this doesn&#39;t work during daylight savings)</span></span>
+<span id="cb177-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb177-2" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;EST&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 EST&quot;</code></pre>
+<p>You can reformat the date in a weather data <code>Timestamps</code> column:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb179-1" tabindex="-1"></a>weather<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(weather<span class="sc">$</span>Timestamps, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
+</div>
+<div id="extracting-information-from-dates" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Extracting information from dates<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#extracting-information-from-dates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are many functions in <code>lubridate</code> to extract information for dates. You can use the <code>year</code> function to extract just the year from the date. The only argument is the vector of dates:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-1" tabindex="-1"></a><span class="fu">year</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<p>You can get the day of year with <code>yday</code>:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb181-1" tabindex="-1"></a>weather<span class="sc">$</span>doy <span class="ot">&lt;-</span> <span class="fu">yday</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<p>You can also add the hour the measurement was taken</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-1" tabindex="-1"></a>weather<span class="sc">$</span>hour <span class="ot">&lt;-</span> <span class="fu">hour</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<p>You will notice the soil moisture had the day of year and hour for information about the time/date. You now have this information for the campus weather. Note that there are four observations for every hour since the data is taken every hour.</p>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="768" />
+</center>
+</div>
+</div>
+<div id="data-wrangling-with-dplyr" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Data wrangling with <code>dplyr</code><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#data-wrangling-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>dplyr</code> package contains a number of helpful functions for data wrangling.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb183-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb183-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb183-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>You’ll want to compare the precipitation data to the soil moisture data. That will allow you to examine increases in soil moisture due to rainfall. Let’s sum up the total precipitation that occurred in the hour rather than using the individual 15 minute increments. We will want to apply to sum function to each unique <code>doy</code> and <code>hour</code> function. This means that we want to treat <code>doy</code> and <code>hour</code> as <strong>grouping variables</strong>. A group indicates that each unique value in the group describes a homogeneous feature (<em>e.g.</em> landcover, day of year). Use the <code>group_by</code> function to specify a grouping variable and sum the preciptation and count the number of observations:.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-1" tabindex="-1"></a>weatherHour <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> <span class="co"># start with weather</span></span>
+<span id="cb184-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-2" tabindex="-1"></a>  <span class="fu">group_by</span>(doy, hour) <span class="sc">%&gt;%</span> <span class="co"># doy and hour are groups</span></span>
+<span id="cb184-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">precip.mm =</span> <span class="fu">sum</span>(Precipitation.mm, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="co"># sum precipitation into a new column called precip.mm</span></span>
+<span id="cb184-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-4" tabindex="-1"></a>          <span class="at">n.precip =</span> <span class="fu">length</span>(<span class="fu">na.omit</span>(Precipitation.mm))  ) <span class="co"># number of observations used to calculate precip.mm with NA omitted</span></span></code></pre></div>
+<pre><code>`summarise()` has grouped output by &#39;doy&#39;. You can override
+using the `.groups` argument.</code></pre>
+<pre class="bg-info"><code># A tibble: 6 × 4
+# Groups:   doy [2]
+    doy  hour precip.mm n.precip
+  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+1   151    19         0        4
+2   151    20         0        4
+3   151    21         0        4
+4   151    22         0        4
+5   151    23         0        4
+6   152     0         0        4</code></pre>
+<p>Note that you get a warning about the output. This is a standard warning to remind you that the default settings were used.</p>
+<p>You’ll notice the output is a little different. Tidyverse contains a data structure called a <strong>tibble</strong> A tibble is a data frame that makes it easier to access the information associated with a data frame including any relevant groups (see doy and hour listed) and the type of data in each column.</p>
+<div id="filtering-data" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> Filtering data<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#filtering-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can use the <code>filter</code> function to subset data just like you did with the <code>[]</code> bracket notation. You use the same relational and logical statements covered in activity 2. Here’s a refresher:
+Operator | Interpretation | Type
+———|—————-|—–
+<code>==</code> | equal to | relational
+<code>!=</code> | not equal to | relational
+<code>&gt;</code> | more than (not including) | relational
+<code>&gt;=</code> | more than or equal to | relational
+<code>&lt;</code> | less than (not including) | relational
+<code>&lt;=</code> | less than or equal to | relational
+<code>&amp;</code> | and | logical
+<code>|</code> | or | logical</p>
+<p>Let’s remove any hours that don’t have all four observations present:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb187-1" tabindex="-1"></a>weatherData <span class="ot">&lt;-</span> weatherHour <span class="sc">%&gt;%</span> <span class="co"># refer to weatherHour data frame</span></span>
+<span id="cb187-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb187-2" tabindex="-1"></a>  <span class="fu">filter</span>(n.precip <span class="sc">==</span> <span class="dv">4</span>) <span class="co"># only keep rows with exactly 4 observations in the hour </span></span>
+<span id="cb187-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb187-3" tabindex="-1"></a><span class="co"># rows in new data frame</span></span>
+<span id="cb187-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb187-4" tabindex="-1"></a><span class="fu">nrow</span>(weatherData)</span></code></pre></div>
+<pre class="bg-info"><code>[1] 3358</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb189-1" tabindex="-1"></a><span class="co"># rows in old data frame</span></span>
+<span id="cb189-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb189-2" tabindex="-1"></a><span class="fu">nrow</span>(weatherHour)</span></code></pre></div>
+<pre class="bg-info"><code>[1] 3365</code></pre>
+</div>
+<div id="joining-data-tables" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Joining data tables<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#joining-data-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Your goal is to compare the precipitation and soil moisture data. It is clear there are slightly different time periods in each data frame. It would be helpful to match the data frames into a single data frame so that each row contains the same day of year and hour of observation. A <strong>join</strong> combines two tables based on one or more columns that contain the same <strong>identifying variables</strong>. We refer to the two tables as a <strong>left</strong> (table listed first) and the <strong>right</strong> table (second table). There are four different types of joins.</p>
+<center>
+<img src="photos/tutorial_7/joins_m.png" style="width:50.0%" />
+</center>
+<p>Let’s explore the types of joins by combining the soil moisture and precipitation observations.</p>
+<p>A <strong>left</strong> join preserves the structure of the left table (<code>left_join</code>. Any data present in the left table are kept. Columns from the right table are matched to the identifying columns in the left table. Any data present in the left table, but not in the right table results in missing data in the new columns. Data are present in the right table but not in the left are not added in the join. The <strong>right</strong> join follows the same rules (<code>right_join</code>), preserving the structure of the right table.</p>
+<p>You can do a join with soil moisture as the left table and the hourly precipitation weather data as the right table. Each function is named by the type of join.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb191-1" tabindex="-1"></a>soilLeftJoin <span class="ot">&lt;-</span> <span class="fu">left_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb191-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb191-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb191-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb191-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
+<pre class="bg-info"><code>[1] 1512</code></pre>
+<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
+1 ag field 190    0  0.3469002         0        4
+2 ag field 190    1  0.3456291         0        4
+3 ag field 190    2  0.3443037         0        4
+4 ag field 190    3  0.3434466         0        4
+5 ag field 190    4  0.3423160         0        4
+6 ag field 190    5  0.3412638         0        4</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb195-1" tabindex="-1"></a>soilRightJoin <span class="ot">&lt;-</span> <span class="fu">right_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb195-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb195-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb195-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb195-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
+<pre class="bg-info"><code>[1] 4366</code></pre>
+<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
+1 ag field 190    0  0.3469002         0        4
+2 ag field 190    1  0.3456291         0        4
+3 ag field 190    2  0.3443037         0        4
+4 ag field 190    3  0.3434466         0        4
+5 ag field 190    4  0.3423160         0        4
+6 ag field 190    5  0.3412638         0        4</code></pre>
+<p>A <strong>full</strong> join keeps all observations in the join. If data are present in one table, but not the other, missing values are added.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb199-1" tabindex="-1"></a>soilFullJoin <span class="ot">&lt;-</span> <span class="fu">full_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb199-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb199-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb199-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb199-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
+<pre class="bg-info"><code>[1] 4366</code></pre>
+<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
+1 ag field 190    0  0.3469002         0        4
+2 ag field 190    1  0.3456291         0        4
+3 ag field 190    2  0.3443037         0        4
+4 ag field 190    3  0.3434466         0        4
+5 ag field 190    4  0.3423160         0        4
+6 ag field 190    5  0.3412638         0        4</code></pre>
+<p>A <strong>inner</strong> join only keeps observations present in both tables.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-1" tabindex="-1"></a>soilInnerJoin <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb203-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb203-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
+<pre class="bg-info"><code>[1] 1512</code></pre>
+<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
+1 ag field 190    0  0.3469002         0        4
+2 ag field 190    1  0.3456291         0        4
+3 ag field 190    2  0.3443037         0        4
+4 ag field 190    3  0.3434466         0        4
+5 ag field 190    4  0.3423160         0        4
+6 ag field 190    5  0.3412638         0        4</code></pre>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-177-1.png" width="768" />
+</center>
+</div>
+</div>
+<div id="conclusions" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Conclusions<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#conclusions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can now look at the data side by side. Let’s combine everything we have learned and look at the soil moisture on the hour with the most precipitation. For example, you can compare soil moisture at the hour with the most precipitation.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-1" tabindex="-1"></a><span class="co"># soil moisture on the day and hour with the most precipitation:</span></span>
+<span id="cb207-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-2" tabindex="-1"></a>maxSoil <span class="ot">&lt;-</span> soilInnerJoin <span class="sc">%&gt;%</span> <span class="co"># use joind data</span></span>
+<span id="cb207-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-3" tabindex="-1"></a>  <span class="fu">filter</span>(precip.mm <span class="sc">==</span> <span class="fu">max</span>(precip.mm)) <span class="co"># look at hour and day with the highest precipitation</span></span>
+<span id="cb207-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-4" tabindex="-1"></a>maxSoil</span></code></pre></div>
+<pre class="bg-info"><code>    location doy hour soil.moist precip.mm n.precip
+1   ag field 199   11  0.4348943     6.221        4
+2  deciduous 199   11  0.3212613     6.221        4
+3 mowed lawn 199   11  0.3097192     6.221        4</code></pre>
+<p>You can also look at a time series of each data value:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-1" tabindex="-1"></a><span class="co">#calculate a decimal doy for plotting</span></span>
+<span id="cb209-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-2" tabindex="-1"></a>soilInnerJoin<span class="sc">$</span>TIME <span class="ot">=</span> soilInnerJoin<span class="sc">$</span>doy<span class="sc">+</span>(soilInnerJoin<span class="sc">$</span>hour<span class="sc">/</span><span class="dv">24</span>)</span>
+<span id="cb209-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-3" tabindex="-1"></a></span>
+<span id="cb209-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-4" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>soil.moist, <span class="at">color=</span>location))<span class="sc">+</span></span>
+<span id="cb209-5"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-5" tabindex="-1"></a>         <span class="fu">geom_point</span>()<span class="sc">+</span> </span>
+<span id="cb209-6"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-6" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb209-7"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb209-8"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb209-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Soil moisture (cm3, cm-3)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-179-1.png" width="960" /></p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb210-1" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>precip.mm))<span class="sc">+</span></span>
+<span id="cb210-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb210-2" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span> </span>
+<span id="cb210-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb210-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Rainfall (mm)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-180-1.png" width="960" /></p>
+<p>You can see that the fallow agricultural field and mowed lawn have the greatest increases in soil moisture after rainfall. The mowed lawn also has the greatest dry down in between rainfall events. Using these data wrangling skills, you will continue to explore patterns in soil moisture in activity 7.</p>
+</div>
+<div id="citations-4" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Citations<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Water Cycle Diagram. 2022. USGS Data VizLab. <a href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle-diagrams" class="uri">https://www.usgs.gov/special-topics/water-science-school/science/water-cycle-diagrams</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-analysis-of-variance-anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-advanced-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

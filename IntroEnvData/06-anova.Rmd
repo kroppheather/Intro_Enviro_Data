@@ -1,0 +1,229 @@
+---
+output: 
+  html_document:
+    theme: yeti
+    highlight: pygments
+---
+
+# Introduction to Analysis of Variance (ANOVA)
+
+_by Heather Kropp_
+_for ENVST 206: Introduction to Environmental Data_
+_Hamilton College_
+
+
+```{r warning=FALSE,echo=FALSE, message=FALSE}
+library(imager)
+library(ggplot2)
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(comment = NA, class.output="bg-info" )
+```
+
+
+## Learning objectives
+1. Work with data related to measures of biodiversity
+2. Learn to conduct an ANOVA in R
+3. Visualize and interpret ANOVA
+
+## New functions & syntax
+`aov`, `TukeyHSD`
+
+## Measuring biodiversity: the data
+
+A decline in **biodiversity** is a common environmental concern. Biodiversity is a concept related to a wide range in the number of species (plant, fungi, and animal) and abundance of populations in a species. Anthropogenic impacts on the environment via habitat loss, increased global temperatures, and pollution can all negatively impact the abundance of living organisms. Extinction of organisms as a result of these impacts is decreasing biodiversity. There are a number of ways to measure biodiversity. **Species richness** is the number of different types of species present in a particular location. It is typically measured as a numerical count of species and collected from observations that look for presence/absence of different species. **Diversity indices** account for both the number of different types of species and the evenness of the number of individuals in each type of species.
+
+The urban environment can affect survival and reproduction of some insect species. Urban built environments are often warmer environments with less water availability, particularly in drier regions of California. Buildings and pavement can remove habitat and warmer temperatures on these surfaces may render them unsuitable for insects. Residential areas of urban environments can provide more vegetated environments, but plant cover is often not native and mostly dominated by a single plant cover such as grass. Some insects may be well equipped to survive in many urban environments and there is a concern that urbanization can drive declines in the diversity of insects. This may negatively impact essential part of ecosystems driving pollination, the food web, and the decomposition of plant material. 
+
+To evaluate the impact of the urban environment on insects, Adams _et al._ (2019) trapped insects across the Los Angeles area and examined the number of species at each location. Below is a map of sampling locations used in the study across differing levels of urbanization.
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_6/Los_Angeles_Aerial_view_2013.jpg){width=70%}
+
+_Aerial view of Los Angeles area highlights the varying levels of urbanization from the highly devleoped areas of commercial complexes and downtown to mountain parks Source: Tuxyso, CC BY-SA 3.0, via Wikimedia Commons_
+
+</center>
+
+```{r eval = FALSE}
+#read in insect data
+datI <- read.csv("/cloud/project/activity06/insect_richness.csv")
+
+```
+
+```{r echo = FALSE}
+#read in insect data
+datI <- read.csv("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/data/tutorial_6/insect_richness.csv")
+head(datI)
+```
+
+As you learned in class, ANOVA is a widely used technique for testing for differences in three or more groups. ANOVA will be useful for examining the insect species richness across an urban gradient in Los Angles. The `Richness` and the `urbanName` column will be used for the test. `urbanName` gives the type of urban environment the species richness was measured in. You will want to specify `urbanName` as a factor to work best in the ANOVA. The `urbanType` column provides an identifying number originally used in by the authors. We are only focusing on a few urban areas in this analysis. Below is a table that provides a more detailed description of each area used in the study site. The numbers in the table coincide with the `urbanType` column.
+
+
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_6/urbanclass.png){width=40%}
+_Table describing urban type classification from Adams _et al._ (2019) 
+</center>
+
+It will be helpful to convert the names to factors in R.
+
+```{r echo = TRUE}
+datI$urbanName <- as.factor(datI$urbanName)
+```
+
+
+## ANOVA overview
+
+In ANOVA,  the F statistic is used to evaluate differences in data between groups. Here the F-ratio that we use for our statistical evaluation is calculated based on the variance of the data around the mean. First the **among group (SS~among~, sometimes referred to as between)** sum of squares calculates the squared difference between each group mean and the overall mean of all the data and sums up the differences for all groups. The **within group (SS~within~, also referred to as residual)** sum of squares calculates the squared difference between each data observation and its group mean and sums these differences for all observations. The **mean squares** is then calculated using the number of groups (_SS~among~_) and both the number of groups and observations (_SS~within~_). This table also shows the total SS for good measure, but we don't often look at it since _SS~total~_ = _SS~among~_ + _SS~within~_. The F-ratio is calculated by dividing the mean square for among groups by within groups. The p-value provides a probability for observing the calculated F-ratio and all values greater under the null distribution. You will want to use the standard confidence level of 0.05 to make your assessment.
+
+<center>
+
+Source | Degrees of freedom | Sum of Squares | Mean square | F-ratio | P-value 
+_______|____________________|________________|_____________|_________|________
+Among groups | _a-1_ | $\sum_{i=1}^{a} \sum_{j=1}^{n}(\overline{Y_i}-\overline{Y})^{2}$ | $\frac{SS_{among}}{a-1}$ | $\frac{MS_{among}}{MS_{within}}$ | p(F-distribution with (_a-1_) and _a(n-1)_ degrees of freedom) 
+Within groups | _a(n-1)_ | $\sum_{i=1}^{a} \sum_{j=1}^{n}({Y_{ij}}-\overline{Y_{i}})^{2}$ |  | | 
+
+Here _a_ represents the total number of groups and _n_ represents the number of observations within groups.
+
+              
+## ANOVA in R
+
+### _Checking assumptions_
+Next you will run the ANOVA test on the insect data to examine whether the different urban environments impact species richness. Before checking the assumptions, it's a good idea to visualize the data. I'll show the data using the plots from class that help visualize the different values used in ANOVA. The grey points show individual observations overlain on the boxplot for each group. The red points show the group mean and the blue line shows the mean for all the data.
+
+```{r echo =FALSE}
+
+
+meanI <- mean(datI$Richness)
+
+meanIG <- tapply(datI$Richness,datI$urbanName,"mean")
+
+
+  
+ggplot(datI, aes(x=urbanName,y=Richness)) + 
+  geom_boxplot(fill="grey75")+
+  theme_classic()+
+  geom_point(data=data.frame(x=seq(1,4), y=meanIG[1:4]),
+             aes(x=x,y=y), col="tomato3",size=3)+
+  geom_line(data=data.frame(x=seq(0,5), y=rep(meanI,6)),
+            aes(x=x,y=y), col="royalblue2")+
+  geom_jitter(col=rgb(0.1,0.1,0.1,0.5), size=0.75)
+
+```
+</center>
+
+The first assumption is **normality** for each group. You must check normality for each individual group. Don't forget that `unique` can be helpful for getting the names for each group:
+
+```{r echo=TRUE}
+unique(datI$urbanName)
+
+```
+
+The sample size is small enough to use the Shapiro Wilk's test.
+
+```{r echo=FALSE}
+shapiro.test(datI$Richness[datI$urbanName == "Suburban"])
+shapiro.test(datI$Richness[datI$urbanName == "Developed"])
+shapiro.test(datI$Richness[datI$urbanName == "Dense"])
+shapiro.test(datI$Richness[datI$urbanName == "Natural"])
+```
+
+The null hypothesis is that the data are normally distributed. Here, each group is higher than our confidencle level of 0.05.  
+
+The second assumption of **equal variance** can be checked with the Bartlett test.
+
+```{r echo=TRUE}
+bartlett.test(datI$Richness~datI$urbanName)
+```
+
+Both equal variance and normality assumptions are appropriate for the data. The other assumptions are that observations are **independent** of each other and **correctly classified** in each group. Since this data comes from a peer reviewed study that uses the same type of statistics (frequentist), we can assume that the research design and data are set up to meet these assumptions. 
+
+### _Running the ANOVA_
+
+Now that you've had a chance to check the assumptions and visualize the data, you are ready to run the ANOVA in R. There are two steps to this test in R. You first specify a linear model with the `lm` function. The next step is to run the ANOVA calcluations using `aov` function. Both of these functions will simply run the calculations. To view the ANOVA table of results, you will print the table using the `summary` function. In the `lm` function we will specify a formula  `Richness ~ Urban`. 
+
+```{r echo = TRUE}
+#specify model for species richness and urban type
+in.mod <- lm(datI$Richness ~ datI$urbanName)
+#run the ANOVA
+in.aov <- aov(in.mod)
+#print out ANOVA table
+summary(in.aov)
+
+```
+Here the table will print out such that the upper row labeled with our group vector name (`datI$urbanName`) is our _among group_ variability (sum of squares for group means compared to overall mean) and the `residuals` row is the _within group_ variability. You can see the F value in the upper right part of the table and the associated p-value. 
+
+### _Post hoc comparisons _
+
+The ANOVA results alone do not give us a complete picture of the differences between urban landcover types. Some groups actually look quite similar. You must check to see how the means compare between groups to make a full statistical conclusion. You would want to highlight that only some groups may differ from each other when drawing conclusions about the urban environment impacts on species richness. This pairwise comparison between groups is called a post hoc test.  Tukey's HSD (Honestly Significant Difference) test can be used to conduct this comparison.There is a simple built in function in R. You just have to give the name of the variable that has the ANOVA results.
+
+```{r echo=TRUE}
+#run Tukey HSD
+tukeyT <- TukeyHSD(in.aov)
+#view results
+tukeyT
+```
+
+Here you will notice that there are two group names in each row indicating which groups are being compared. A significant difference between groups means that the confidence interval in the difference between the means will not overlap with zero and will have a p-value below our confidence level threshold of 0.05. Note that this test prints a `p-adj` value. This means it has made some adjustments to account for the fact that were a comparing many means and should account for this in our calculations.
+
+You can also use the `plot` function and input the entire test variable to generate a plot that shows the confidence levels for the mean comparisons. This can help you get a better visualization for how close these intervals are to zero since there are a lot of numbers printed out in the table.  
+
+```{r echo=TRUE, fig.height=9}
+#make a plot
+#make axes labels smaller than usual to fit on plot using cex.axis 
+plot(tukeyT, cex.axis=0.75)
+
+```
+
+
+### _Interpreting the results _
+
+When you interpret ANOVA results, you will want to summarize the test results, the means and difference between means, and make a plot that visualizes the data in each group.
+
+Typically a bar or box plot is used to show the means or quartiles of each group with letters above the data to indicate when groups are similar. For example, an ANOVA with four groups that all significantly differed from each other would show a different letter for each group like a,b,c,d. 
+
+The Tukey HSD results indicate that the Dense, Developed, and Suburban are all similar. Natural differs from Dense and Developed, but not Suburban. Multiple letters can be used for a group. Dense, Developed, and Suburban all get the letter `a`. Natural will get the letter `b`. Since Suburban is similar to Natural, it will also get a `b`.
+
+The best way to add labels to a base plot in R is the the `text` function. The arguments are `text(x coordinates, y coordinates, text labels to add)`. In the code below, the coordinates and labels will be set up as vectors.
+
+```{r echo = TRUE}
+# box plot
+plot(datI$Richness ~ datI$urbanName, 
+     xlab = "Urban surface",
+     ylab= "Insect species Richness",
+     ylim=c(0,60))
+# x coordinates for labels
+xname <- as.factor(c("Dense","Developed","Natural","Suburban"))
+# y coordinates for labels
+ylabel <- c(50,55,50,55)
+# labels to add
+textName <- c("a","a","b","a,b")
+# add letters to existing plot
+text(xname, #x coordinate
+     ylabel, #y coordinate
+     textName) # labels
+```
+
+<center>
+```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
+par(bg = rgb(229/255,214/255,232/255), mai=c(0,0.2,0,7))
+plot(load.image("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_7/Leaf5.png"),   axes=FALSE)
+a <- strwrap("Why is a post-hoc test needed for an ANOVA?",width=70)
+text(1300,75, "Check your understanding:", font=2, xpd=T, cex=1.25,adj = c(0,0))
+for(i in 1:length(a)){
+  text(1300,75+(i*400),paste(a[i]), xpd=T, cex=1.25,adj = c(0,0))
+}
+```
+</center>
+
+## Citations
+
+**Insect Species Richness**
+Adams, B., E. Li, C. Bahlai, E. Meineke, T. McGlynn, and B. Brown. (2020). Local- and landscape-scale variables shape insect diversity in an urban biodiversity hot spot. _Ecological Applications_. 30: e02089.
+
+_Data citation_
+Adams, Benjamin et al. (2020), Local and landscape scale variables shape insect diversity in an urban biodiversity hotspot., v2, Dryad, Dataset, https://doi.org/10.5061/dryad.7d7wm37rd
+
+
+
+

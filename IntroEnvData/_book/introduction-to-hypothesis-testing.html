@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Introduction to hypothesis testing | Introduction to Environmental Data and R</title>
+  <meta name="description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Introduction to hypothesis testing | Introduction to Environmental Data and R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  <meta name="github-repo" content="kroppheather/Intro_Enviro_data" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Introduction to hypothesis testing | Introduction to Environmental Data and R" />
+  
+  <meta name="twitter:description" content="ENVST 206: Intro to Environmental Data, Hamilton College." />
+  
+
+<meta name="author" content="Heather Kropp" />
+
+
+<meta name="date" content="2023-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="visualizing-data.html"/>
+<link rel="next" href="introduction-to-linear-regression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">An Introduction to Environmental Data</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#course-learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Course Learning objectives</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html"><i class="fa fa-check"></i><b>2</b> Introduction to R Statistical Software</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#new-functions-syntax"><i class="fa fa-check"></i><b>2.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#first-some-terms"><i class="fa fa-check"></i><b>2.3</b> First some terms:</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#getting-to-know-rstudio-cloud"><i class="fa fa-check"></i><b>2.4</b> Getting to know Rstudio Cloud</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#introduction-to-r-rstudio"><i class="fa fa-check"></i><b>2.5</b> Introduction to R &amp; RStudio</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#r-basics"><i class="fa fa-check"></i><b>2.6</b> R basics</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#a-fancy-calculator"><i class="fa fa-check"></i><b>2.6.1</b> <em>A fancy calculator</em></a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#variables"><i class="fa fa-check"></i><b>2.6.2</b> <em>Variables</em></a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#vectors"><i class="fa fa-check"></i><b>2.6.3</b> <em>Vectors</em></a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-r-statistical-software.html"><a href="introduction-to-r-statistical-software.html#data-frames"><i class="fa fa-check"></i><b>2.6.4</b> <em>Data frames</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><i class="fa fa-check"></i><b>3</b> Is this normal? Evaluating historical weather data to understand extremes, changes, and climate.</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#new-functions-syntax-1"><i class="fa fa-check"></i><b>3.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="3.3" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-1-the-problem.-how-weird-was-yesterdays-heatwave-using-long-term-weather-data-to-understand-normals-and-climate."><i class="fa fa-check"></i><b>3.3</b> <strong>Section 1:</strong> The problem. How weird was yesterday’s heatwave? Using long-term weather data to understand normals and climate.</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-summary-summary-statistics-to-summarize-weather"><i class="fa fa-check"></i><b>3.3.1</b> <em>Using summary summary statistics to summarize weather</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-2-the-data."><i class="fa fa-check"></i><b>3.4</b> <strong>Section 2:</strong> The Data.</a></li>
+<li class="chapter" data-level="3.5" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-packages-in-r"><i class="fa fa-check"></i><b>3.5</b> Using packages in R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#reading-in-data"><i class="fa fa-check"></i><b>3.5.1</b> <em>Reading in data</em></a></li>
+<li class="chapter" data-level="3.5.2" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#subsetting"><i class="fa fa-check"></i><b>3.5.2</b> <em>Subsetting</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3a-the-approach.-summary-statistics-and-visualizing-data-distributions."><i class="fa fa-check"></i><b>3.6</b> <strong>Section 3a:</strong> The approach. Summary statistics and visualizing data distributions.</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#histograms"><i class="fa fa-check"></i><b>3.6.1</b> <em>Histograms</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3b-probability-distributions"><i class="fa fa-check"></i><b>3.7</b> <strong>Section 3b:</strong> Probability distributions</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
+<li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualizing-data.html"><a href="visualizing-data.html"><i class="fa fa-check"></i><b>4</b> Visualizing data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visualizing-data.html"><a href="visualizing-data.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="visualizing-data.html"><a href="visualizing-data.html#new-functions-syntax-2"><i class="fa fa-check"></i><b>4.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="4.3" data-path="visualizing-data.html"><a href="visualizing-data.html#fundamentals-of-plotting-data"><i class="fa fa-check"></i><b>4.3</b> Fundamentals of plotting data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualizing-data.html"><a href="visualizing-data.html#representation-of-data"><i class="fa fa-check"></i><b>4.3.1</b> <em>1. Representation of data</em></a></li>
+<li class="chapter" data-level="4.3.2" data-path="visualizing-data.html"><a href="visualizing-data.html#layout"><i class="fa fa-check"></i><b>4.3.2</b> <em>2. Layout</em></a></li>
+<li class="chapter" data-level="4.3.3" data-path="visualizing-data.html"><a href="visualizing-data.html#encoding"><i class="fa fa-check"></i><b>4.3.3</b> <em>3. Encoding</em></a></li>
+<li class="chapter" data-level="4.3.4" data-path="visualizing-data.html"><a href="visualizing-data.html#simplicity"><i class="fa fa-check"></i><b>4.3.4</b> <em>4. Simplicity</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-data-in-base-r"><i class="fa fa-check"></i><b>4.4</b> Plotting data in base R</a></li>
+<li class="chapter" data-level="4.5" data-path="visualizing-data.html"><a href="visualizing-data.html#using-packages-in-r-1"><i class="fa fa-check"></i><b>4.5</b> Using packages in R</a></li>
+<li class="chapter" data-level="4.6" data-path="visualizing-data.html"><a href="visualizing-data.html#plotting-in-ggplot2"><i class="fa fa-check"></i><b>4.6</b> Plotting in ggplot2</a></li>
+<li class="chapter" data-level="4.7" data-path="visualizing-data.html"><a href="visualizing-data.html#exploring-different-visualizations-in-ggplot2"><i class="fa fa-check"></i><b>4.7</b> Exploring different visualizations in ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Introduction to hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#new-functions-syntax-3"><i class="fa fa-check"></i><b>5.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-two-sample-t-tests"><i class="fa fa-check"></i><b>5.3</b> Introduction to two sample t-tests</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data"><i class="fa fa-check"></i><b>5.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#study-goals-and-statistical-hypotheses"><i class="fa fa-check"></i><b>5.3.2</b> <em>Study goals and statistical hypotheses</em></a></li>
+<li class="chapter" data-level="5.3.3" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#checking-assumptions-of-test"><i class="fa fa-check"></i><b>5.3.3</b> <em>Checking assumptions of test</em></a></li>
+<li class="chapter" data-level="5.3.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#two-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.3.4</b> <em>Two sample t-test in R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#one-sample-t-test-in-r"><i class="fa fa-check"></i><b>5.4</b> One sample t-test in R</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#introduction-to-chi-squared-test"><i class="fa fa-check"></i><b>5.5</b> Introduction to chi-squared test</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#the-data-1"><i class="fa fa-check"></i><b>5.5.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#chi-squared-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>Chi squared test</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="introduction-to-hypothesis-testing.html"><a href="introduction-to-hypothesis-testing.html#citations-1"><i class="fa fa-check"></i><b>5.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html"><i class="fa fa-check"></i><b>6</b> Introduction to linear regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#learning-objectives-4"><i class="fa fa-check"></i><b>6.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#new-functions-syntax-4"><i class="fa fa-check"></i><b>6.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="6.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#simple-linear-regression-are-beavers-flooding-the-arctic"><i class="fa fa-check"></i><b>6.3</b> Simple linear regression: Are beavers flooding the Arctic?</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-2"><i class="fa fa-check"></i><b>6.3.1</b> <em>The data</em></a></li>
+<li class="chapter" data-level="6.3.2" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#set-up-the-regression"><i class="fa fa-check"></i><b>6.3.2</b> <em>Set up the regression</em></a></li>
+<li class="chapter" data-level="6.3.3" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>6.3.3</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="6.3.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpreting-results"><i class="fa fa-check"></i><b>6.3.4</b> <em>Interpreting results</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#multiple-linear-regression-what-makes-an-early-spring"><i class="fa fa-check"></i><b>6.4</b> Multiple linear regression: What makes an early spring?</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#the-data-3"><i class="fa fa-check"></i><b>6.4.1</b> <em>The data</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#panels-of-bivariate-plots"><i class="fa fa-check"></i><b>6.5</b> <em>Panels of bivariate plots</em></a></li>
+<li class="chapter" data-level="6.6" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#check-for-multi-collinearity"><i class="fa fa-check"></i><b>6.6</b> <em>Check for multi-collinearity</em></a></li>
+<li class="chapter" data-level="6.7" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#run-the-regression"><i class="fa fa-check"></i><b>6.7</b> <em>Run the regression</em></a></li>
+<li class="chapter" data-level="6.8" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#interpret-the-regression"><i class="fa fa-check"></i><b>6.8</b> <em>Interpret the regression</em></a></li>
+<li class="chapter" data-level="6.9" data-path="introduction-to-linear-regression.html"><a href="introduction-to-linear-regression.html#citations-2"><i class="fa fa-check"></i><b>6.9</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html"><i class="fa fa-check"></i><b>7</b> Introduction to Analysis of Variance (ANOVA)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#learning-objectives-5"><i class="fa fa-check"></i><b>7.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="7.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#new-functions-syntax-5"><i class="fa fa-check"></i><b>7.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="7.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#measuring-biodiversity-the-data"><i class="fa fa-check"></i><b>7.3</b> Measuring biodiversity: the data</a></li>
+<li class="chapter" data-level="7.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-overview"><i class="fa fa-check"></i><b>7.4</b> ANOVA overview</a></li>
+<li class="chapter" data-level="7.5" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#anova-in-r"><i class="fa fa-check"></i><b>7.5</b> ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#checking-assumptions-1"><i class="fa fa-check"></i><b>7.5.1</b> <em>Checking assumptions</em></a></li>
+<li class="chapter" data-level="7.5.2" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#running-the-anova"><i class="fa fa-check"></i><b>7.5.2</b> <em>Running the ANOVA</em></a></li>
+<li class="chapter" data-level="7.5.3" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#post-hoc-comparisons"><i class="fa fa-check"></i><b>7.5.3</b> <em>Post hoc comparisons </em></a></li>
+<li class="chapter" data-level="7.5.4" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#interpreting-the-results"><i class="fa fa-check"></i><b>7.5.4</b> <em>Interpreting the results </em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="introduction-to-analysis-of-variance-anova.html"><a href="introduction-to-analysis-of-variance-anova.html#citations-3"><i class="fa fa-check"></i><b>7.6</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><i class="fa fa-check"></i><b>8</b> Advanced data wrangling. Linking soil moisture with landcover and rainfall.</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#learning-objectives-6"><i class="fa fa-check"></i><b>8.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="8.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#new-functions-syntax-6"><i class="fa fa-check"></i><b>8.2</b> New functions &amp; syntax</a></li>
+<li class="chapter" data-level="8.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture"><i class="fa fa-check"></i><b>8.3</b> Soil moisture</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#soil-moisture-in-different-types-of-land-cover"><i class="fa fa-check"></i><b>8.3.1</b> Soil moisture in different types of land cover</a></li>
+<li class="chapter" data-level="8.3.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-data-soil-moisture"><i class="fa fa-check"></i><b>8.3.2</b> The data: soil moisture</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#working-with-dates"><i class="fa fa-check"></i><b>8.4</b> Working with dates</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-lubridate-package"><i class="fa fa-check"></i><b>8.4.1</b> The lubridate package</a></li>
+<li class="chapter" data-level="8.4.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#parsing-datetime"><i class="fa fa-check"></i><b>8.4.2</b> Parsing date/time</a></li>
+<li class="chapter" data-level="8.4.3" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#extracting-information-from-dates"><i class="fa fa-check"></i><b>8.4.3</b> Extracting information from dates</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>8.5</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#filtering-data"><i class="fa fa-check"></i><b>8.5.1</b> Filtering data</a></li>
+<li class="chapter" data-level="8.5.2" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#joining-data-tables"><i class="fa fa-check"></i><b>8.5.2</b> Joining data tables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#conclusions"><i class="fa fa-check"></i><b>8.6</b> Conclusions</a></li>
+<li class="chapter" data-level="8.7" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4"><i class="fa fa-check"></i><b>8.7</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Environmental Data and R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-hypothesis-testing" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Introduction to hypothesis testing<a href="introduction-to-hypothesis-testing.html#introduction-to-hypothesis-testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>by Heather Kropp</em>
+<em>for ENVST 206: Introduction to Environmental Data</em>
+<em>Hamilton College</em></p>
+<div id="learning-objectives-3" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Learning objectives<a href="introduction-to-hypothesis-testing.html#learning-objectives-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Learn about data describing biodiversity and species impacts on ecosystems</li>
+<li>Learn how to conduct statistical hypothesis testing for t-tests and chi squared tests</li>
+<li>Interpret statistical output in R</li>
+</ol>
+</div>
+<div id="new-functions-syntax-3" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> New functions &amp; syntax<a href="introduction-to-hypothesis-testing.html#new-functions-syntax-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>stat.summary</code>, <code>shapiro.test</code>, <code>bartlett.test</code>,<code>tapply</code>,<code>t.test</code>, <code>chisq.test</code>, <code>mosaicplot</code></p>
+</div>
+<div id="introduction-to-two-sample-t-tests" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Introduction to two sample t-tests<a href="introduction-to-hypothesis-testing.html#introduction-to-two-sample-t-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-data" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> <em>The data</em><a href="introduction-to-hypothesis-testing.html#the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The consumption of vegetation by herbivores can impact the carbon cycling through by reducing plant biomass. These impacts can even change the energy, water, and nutrient cycling in an area.</p>
+<p>Brown lemmings are a type of rodent that lives in the Arctic in Alaska and eastern Siberia.</p>
+<center>
+<img src="photos/tutorial_4/Lemming.jpg" style="width:25.0%" />
+</center>
+<center>
+<em>An example of a lemming. CC3:Frode Inge Helland</em>
+</center>
+<p>Lemming populations fluctuate over time. When lemming populations reach high numbers in an ecosystem, they can consume up to 90% of the plant biomass in an area. Herbivory can also change the types of plant species, allocation of root and leaf biomass, and impact nutrient cycling. However, lemming populations in the Arctic have been decline over the previous decades and some regions have seen lemmings disappear. A study done by Lara <em>et al.</em> in 2017 focused on better understanding the impact of lemming herbivory on the soil conditions and the carbon cycle in Arctic ecosystems. This research can help indicate the potential impacts that declines in lemming herbivory might have on changing Arctic ecosystems.</p>
+<p>Lara <em>et al.</em> looked at the impact of lemmings by using a long term fenced exclosure that kept lemmings out (pictured below) for more than 50 years. The authors found that there were sufficient lemming population outbreaks in frequent intervals to properly capture long term lemming impacts on the ecosystem.</p>
+<center>
+<img src="photos/tutorial_4/Grazing_exclosure_-_geograph.org.uk_-_4235774.jpg" style="width:75.0%" />
+</center>
+<p><em>Example of a grazing exclosure by Hugh Venables, CC BY-SA 2.0, via Wikimedia</em> Commons</p>
+<p>They measured many components of the carbon cycle including how much carbon dioxide was released from the soil versus taken in by plants. This is called net ecosystem exchange (<code>NEE</code> in g CO<sub>2</sub> m<sup>–2</sup> day<sup>–1</sup>) and it was measured in plots with exclosures (exclusion, lemmings cannot enter the plot, no herbivory) and without exclosures (control, lemmings can freely graze in the plot). Methane is another greenhouse gas that can be released by bacteria in Arctic soils typically when soils are flooded or hold a high volume of water. The vegetation at the soil surface can influence the release of methane from soils. Some plants allow methane to readily escape the soil. Plant water use and leaf also influences the amount of water in the soil. Methane emissions from Arctic soils are a major research focus of Arctic climate change research since changes in methane production in Arctic soils may amplify climate change. Other measurements also included factors that influence the carbon cycle such as soil temperature (<code>SoilTemp_1</code>, ° C). Higher soil temperature can lead to greater microbial activity leading to greater greenhouse gas emissions. The tutorial will focus on analyzing the impacts of lemming grazing of vegetation on methane fluxes. Here’s a look at the data:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-to-hypothesis-testing.html#cb105-1" tabindex="-1"></a><span class="co">#file path on Rstudio cloud</span></span>
+<span id="cb105-2"><a href="introduction-to-hypothesis-testing.html#cb105-2" tabindex="-1"></a>lemmings <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity04/lemming_JEco_HerbEx.csv&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>  PLOT herbivory_trt  CH4_Flux          NEE SoilTemp_1
+1  21C           Ctl -5.708030 -0.072987056       10.6
+2  22C           Ctl  3.301541  0.475255463       15.6
+3  23C           Ctl -1.004405  0.485916744       10.0
+4  24C           Ctl 16.490522 -0.028536595       12.2
+5  15C           Ctl 17.189540  2.391257958        6.1
+6  11C           Ctl 15.736118  0.008257762        7.8</code></pre>
+<p>Here, there are three variables in this data, there are CH<sub>4</sub> fluxes (<code>CH4_Flux</code> mgC m<sup>–2</sup> day<sup>–1</sup>) and there is an herbivory treatment column (<code>herbivory_trt</code>) where a value of <em>Ctl</em> indicates that it was a control plot with no exclosure that was was open to lemming grazing. The <em>Ex</em> rows will indicate that an exclosure was applied preventing lemmings from accessing the site. The net ecosystem exchange column represents the amount of CO<sub>2</sub> produced in the plot (<code>NEE</code>, mgC m<sup>–2</sup> day<sup>–1</sup>). A negative value means that the plants are taking in more CO<sub>2</sub> through photosynthesis than what gets released through respiration by plants and decomposition. It will be helpful to treat the herbivory column as a factor:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introduction-to-hypothesis-testing.html#cb107-1" tabindex="-1"></a><span class="co">#convert treatment data to factor</span></span>
+<span id="cb107-2"><a href="introduction-to-hypothesis-testing.html#cb107-2" tabindex="-1"></a>lemmings<span class="sc">$</span>herbivory_trt <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
+<p><code>ggplot2</code> will be used plotting in this tutorial. To follow along, install the package and load it to the environment:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="introduction-to-hypothesis-testing.html#cb108-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>A <strong>boxplot</strong> will help visualize the differences in methane fluxes between treatments. Here positive values indicate that methane is being emitted from the plot and a negative value indicates that there is methane uptake occurring over the plot surface. Let’s also use the <code>stat_summary</code> function in ggplot2 to add the mean to the plot too. This will really help with getting a sense for the range of data:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introduction-to-hypothesis-testing.html#cb109-1" tabindex="-1"></a><span class="fu">ggplot</span>(lemmings, <span class="fu">aes</span>(<span class="at">x=</span>herbivory_trt, <span class="at">y=</span>CH4_Flux))<span class="sc">+</span> <span class="co"># data </span></span>
+<span id="cb109-2"><a href="introduction-to-hypothesis-testing.html#cb109-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span> <span class="co"># box plot geometry</span></span>
+<span id="cb109-3"><a href="introduction-to-hypothesis-testing.html#cb109-3" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="co"># add points</span></span>
+<span id="cb109-4"><a href="introduction-to-hypothesis-testing.html#cb109-4" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="co"># for the mean</span></span>
+<span id="cb109-5"><a href="introduction-to-hypothesis-testing.html#cb109-5" tabindex="-1"></a>               <span class="at">col=</span><span class="st">&quot;tomato3&quot;</span>, <span class="co"># color (will be red points)</span></span>
+<span id="cb109-6"><a href="introduction-to-hypothesis-testing.html#cb109-6" tabindex="-1"></a>               <span class="at">size=</span><span class="dv">4</span>)<span class="sc">+</span> <span class="co"># size of point</span></span>
+<span id="cb109-7"><a href="introduction-to-hypothesis-testing.html#cb109-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Herbivory treatment&quot;</span>,</span>
+<span id="cb109-8"><a href="introduction-to-hypothesis-testing.html#cb109-8" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Methane flux (mgC m –2 day–1)&quot;</span>)<span class="sc">+</span> <span class="co"># change the axis labels</span></span>
+<span id="cb109-9"><a href="introduction-to-hypothesis-testing.html#cb109-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># plot with no gridlines</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+<p>The boxplot shows breaks the data up into quartiles (the values where we observe 0, 25, 50, 75,and 100% of the data). Here the thick black lines show the median of the data. This is the value where 50% of the data observations are above the value and below the value. The grey shaded box shows the range between 25-75%. The whiskers or lines show the rest of the range of data. Note that this function automatically separates potential outliers and shows them as open points. However, this is based on a calculation and these observations may be legitimate observations to include in our analysis. In this case, the observation is well within an observable and reasonable range, it just does not occur frequently in the exclusion plots. We have no reason to believe this data should be thrown out and will keep it in our analysis.</p>
+<p>Looking at the means for each group can also help contextualize the typical methane fluxes in each plot. The <code>tapply</code> function is similar to aggregate, and allows you to apply a function to an index. It returns a vector of output with each element labeled with the index value.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="introduction-to-hypothesis-testing.html#cb110-1" tabindex="-1"></a>meansCH4 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(lemmings<span class="sc">$</span>CH4_Flux,<span class="co">#data </span></span>
+<span id="cb110-2"><a href="introduction-to-hypothesis-testing.html#cb110-2" tabindex="-1"></a>                   lemmings<span class="sc">$</span>herbivory_trt,<span class="co">#index for each calculation</span></span>
+<span id="cb110-3"><a href="introduction-to-hypothesis-testing.html#cb110-3" tabindex="-1"></a>                   <span class="st">&quot;mean&quot;</span>) <span class="co">#function to use</span></span>
+<span id="cb110-4"><a href="introduction-to-hypothesis-testing.html#cb110-4" tabindex="-1"></a>meansCH4</span></code></pre></div>
+<pre class="bg-info"><code>      Ctl        Ex 
+18.814645  5.714765 </code></pre>
+<p>At first glance, the means seem to be different. The exclusion plot mean of 5.7 g C m<sup>–2</sup> day<sup>–1</sup> seems lower than the control plot mean of 18.8 g C m<sup>–2</sup> day<sup>–1</sup>, but we need to account for the uncertainty around the mean. The t-test can help support our conclusions.</p>
+</div>
+<div id="study-goals-and-statistical-hypotheses" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> <em>Study goals and statistical hypotheses</em><a href="introduction-to-hypothesis-testing.html#study-goals-and-statistical-hypotheses" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With the help of statistical analysis, we can examine whether there is a difference in methane fluxes between the control plot (allows grazing) and the exclusion plots (prevents grazing) will help answer this question. The study can be guided by the over all question: <strong>Does lemming grazing impact methane fluxes?</strong> This question is open ended and could be answered with grazing increasing, decreasing, or having no influence on methane fluxes.</p>
+<p>The boxplot and means in the above section suggested there may be some differences in the data, but there is also a fair amount of overlap in the spread of the data. Statistical hypothesis testing can support making more robust conclusions about differences between treatments than simply looking at a graph. A <strong>two-sample t-test</strong> can be used to make this comparison. The test is structured to examine whether two population means differ. We can use this test to examine whether the control has a different mean methane flux than the exclosure treatment.</p>
+<p>In statistical hypothesis testing, there are often two hypothesis that the test examines called the <strong>null hypothesis</strong> and the <strong>alternative hypothesis</strong>. The statistical test examines whether the null hypothesis should be accepted or rejected (subsequently accepting the alternative hypothesis). Statistical hypothesis are separate from the scientific hypothesis and are structured around the specific assumptions and framework of the test. Here our hypothesis for the t-test would be</p>
+<p><strong>H<sub>0</sub>:</strong> The means do not differ between the two groups.</p>
+<p><strong>H<sub>A</sub>:</strong> There is a difference between the means of the two groups.</p>
+</div>
+<div id="checking-assumptions-of-test" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> <em>Checking assumptions of test</em><a href="introduction-to-hypothesis-testing.html#checking-assumptions-of-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The two sample t-test makes the following assumptions:</p>
+<p><em>1. Independently and randomly sampled continuous data</em></p>
+<p><em>2. Each group is normally distributed</em></p>
+<p><em>3. Variances of the two group are equal</em></p>
+<p><strong>Variance</strong> is another measure of the spread of data. It is part of the standard deviation calculation: the sum of the squared difference between each observation from the mean.</p>
+<div id="assumption-of-independence-and-random-sampling" class="section level4 hasAnchor" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> <em>Assumption of independence and random sampling</em><a href="introduction-to-hypothesis-testing.html#assumption-of-independence-and-random-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Random, independent sampling is achieved through proper experimental design. Given the published experimental design of the study by Lara <em>et al.</em>, and the assumptions the authors state in their study, we can conclude this assumption is sufficiently met.</p>
+</div>
+<div id="assumption-of-normality" class="section level4 hasAnchor" number="5.3.3.2">
+<h4><span class="header-section-number">5.3.3.2</span> <em>Assumption of Normality</em><a href="introduction-to-hypothesis-testing.html#assumption-of-normality" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>It can be difficult to assess normality visually especially for small sample size. Some data may be assumed to be normal based on underlying knowledge about the data. If you are unsure, the Shapiro-Wilk test can be used to test normality more quantitatively (for sample size &lt; 2,000). In R, the function for the Shapiro Wilk test is <em>shapiro.test</em> and the only argument is the vector of data that you want to test. Since each treatment group must be tested directly, we will subset the treatments directly in the function using the <code>[]</code> notation with the relational statement:</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="introduction-to-hypothesis-testing.html#cb112-1" tabindex="-1"></a><span class="co">#use the shapiro wilks test to look for normality in each treatment</span></span>
+<span id="cb112-2"><a href="introduction-to-hypothesis-testing.html#cb112-2" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing plots</span></span>
+<span id="cb112-3"><a href="introduction-to-hypothesis-testing.html#cb112-3" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
+<pre class="bg-info"><code>
+    Shapiro-Wilk normality test
+
+data:  lemmings$CH4_Flux[lemmings$herbivory_trt == &quot;Ctl&quot;]
+W = 0.87763, p-value = 0.08173</code></pre>
+<p>The shapiro-wilk test is set up as a statistical test. This means that you are testing the null hypothesis:</p>
+<p><strong>H<sub>0</sub>:</strong> the data are normally distributed.</p>
+<p><strong>H<sub>A</sub>:</strong> the data are not normally distributed.</p>
+<p>You’ll use the conventional confidence level (<span class="math inline">\(\alpha\)</span> = 0.05) for our statistics in this class. In this test, we’ll rely on the p-value associated with the test statistic to assess how this outcome compares to our confidence level. A p-value of less than 0.05 would indicate that we should reject our null hypothesis since it would be unlikely to observe this test statistic value if the data were normally distributed. If the p-value is greater than 0.05, then we can assume that our data is normally distributed. You can see that the control plots do not deviate from a normal distribution. Next let’s test the exclusion plots:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="introduction-to-hypothesis-testing.html#cb114-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
+<span id="cb114-2"><a href="introduction-to-hypothesis-testing.html#cb114-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ex&quot;</span>])</span></code></pre></div>
+<pre class="bg-info"><code>
+    Shapiro-Wilk normality test
+
+data:  lemmings$CH4_Flux[lemmings$herbivory_trt == &quot;Ex&quot;]
+W = 0.93325, p-value = 0.4158</code></pre>
+</div>
+<div id="assumption-of-equal-variance" class="section level4 hasAnchor" number="5.3.3.3">
+<h4><span class="header-section-number">5.3.3.3</span> <em>Assumption of equal variance</em><a href="introduction-to-hypothesis-testing.html#assumption-of-equal-variance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>You can also test for differences in the variance between groups. The t-test can still be run if the variances are not equal, but will need a slightly different equation. In R, you use the <strong>bartlett.test</strong> function to run the test statistic. This test statistic has the following hypotheses:</p>
+<p><strong>H<sub>0</sub>:</strong> Groups have similar variances</p>
+<p><strong>H<sub>A</sub>:</strong> Groups do not have similar variances</p>
+<p>Here accepting the null would confirm the assumption that the variances do not differ between groups. A p-value of less than 0.05 would indicate we would be unlikely to observe the difference in variances under the null hypothesis.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="introduction-to-hypothesis-testing.html#cb116-1" tabindex="-1"></a><span class="co">#use bartlett test since testing for equal variance</span></span>
+<span id="cb116-2"><a href="introduction-to-hypothesis-testing.html#cb116-2" tabindex="-1"></a><span class="fu">bartlett.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
+<pre class="bg-info"><code>
+    Bartlett test of homogeneity of variances
+
+data:  lemmings$CH4_Flux by lemmings$herbivory_trt
+Bartlett&#39;s K-squared = 0.21236, df = 1, p-value = 0.6449</code></pre>
+<p>Here, the test statistic is well above 0.05 so you can assume the variances are equal and accept the null hypothesis.</p>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="768" />
+</center>
+</div>
+</div>
+<div id="two-sample-t-test-in-r" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> <em>Two sample t-test in R</em><a href="introduction-to-hypothesis-testing.html#two-sample-t-test-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can now conduct a two sample t-test now that you know the data meets all of the assumptions needed to reliably interpret the test. Now that all assumptions have been tested, we can revist the original statistical hypotheses:</p>
+<p><strong>H<sub>0</sub>:</strong> The mean methane flux does not differ between the control and exclosure plots.</p>
+<p><strong>H<sub>A</sub>:</strong> The mean methane flux does differ between the control and exclosure plots.</p>
+<p>The t-test statistic is calculated based on the difference between means. Here a two sample t-test (with equal variance) is calculated based on the difference between means, the sample size, and the pooled standard deviation. No difference between means would be interpreted as the mean for group 1 is equal to the mean for group 2.</p>
+<center>
+<img src="/Users/hkropp/Documents/GitHub/Intro_EnvData/bookdown/IntroEnvData/photos/tutorial_4/t%20test.png" style="width:50.0%" />
+</center>
+<p>In R, the <code>t.test</code> function performs a t-test. Keep in mind this is a two sample t-test. Our data is formatted so that the identifier of the treatments is in the <code>herbivory_trt</code> column and the data for both groups is in the <code>CH4_Flux</code> column. The easiest way to tell R how to use this data is using a <strong>formula</strong> expression. Typically formulas follow this expression: <code>Dependent variable ~ Independent variables</code>. That symbol is called a <em>tilde</em> and the key for it is usually just above your tab key and next to the 1 key on your keyboard. Whenever, you see an expression you can think of it as <em>dependent variable <strong>is a function of</strong> the independent variables</em>. This is a common way to express statistical relationships and we will build on it with more complex relationships. Here we’ll use this formula notation to indicate that the t-test for <code>CH4_Flux</code> data should be a function of the groups indicated by the <code>herbivory_trt</code> column.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="introduction-to-hypothesis-testing.html#cb118-1" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre class="bg-info"><code>
+    Two Sample t-test
+
+data:  lemmings$CH4_Flux by lemmings$herbivory_trt
+t = 1.5328, df = 22, p-value = 0.1396
+alternative hypothesis: true difference in means between group Ctl and group Ex is not equal to 0
+95 percent confidence interval:
+ -4.624054 30.823815
+sample estimates:
+mean in group Ctl  mean in group Ex 
+        18.814645          5.714765 </code></pre>
+<p>There are many types of t-tests that can be run in R with slightly different assumptions. The <code>var.equal</code> argument specifies that this is a t-test with equal variance between groups.</p>
+<p>There are other types of t-test that can be run with this argument. Changing the argument to <code>var.equal=FALSE</code> would run a two-sample t-test with unequal variance (see lecture notes for equation).</p>
+<p>You can see that the p value for the t-test statistic is well above the confidence level of 0.05. The 95% confidence interval also overlaps with zero. This indicates that we cannot reject the null hypothesis. The difference between means is not statistically significant. <strong>Lemming grazing did not significantly alter methane fluxes.</strong> Keep in mind that either outcome of accepting or rejecting the null hypothesis is still of interest scientifically. Knowing that lemming grazing did not impact methane release still conveys information about greenhouse gases in Arctic ecosystems. Do not fall into the trap of thinking that accepting the null hypothesis is uninteresting or not relevant. It is still information!</p>
+</div>
+</div>
+<div id="one-sample-t-test-in-r" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> One sample t-test in R<a href="introduction-to-hypothesis-testing.html#one-sample-t-test-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The one sample t-test compares the mean of a vector of data to a mean specified by the null hypothesis. Let’s explore running a one sample t-test. Let’s test to see if the control plot methane levels are statistically different from zero (no methane produced).</p>
+<p><strong>H<sub>0</sub>:</strong> The mean of the data variable does not differ from zero</p>
+<p><strong>H<sub>A</sub>:</strong> The mean of the data variable is different from zero</p>
+<center>
+<img src="/Users/hkropp/Documents/GitHub/Intro_EnvData/bookdown/IntroEnvData/photos/tutorial_4/one%20t%20test.png" style="width:50.0%" />
+</center>
+<p>The one sample t-test still requires normally distributed data. We checked this group before using the shapiro test, but here is a reminder:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="introduction-to-hypothesis-testing.html#cb120-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
+<span id="cb120-2"><a href="introduction-to-hypothesis-testing.html#cb120-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
+<pre class="bg-info"><code>
+    Shapiro-Wilk normality test
+
+data:  lemmings$CH4_Flux[lemmings$herbivory_trt == &quot;Ctl&quot;]
+W = 0.87763, p-value = 0.08173</code></pre>
+<p>Now you can run the one sample t-test. The <code>mu</code> argument provides the mean value used in the null hypothesis (set to zero in our case):</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="introduction-to-hypothesis-testing.html#cb122-1" tabindex="-1"></a><span class="co"># one sided t test with the null mean set to zero</span></span>
+<span id="cb122-2"><a href="introduction-to-hypothesis-testing.html#cb122-2" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>], <span class="at">mu=</span><span class="dv">0</span>)</span></code></pre></div>
+<pre class="bg-info"><code>
+    One Sample t-test
+
+data:  lemmings$CH4_Flux[lemmings$herbivory_trt == &quot;Ctl&quot;]
+t = 2.9142, df = 11, p-value = 0.01408
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+  4.60478 33.02451
+sample estimates:
+mean of x 
+ 18.81465 </code></pre>
+<p>The t-test shows the range in the 95% confidence interval does not overlap with zero (with the lower interval at least 4 mg C per day above zero) and the p value is below the confidence level. This is a strong indicator that the methane produced in the control plot does significantly differ from zero. This helps tell us that under typical tundra conditions that include lemming grazing methane production is not negligible with a mean well above zero. This helps add context that tundra ecosystems can be a source of methane under typical, untreated conditions that allow for natural herbivory and grazing by small rodents and lemmings.</p>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="768" />
+</center>
+</div>
+<div id="introduction-to-chi-squared-test" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Introduction to chi-squared test<a href="introduction-to-hypothesis-testing.html#introduction-to-chi-squared-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-data-1" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> <em>The data</em><a href="introduction-to-hypothesis-testing.html#the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The next test is useful if you want to collect categorical data (also known as nominal data). Categorical data fits into distinct predefined categories. For example, if you counted the number of blue and red cars driving down College Hill Road in an hour, you have data in two distinct categories: # of red cars and # of blue cars.</p>
+<p>Farnsworth (2004) looked at the influence of legal protections on populations of rare plant species. Here we have two variables each with two outcomes. The first describes legal protection with outcomes being <em>protected</em> or <em>not protected</em>. The second is the status of population: <em>stable/increasing</em> or <em>decreasing</em>. Here a decreasing observation for a species would indicate that the number of plants in that species is declining over time. You will set up our data in a <strong>contigency table</strong>. Rows and columns are assigned the outcomes for the two different variables and each cell of the table shows the number of observations in those categories. Each observation describes the number of species</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="introduction-to-hypothesis-testing.html#cb124-1" tabindex="-1"></a><span class="co">#set up contigency table</span></span>
+<span id="cb124-2"><a href="introduction-to-hypothesis-testing.html#cb124-2" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">32</span>), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb124-3"><a href="introduction-to-hypothesis-testing.html#cb124-3" tabindex="-1"></a><span class="fu">colnames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
+<span id="cb124-4"><a href="introduction-to-hypothesis-testing.html#cb124-4" tabindex="-1"></a><span class="fu">rownames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
+<p>You can use a mosaic plot to visualize the proportion of the total observations in each category. You will see the size of the boxes is weighted by the proportion of species within each category. A larger box indicates that there are more observations in a category.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="introduction-to-hypothesis-testing.html#cb125-1" tabindex="-1"></a><span class="co">#make a mosaic plot with an informative title and axes labels</span></span>
+<span id="cb125-2"><a href="introduction-to-hypothesis-testing.html#cb125-2" tabindex="-1"></a><span class="fu">mosaicplot</span>(species, </span>
+<span id="cb125-3"><a href="introduction-to-hypothesis-testing.html#cb125-3" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>), <span class="co"># add color to rows</span></span>
+<span id="cb125-4"><a href="introduction-to-hypothesis-testing.html#cb125-4" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>, <span class="co"># x label</span></span>
+<span id="cb125-5"><a href="introduction-to-hypothesis-testing.html#cb125-5" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>, <span class="co"># y label</span></span>
+<span id="cb125-6"><a href="introduction-to-hypothesis-testing.html#cb125-6" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Legal protection impacts on populations&quot;</span>) <span class="co"># title</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<p>If legal protections don’t have any impact on populations, we would expect the species to be randomly distributed in each population status category and legal protection category.</p>
+</div>
+<div id="chi-squared-test" class="section level3 hasAnchor" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> <em>Chi squared test</em><a href="introduction-to-hypothesis-testing.html#chi-squared-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Visually it looks like there may be some difference in population status that depends on legal protections. However, it is difficult to know whether this difference is significant. You can test whether the frequency of observations in each category meets the expectation under a null hypothesis. Here the statistical hypotheses are:</p>
+<p><strong>H<sub>0</sub>:</strong> Observations in each category occur at expected frequencies</p>
+<p><strong>H<sub>A</sub>:</strong> Observations in each category differ from expected frequencies</p>
+The test statistic is calculated by comparing the observations to expectations:
+<center>
+<span class="math inline">\(\chi\)</span><sup>2</sup> = <span class="math inline">\(\sum (O-E)^2/E\)</span>
+</center>
+<p>This statistic uses a <span class="math inline">\(\chi\)</span><sup>2</sup> distribution to evaluate how likely we are to observe deviations from the expected value under the null hypothesis. Higher deviations from expected values result in a greater <span class="math inline">\(\chi\)</span><sup>2</sup> statistic.</p>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="672" />
+</center>
+<p>The <span class="math inline">\(\chi\)</span><sup>2</sup> goodness of fit test in R uses the <code>chisq.test</code> function. By default the test will assume a null hypothesis with equal proportions of occurrences for each cell of the contingency table. You can alter this if your null hypothesis should have different expected frequencies. By default, R would enter expected frequencies based on diving the total number of items in our data frame evenly. Here, with four different combinations, the null frequencies would be each population x protection outcome occurring at a rate of 25%. However, this deviates a little from statistical recommendations.</p>
+<p>It is recommended that you calculate expected frequencies that would occur when there is no association between the categories using the row and column totals. This can help account for differences in the number of samples collected in each category. For example, summing up the protected species, there are 40 species observed. The not protected species only has 33 total observations. There are also less species experiencing declines in the population compared to those experiencing stable/increasing population. The chi-squared statistic might pick up differences in these sample size by each category rather than the association between legal protection and population status.</p>
+<p>Expected frequencies can be calculated by multiplying row and column sums and dividing by the total number of observations. You can also enter expected proportions using the <code>p</code> argument if you have a hypothesis about the null proportions under a scientific premise. In this case, we only are looking for whether legal protection is <em>associated</em> with population status. This means we will calculate expected values under the null:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introduction-to-hypothesis-testing.html#cb126-1" tabindex="-1"></a><span class="co">#total number of species counted</span></span>
+<span id="cb126-2"><a href="introduction-to-hypothesis-testing.html#cb126-2" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(species)</span>
+<span id="cb126-3"><a href="introduction-to-hypothesis-testing.html#cb126-3" tabindex="-1"></a><span class="co"># sum up rows of population status</span></span>
+<span id="cb126-4"><a href="introduction-to-hypothesis-testing.html#cb126-4" tabindex="-1"></a>tot.decline <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">1</span>, ])</span>
+<span id="cb126-5"><a href="introduction-to-hypothesis-testing.html#cb126-5" tabindex="-1"></a>tot.increase <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">2</span>, ])</span>
+<span id="cb126-6"><a href="introduction-to-hypothesis-testing.html#cb126-6" tabindex="-1"></a><span class="co"># sum up columns for protection</span></span>
+<span id="cb126-7"><a href="introduction-to-hypothesis-testing.html#cb126-7" tabindex="-1"></a>tot.noProtect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[,<span class="dv">1</span>])</span>
+<span id="cb126-8"><a href="introduction-to-hypothesis-testing.html#cb126-8" tabindex="-1"></a>tot.protect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[, <span class="dv">2</span>])</span>
+<span id="cb126-9"><a href="introduction-to-hypothesis-testing.html#cb126-9" tabindex="-1"></a></span>
+<span id="cb126-10"><a href="introduction-to-hypothesis-testing.html#cb126-10" tabindex="-1"></a><span class="co">#calculate expected values:</span></span>
+<span id="cb126-11"><a href="introduction-to-hypothesis-testing.html#cb126-11" tabindex="-1"></a>expectedFreq <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(tot.decline<span class="sc">*</span>tot.noProtect, <span class="co"># each cell multiplies sums</span></span>
+<span id="cb126-12"><a href="introduction-to-hypothesis-testing.html#cb126-12" tabindex="-1"></a>                         tot.decline<span class="sc">*</span>tot.protect,</span>
+<span id="cb126-13"><a href="introduction-to-hypothesis-testing.html#cb126-13" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.noProtect,</span>
+<span id="cb126-14"><a href="introduction-to-hypothesis-testing.html#cb126-14" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.protect),</span>
+<span id="cb126-15"><a href="introduction-to-hypothesis-testing.html#cb126-15" tabindex="-1"></a>                       <span class="at">byrow=</span><span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">2</span>)<span class="sc">/</span>tot <span class="co"># divide by total numer</span></span>
+<span id="cb126-16"><a href="introduction-to-hypothesis-testing.html#cb126-16" tabindex="-1"></a></span>
+<span id="cb126-17"><a href="introduction-to-hypothesis-testing.html#cb126-17" tabindex="-1"></a><span class="fu">colnames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
+<span id="cb126-18"><a href="introduction-to-hypothesis-testing.html#cb126-18" tabindex="-1"></a><span class="fu">rownames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
+<p>Let’s look at the mosaic plot to see the expected outcomes for the null hypothesis: there is no association between legal protection and population status:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction-to-hypothesis-testing.html#cb127-1" tabindex="-1"></a><span class="fu">mosaicplot</span>(expectedFreq, </span>
+<span id="cb127-2"><a href="introduction-to-hypothesis-testing.html#cb127-2" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>),</span>
+<span id="cb127-3"><a href="introduction-to-hypothesis-testing.html#cb127-3" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>,</span>
+<span id="cb127-4"><a href="introduction-to-hypothesis-testing.html#cb127-4" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>,</span>
+<span id="cb127-5"><a href="introduction-to-hypothesis-testing.html#cb127-5" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Null hypothesis for no association&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p>The <code>chisq.test</code> function expects our contingency table to be converted to a vector. The <code>as.vector</code> will turn the table into a vector. This process goes column by column. So in this case the <code>Not.Protected</code> column will be the first two numbers in the vector. The <code>p</code> argument allows you to specify the proportions that would occur under expected frequencies. These values must all add up to one.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introduction-to-hypothesis-testing.html#cb128-1" tabindex="-1"></a><span class="co">#Conduct a chi-squared test</span></span>
+<span id="cb128-2"><a href="introduction-to-hypothesis-testing.html#cb128-2" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="at">x=</span>species, <span class="co"># actual data</span></span>
+<span id="cb128-3"><a href="introduction-to-hypothesis-testing.html#cb128-3" tabindex="-1"></a>           <span class="at">y=</span>expectedFreq) <span class="co"># expected values under null</span></span></code></pre></div>
+<pre class="bg-info"><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  species
+X-squared = 7.9642, df = 1, p-value = 0.004771</code></pre>
+<p>Here the chi-squared test statistic has a p value well under 0.05. The null hypothesis can be rejected. Note there is a correction applied to 2x2 contigency tables (Yates’ continuity correction) since the degrees of freedom is small. The null hypothesis assumed that each category combination would occur with equal frequencies. This means that the differences in population status for each legal protection category occur at rates that differ from random chance. We can conclude that legal protection status is associated with a higher number of species that have stable/increasing populations than expected by random chance. Species in areas that are not legally protected status have a higher number of species with declining populations than expected by random chance alone.</p>
+<center>
+<img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="768" />
+</center>
+</div>
+</div>
+<div id="citations-1" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Citations<a href="introduction-to-hypothesis-testing.html#citations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Lemming grazing &amp; surface fluxes</strong></p>
+<p>Lara, M., D. Johnson, C. Andresen, R. Hollister, and C. Tweedie. (2017). Peak season carbon exchanges shifts from a sink to a source following 50+ years of herbivore exclusion in an Arctic tundra ecosystem. <em>Journal of Ecology</em> 105:122-131.</p>
+<p><em>Data citation:</em></p>
+<p><strong>Lemming grazing &amp; surface fluxes</strong>
+Mark Lara. 2016. Long-term functional impact of Herbivore Exclusion. Arctic Data Center. <a href="doi:10.18739/A2CC0TT3H" class="uri">doi:10.18739/A2CC0TT3H</a>.</p>
+<p><strong>Species protections</strong></p>
+<p>Farnsworth, E.J. (2004). Patterns of plant invasions at sites with rare plant species throughout New England. <em>Rhodora</em>: 97-117.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualizing-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-stats.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

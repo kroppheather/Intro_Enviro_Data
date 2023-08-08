@@ -1,0 +1,2 @@
+mywd <- getwd()
+
