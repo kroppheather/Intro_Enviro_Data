@@ -6,8 +6,9 @@ output:
 ---
 # Introduction
 
-
-![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png)
+<center>
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png){width=85%}
+</center>
 
  Data plays a critical role in addressing major environmental issues related to climate change, conservation, and water security. We gain a critical understanding of the role of observation, the scientific method, environmental sensors, and citizen science in describing the environment. Topics will include data life cycles, statistics, visualization, and statistical programming for
 environmental data. This book mainly focuses on a basic introduction to the tools used to analyze and interpret giving common types of data associated with the environment.
@@ -20,8 +21,9 @@ In these tutorials, you will learn about types of data that are core to many env
 *soil observations that are critical for the water cycle, agriculture, and plant health
 
 <center>
-![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/PXL_20201212_142447471.jpg)
-_Weather and soil micrometereological measurements are collected every 15 minutes from sensors. The abundance of data that is enabled by many sensors and observation platforms necessitates coding-based, reproducible tools._  
+![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/PXL_20201212_142447471.jpg){width=85%}
+
+_Weather and soil micrometereological measurements are collected every 15 minutes from sensors. An abundance of data used to address environmental issues and research necessitates coding-based, reproducible tools._  
 </center>
 
 ## Course Learning objectives
@@ -30,6 +32,8 @@ _Weather and soil micrometereological measurements are collected every 15 minute
 2. Apply statistical analysis and critically interpret data
 3. Use code-based, reproducible computational tools
 
+## License
 
+_Introduction to Environmental Data and Statistics_ ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/640px-Copyright.svg.png){width=2%} Heather Kropp. _Introduction to Environmental Data and Statistics_ is licensed under a [Creative Commons Attribution-NoDerivs](https://creativecommons.org/licenses/by-nd/4.0/) license CC BY-ND.
 
 

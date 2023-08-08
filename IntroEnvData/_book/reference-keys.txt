@@ -1,5 +1,6 @@
 introduction
 course-learning-objectives
+license
 introduction-to-r-statistical-software
 learning-objectives
 new-functions-syntax
