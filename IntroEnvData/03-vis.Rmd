@@ -33,7 +33,7 @@ Visualizing data requires careful consideration of the audience and representati
 
 ### _1. Representation of data_
 
-The representation of data will depend on the type of data (categorical, discrete, proportion, numerical, etc.) and the uncertainty associated with the data. Keep in mind, uncertainty may be related to measurement error or simply showing the variation or spread of the data . Typically the type of data influences the type of graph that can be used. Below are a few examples of the underlying representation of data and associated error or variation. 
+The representation of data will depend on the type of data (categorical, discrete, proportion, numerical, etc.) and the uncertainty associated with the data. Keep in mind, uncertainty may be related to measurement error or simply showing the variation or spread of the data. The type of data influences the type of graph that can be used. Below are a few examples of the underlying representation of data and associated error or variation. 
 
 ```{r echo=FALSE,fig.width=10}
 set.seed(12)
@@ -104,7 +104,7 @@ pie(pieNum, labels=c("    a","    b","    c","    d","    e"),
 
 ```
 
-The choice in plot will depend on the representing uncertainty or variation (error bars, quantile boxplot), independence or ordering of variables (line versus scatter), and categorical versus numerical data (barplot, mosaic, pie).
+The choice in plot will depend on the representation of uncertainty or variation (error bars, quantile boxplot), independence or ordering of variables (line versus scatter), and the type of observations such as categorical versus numerical data (barplot, mosaic, pie).
 
 ### _2. Layout_
 
@@ -178,7 +178,7 @@ Too many colors, crowded points, complex shapes, and overlapping text all hamper
 
 ## Plotting data in base R
 
-Plots are one of the most useful tools for visualizing weather patterns and long term climate trends. We will work with the NOAA weather data from activity 2 to get more comfortable with making plots in R. 
+Plots are one of the most useful tools for visualizing weather patterns and long term climate trends. We will work with the NOAA weather data from Chapter 3 to get more comfortable with making plots in R. 
 
 ```{r echo=FALSE}
 
@@ -204,7 +204,9 @@ nameS
 ```
 
 
-Let's start by taking a closer look at precipitation at each site. Just as you did in the previous chapter, totaling the precipitation that occurred in a year using the `summarise` and `group_by` function and sum will allow you to examine total annual precipitation. However, you want to avoid years with too many missing observations. In most cases involving missing observations, annual precipitation will be biased lower than the actual values of precipitation that fell. You would want to be careful comparing precipitation across sites and years when most of the the year is missing. It can be helpful to remove the `NA`s to sum the precipitation observations and account for the number of observations with real data. You will want to start by putting precipitation in a separate data frame and omitting `NA`s using the `na.omit` function. This will omit any row of data with an `NA` in it.
+Let's start by taking a closer look at precipitation at each site. Just as you did in the previous chapter, totaling the precipitation that occurred in a year using the `summarise` and `group_by` function and sum will allow you to examine total annual precipitation. However, you want to avoid years with too many missing observations. In most cases involving missing observations, annual precipitation will be biased lower than the actual values of precipitation that fell. 
+
+It can be helpful to remove the `NA`s to sum the precipitation observations and account for the number of observations with real data. You will want to start by putting precipitation in a separate data frame and omitting `NA`s using the `na.omit` function. This will omit any row of data with an `NA` in it.
 
 ```{r echo=TRUE}
 # remove NA using na.omit
@@ -233,7 +235,7 @@ pr <- precip %>%
 ```
 
 
-Now let's make a plot that looks at precipitation throughout the years. Let's start by looking at the the town formally known as Barrow, Alaska (now known as Utqiagvik) and the Fargo, North Dakota data. Utqiagvik is a polar desert and Fargo is a cold, continental semi-arid area mostly consisting of prairie habitat. The sites are the second and third levels in our factor data. We can subset the entire data frame:
+Next, let's make a plot that looks at precipitation throughout the years. Let's start by looking at the the town formally known as Barrow, Alaska (now known as Utqiagvik) and the Fargo, North Dakota data. Utqiagvik is a polar desert and Fargo is a cold, continental semi-arid area mostly consisting of prairie habitat. The sites are the second and third levels in our factor data. We can subset the entire data frame:
 
 ```{r echo=TRUE}
 
@@ -246,7 +248,7 @@ nd <- pr %>%
 
 ```
 
-Let's start by looking at the basic plot in R using the Arizona data first using the `plot` function. The basic arguments involve data for the x axis and data for the y axis. 
+Let's start by looking at the basic plot in R using the Alaska data first using the `plot` function. The basic arguments involve data for the x axis and data for the y axis. 
 
 
 ```{r echo =TRUE }
@@ -303,7 +305,7 @@ points(nd$YEAR, nd$totalP, # x and y data
      col="tomato3") # change the color
 ```
 
-Only one observation in North Dakota is within the range of the Alaska site. The rest of the data is not shown because it falls outside of the The axis range will need to be fixed so that all observations are visible for both sites. Here the `xlim` and `ylim` arguments change the range of the axes. These arguments expect a vector of two numbers: `ylim = c(minimum value, maximum value)`. This tells R the range on the axis to plot.
+Only one observation in North Dakota is within the range of the Alaska site. The rest of the data is not shown because it falls outside of the The axis range will need to be fixed so that all observations are visible for both sites. Here, the `xlim` and `ylim` arguments change the range of the axes. These arguments expect a vector of two numbers: `ylim = c(minimum value, maximum value)`. This tells R the range on the axis to plot.
 
 ```{r echo =TRUE, fig.width=8}
 plot(ak$YEAR, ak$totalP,
@@ -322,7 +324,7 @@ points(nd$YEAR, nd$totalP,
      col="tomato3")
 ```
 
-There is just a couple of last considerations to finish the plot. You can add a legend to properly label the plot using `legend` function. The first argument specifies the placement using either the exact x,y coordinate or you use an argument for a more general position such as: `topleft`, `center`, `bottomright`. You could also add a line to indicate where the mean annual precipitation values are for each site using the `abline` function from tutorial 2. The `h=` argument adds a horizontal line at a value 
+There is just a couple of final considerations to finish the plot. You can add a legend to properly label the plot using `legend` function. The first argument specifies the placement using either the exact x,y coordinate or you use an argument for a more general position such as: `topleft`, `center`, `bottomright`. You could also add a line to indicate where the mean annual precipitation values are for each site using the `abline` function from tutorial 2. The `h=` argument adds a horizontal line at a value 
 
 ```{r echo =TRUE, fig.width=8}
 plot(ak$YEAR, ak$totalP,
@@ -382,17 +384,14 @@ for(i in 1:length(a)){
 
 </center>
 
-## Using packages in R
+## Using `ggplot2`
 
-We have been learning to make plots using the built in functions in R including `plot` and `histogram`. While working with these basic plotting functions is useful, it can take a lot more coding to make a nicer looking figure. **Packages** add additional functions that are not located in the base functions in R. There are a total of 18,088 packages currently available on CRAN that expand the functions available in R. If you were to automatically have all of these packages and their functions loaded in R, it would take up  space and too many functions would have the same name. This is why you should load only the packages needed to run the code in your script in an R session.
-
-The first step in using a package, is to install it to your local computer using the `install.packages` function. **You only need to do run this once for a project in RStudio Cloud.** You will get a prompt asking what mirror you would like to download from. You may choose any mirror.
+We have been learning to make plots using the built in functions in R including `plot` and `histogram`. While working with these basic plotting functions is useful, it can take a lot more coding to make a nicer looking figure. `ggplot2` was developed to make nice plots with less code. Install the package and load it into your library:
 
 ```{r echo=TRUE, eval=FALSE}
 install.packages("ggplot2")
 ```
 
-Once the package is installed, you will need to load the package into your current session using the **library** function. **You will run this every time you start a new R session.**
 
 ```{r echo=TRUE}
 library(ggplot2)
@@ -401,9 +400,9 @@ library(ggplot2)
 
 ## Plotting in ggplot2
 
-_ggplot2_ contains many different functions to make nice looking plots easily. You'll notice we needed to run many lines of code to make the axes and points look nice. ggplot2 has developed a different plotting syntax than base R. The language of ggplot2 means that you declare the **data** that you are using, the **coordinate system**, and the **geometry** to be used in the plot. The **data** refers to the data source and the **aesthetics**. In the **aesthetics** you define the x, y coordinate specifications and any other information on the size or colors to be used. The **coordinate system** specifies how to plot the data graphically. By default it refers to a **cartesian** coordinate system which simply means plotting on a x,y axis. You don't need to specify this plotting component if you are making a cartesian graph. The **geometry** refers to the shapes/type of plot to be used (ex: bars, boxes, points). You can find a cheat sheet for ggplot2 here: https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf
+_ggplot2_ contains many different functions to make nice looking plots easily. You'll notice we needed to run many lines of code to make the axes and points look nice. ggplot2 has developed a different plotting syntax than base R. The language of ggplot2 means that you declare the **data** that you are using, the **coordinate system**, and the **geometry** to be used in the plot. The **data** refers to the data source and the **aesthetics**. In the **aesthetics**, you define the x, y coordinate specifications and any other information on the size or colors to be used. The **coordinate system** specifies how to plot the data graphically. By default it refers to a **cartesian** coordinate system which simply means plotting on a x,y axis. The **geometry** refers to the shapes/type of plot to be used (ex: bars, boxes, points). You can find a cheat sheet for ggplot2 here: https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf
 
-Let's get a feel for using ggplot by looking at the annual precipitation across years for all of the sites. You'll notice that ggplot2 also uses `+` signs to connect multiple functions. This is unique to this type of package and other packages made by the same developers. It does not work for functions outside of these packages
+Let's get a feel for using ggplot by looking at the annual precipitation across years for all of the sites. You'll notice that ggplot2 also uses `+` signs to connect multiple functions. This is unique to this type of package and other packages made by the same developers. It does not work for functions outside of these packages.
 
 ```{r echo=TRUE, fig.width=8}
 ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+ # data for plot
@@ -413,7 +412,7 @@ ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+ # data for plot
 
 ```
 
-You'll notice a legend is automatically made and the y axis labels are in the right direction. There's just a couple more things. I personally _dislike_ the gray gridlines. A lot of people like them and that's fine if you like them. Let's look at how we can get rid of them by changing the theme.
+You'll notice a legend is automatically made and the y axis labels are in the right direction. You can change the background of the plot using the **theme** functions. A classic theme will remove the gridlines:
 
 ```{r echo=TRUE, fig.width=8}
 ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+ # data for plot
@@ -423,7 +422,9 @@ ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+ # data for plot
         theme_classic() # change plot theme
 ```
 
-It also would be helpful to change the colors and make them semi-transparent so we can see what sites overlap a little better. You can manually change the colors in Rstudio using the `scale_color_manual` setting. Note in R, you can enter colors as color names: such as `"tomato3"`, the hex code, or you can use the rgb() function to designate the amount of red, green, and blue that goes into making a color. There are a lot of color resources online that can help you pick colors. If you search for the color _tomato3_ in google, you will get results from color websites that give the hex codes or the red,green, blue composition. In the case of _tomato3_, the hex code is `#CD4F39` and the red, green, blue composition is `rgb(0.8, 0.31,0.22)`. You can find more information on color theory and colors in R here: https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf
+It also would be helpful to change the colors and make them semi-transparent so we can see what sites overlap a little better. You can manually change the colors in Rstudio using the `scale_color_manual` setting. 
+
+In R, you can enter colors as color names: such as `"tomato3"`, the hex code, or you can use the rgb() function to designate the amount of red, green, and blue that goes into making a color. There are a lot of color resources online that can help you pick colors. If you search for the color _tomato3_ in google, you will get results from color websites that give the hex codes or the red,green, blue composition. In the case of _tomato3_, the hex code is `#CD4F39` and the red, green, blue composition is `rgb(0.8, 0.31,0.22)`. You can find more information on color theory and colors in R here: https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf
 
 ```{r echo=TRUE, fig.width=8}
 ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+
@@ -437,9 +438,11 @@ ggplot(data = pr, aes(x = YEAR, y=totalP, color=NAME ) )+
 
 ## Exploring different visualizations in ggplot2
 
-One of the main considerations in data visualizations is using the proper type of geometry to display data. Let's look at making different types of plots in ggplot2. 
+One of the main considerations in data visualizations is using the proper type of geometry to display data. Let's look at making different types of plots in `ggplot2`. 
 
-Violin plots are a way to display data across categories in a manner that conveys more information than a barplot showing the mean. The violins are created using a mirrored histogram of the data that is smoothed out into a line. Each distribution is displayed around the name with wider parts of the violin representing values on the y axis that occur more frequently within a group. Typically violins are paired with a boxplot in the violin to show the quartiles (25% and 75% of the data ranges), median, and 95% range within the distribution. In ggplot2, violin plots are easy to make. Let's focus on minimum temperatures for this next part. Let's take a look at the daily minimum temperatures in Alaska, Washington, and Stillwater Reservoir.
+**Violin plots** are a way to display data across categories in a manner that conveys more information than a barplot showing the mean. The violins are created using a mirrored histogram of the data that is smoothed out into a line. Each distribution is displayed around the name with wider parts of the violin representing values on the y axis that occur more frequently within a group. Typically violins are paired with a boxplot in the violin to show the quartiles (25% and 75% of the data ranges), median, and 95% range within the distribution.
+
+Let's take a look at the daily minimum temperatures in Alaska, Washington, and Stillwater Reservoir using a violin plot:
 
 ```{r echo = TRUE, fig.width=11, message = FALSE, warning=FALSE}
 # subset so that data can come from AK, Stillwater, or WA
@@ -491,7 +494,7 @@ ggplot(data=sub, aes(x=DATE, y=TMAX))+
 
 ```
 
-In one last plot example, lets look at a barplot. Barplots are helpful for precipitation since we are often looking at totals for a day or year and in many cases do not have variability in each value.
+Barplots are helpful for precipitation since we are often looking at totals for a day or year and in any cases where there is no variability associated with each value.
 
 ```{r echo=TRUE, message=FALSE, fig.width=7}
 ggplot(data=sub, aes(x=DATE, y=PRCP))+

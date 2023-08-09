@@ -34,7 +34,7 @@ knitr::opts_chunk$set(comment = NA, class.output="bg-info" )
 
 ### _The data_ 
 
-The consumption of vegetation by herbivores can impact the carbon cycling through by reducing plant biomass. These impacts can even change the energy, water, and nutrient cycling in an area.  
+The consumption of vegetation by herbivores can impact carbon cycling through by when plant biomass is consumed. These impacts can even change the energy, water, and nutrient cycling in an area.  
 
 Brown lemmings are a type of rodent that lives in the Arctic in Alaska and eastern Siberia. 
 
@@ -47,7 +47,7 @@ _An example of a lemming. CC3:Frode Inge Helland_
 
 Lemming populations fluctuate over time. When lemming populations reach high numbers in an ecosystem, they can consume up to 90% of the plant biomass in an area. Herbivory can also change the types of plant species, allocation of root and leaf biomass, and impact nutrient cycling. However, lemming populations in the Arctic have been decline over the previous decades and some regions have seen lemmings disappear. A study done by Lara _et al._ in 2017 focused on better understanding the impact of lemming herbivory on the soil conditions and the carbon cycle in Arctic ecosystems. This research can help indicate the potential impacts that declines in lemming herbivory might have on changing Arctic ecosystems.
 
-Lara _et al._ looked at the impact of lemmings by using a long term fenced exclosure that kept lemmings out (pictured below) for more than 50 years. The authors found that there were sufficient lemming population outbreaks in frequent intervals to properly capture long term lemming impacts on the ecosystem. 
+Lara _et al._ looked at the impact of lemmings by using a long term fenced exclosure that kept lemmings out (pictured example below) for more than 50 years. The authors found that there were sufficient lemming population outbreaks in frequent intervals to properly capture long-term lemming impacts on the ecosystem. 
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_4/Grazing_exclosure_-_geograph.org.uk_-_4235774.jpg){width=75%}
@@ -55,7 +55,7 @@ Lara _et al._ looked at the impact of lemmings by using a long term fenced exclo
 
 _Example of a grazing exclosure by Hugh Venables, CC BY-SA 2.0, via Wikimedia_ Commons
 
-They measured many components of the carbon cycle including how much carbon dioxide was released from the soil versus taken in by plants. This is called net ecosystem exchange (`NEE` in g CO~2~ m^–2^ day^–1^) and it was measured in plots with exclosures (exclusion, lemmings cannot enter the plot, no herbivory) and without exclosures (control, lemmings can freely graze in the plot). Methane is another greenhouse gas that can be released by bacteria in Arctic soils typically when soils are flooded or hold a high volume of water. The vegetation at the soil surface can influence the release of methane from soils. Some plants allow methane to readily escape the soil. Plant water use and leaf also influences the amount of water in the soil. Methane emissions from Arctic soils are a major research focus of Arctic climate change research since changes in methane production in Arctic soils may amplify climate change. Other measurements also included factors that influence the carbon cycle such as soil temperature (`SoilTemp_1`, &deg; C). Higher soil temperature can lead to greater microbial activity leading to greater greenhouse gas emissions. The tutorial will focus on analyzing the impacts of lemming grazing of vegetation on methane fluxes. Here's a look at the data:
+They measured many components of the carbon cycle including the flux of carbon dioxide that was released from the soil versus taken in by plants. This is called net ecosystem exchange (`NEE` in g CO~2~ m^–2^ day^–1^) and it was measured in plots with exclosures (exclusion, lemmings cannot enter the plot, no herbivory) and without exclosures (control, lemmings can freely graze in the plot). Methane is another greenhouse gas that can be released by bacteria in Arctic soils typically when soils are flooded or hold a high volume of water. The vegetation at the soil surface can influence the release of methane from soils. Some plants allow methane to readily escape the soil. Plant water use and leaf also influences the amount of water in the soil. Methane emissions from Arctic soils are a major research focus of Arctic climate change research since changes in methane production in Arctic soils may amplify climate change. Other measurements also included factors that influence the carbon cycle such as soil temperature (`SoilTemp_1`, &deg; C). Higher soil temperature can lead to greater microbial activity leading to greater greenhouse gas emissions. The tutorial will focus on analyzing the impacts of lemming grazing of vegetation on methane fluxes. Here's a look at the data:
 ```{r echo = FALSE}
 #make sure you change the file path to match your computer
 lemmings <- read.csv("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/data/tutorial_4/lemming_JEco_HerbEx.csv")
@@ -72,7 +72,7 @@ lemmings <- read.csv("/cloud/project/activity04/lemming_JEco_HerbEx.csv")
 head(lemmings)
 ```
 
-Here, there are three variables in this data, there are CH~4~ fluxes (`CH4_Flux` mgC m^–2^ day^–1^) and there is an herbivory treatment column (`herbivory_trt`) where a value of _Ctl_ indicates that it was a control plot with no exclosure that was was open to lemming grazing. The _Ex_ rows will indicate that an exclosure was applied preventing lemmings from accessing the site. The net ecosystem exchange column represents the amount of CO~2~ produced in the plot (`NEE`, mgC m^–2^ day^–1^). A negative value means that the plants are taking in more CO~2~ through photosynthesis than what gets released through respiration by plants and decomposition. It will be helpful to treat the herbivory column as a factor:
+The CH~4~ fluxes column contains the methane data (`CH4_Flux` mgC m^–2^ day^–1^), The `herbivory_trt` labels the type of treatment. A value of _Ctl_ indicates that the data is from a control plot with no exclosure (open to lemming grazing). The _Ex_ rows will indicate that an exclosure was applied preventing lemmings from accessing the site. The net ecosystem exchange column represents the amount of CO~2~ produced in the plot (`NEE`, mgC m^–2^ day^–1^). A negative value means that the plants are taking in more CO~2~ through photosynthesis than what gets released through respiration by plants and decomposition. It will be helpful to treat the herbivory column as a factor:
 
 ```{r echo = TRUE}
 #convert treatment data to factor
@@ -115,11 +115,11 @@ At first glance, the means seem to be different. The exclusion plot mean of 5.7 
 
 ### _Study goals and statistical hypotheses_
 
-With the help of statistical analysis, we can examine whether there is a difference in methane fluxes between the control plot (allows grazing) and the exclusion plots (prevents grazing) will help answer this question. The study can be guided by the over all question: **Does lemming grazing impact methane fluxes?** This question is open ended and could be answered with grazing increasing, decreasing, or having no influence on methane fluxes. 
+With the help of statistical analysis, we can examine whether there is a difference in methane fluxes between the control plot (allows grazing) and the exclusion plots (prevents grazing). The study can be guided by the overall question: **Does lemming grazing impact methane fluxes?** This question is open ended and could be answered with grazing increasing, decreasing, or having no influence on methane fluxes. 
 
-The boxplot and means in the above section suggested there may be some differences in the data, but there is also a fair amount of overlap in the spread of the data. Statistical hypothesis testing can support making more robust conclusions about differences between treatments than simply looking at a graph. A **two-sample t-test** can be used to make this comparison. The test is structured to examine whether two population means differ. We can use this test to examine whether the control has a different mean methane flux than the exclosure treatment. 
+The boxplot and means in the graph above suggested there may be some differences in the data, but there is also a fair amount of overlap in the spread of the data. Statistical hypothesis testing leads to more robust conclusions about differences between treatments than simply looking at a graph. A **two-sample t-test** can be used to make this comparison. The test is structured to examine whether two population means differ. We can use this test to examine whether the control has a different mean methane flux than the exclosure treatment. 
 
-In statistical hypothesis testing, there are often two hypothesis that the test examines called the **null hypothesis** and the **alternative hypothesis**. The statistical test examines whether the null hypothesis should be accepted or rejected (subsequently accepting the alternative hypothesis). Statistical hypothesis are separate from the scientific hypothesis and are structured around the specific assumptions and framework of the test. Here our hypothesis for the t-test would be 
+In statistical hypothesis testing, there are often two hypothesis that the test examines called the **null hypothesis** and the **alternative hypothesis**. The statistical test examines whether the null hypothesis should be accepted or rejected (subsequently accepting the alternative hypothesis). Statistical hypotheses are separate from the scientific hypotheses and are structured around the specific assumptions and framework of the test. Here our hypothesis for the t-test would be 
 
 **H~0~:** The means do not differ between the two groups.
 
@@ -194,6 +194,7 @@ for(i in 1:length(a)){
 }
 ```
 </center>
+
 ### _Two sample t-test in R_
 You can now conduct a two sample t-test now that you know the data meets all of the assumptions needed to reliably interpret the test. Now that all assumptions have been tested, we can revist the original statistical hypotheses:
 
@@ -244,7 +245,7 @@ Now you can run the one sample t-test. The `mu` argument provides the mean value
 t.test(lemmings$CH4_Flux[lemmings$herbivory_trt == "Ctl"], mu=0)
 ```
 
-The t-test shows the range in the 95% confidence interval does not overlap with zero (with the lower interval at least 4 mg C per day above zero) and the p value is below the confidence level. This is a strong indicator that the methane produced in the control plot does significantly differ from zero. This helps tell us that under typical tundra conditions that include lemming grazing methane production is not negligible with a mean well above zero. This helps add context that tundra ecosystems can be a source of methane under typical, untreated conditions that allow for natural herbivory and grazing by small rodents and lemmings.
+The t-test shows the range in the 95% confidence interval does not overlap with zero (with the lower interval at least 4 mg C per day above zero) and the p value is below the confidence level. This is a strong indicator that the methane produced in the control plot does significantly differ from zero. This indicates that under typical tundra conditions with lemming grazing, methane production is not negligible with a mean well above zero. This helps add context that tundra ecosystems can be a source of methane under typical conditions that allow for natural herbivory and grazing by small rodents and lemmings.
 
 <center>
 ```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
@@ -263,7 +264,7 @@ for(i in 1:length(a)){
 ### _The data_
 The next test is useful if you want to collect categorical data (also known as nominal data). Categorical data fits into distinct predefined categories. For example, if you counted the number of blue and red cars driving down College Hill Road in an hour, you have data in two distinct categories: # of red cars and # of blue cars.
 
-Farnsworth (2004) looked at the influence of legal protections  on populations of rare plant species. Here we have two variables each with two outcomes. The first describes legal protection with outcomes being _protected_ or _not protected_. The second is the status of population: _stable/increasing_ or _decreasing_. Here a decreasing observation for a species would indicate that the number of plants in that species is declining over time. You will set up our data in a **contigency table**. Rows and columns are assigned the outcomes for the two different variables and each cell of the table shows the number of observations in those categories. Each observation describes the number of species
+Farnsworth (2004) looked at the influence of legal protections  on populations of rare plant species. Here we have two variables each with two outcomes. The first describes legal protection with outcomes being _protected_ or _not protected_. The second is the status of population: _stable/increasing_ or _decreasing_. Here a decreasing observation for a species would indicate that the number of plants in that species is declining over time. The data needs to be set up in a **contigency table**. Rows and columns are assigned the outcomes for the two different variables and each cell of the table shows the number of observations in those categories. Each observation describes the number of species:
 
 ```{r echo=TRUE}
 #set up contigency table
@@ -311,7 +312,7 @@ axis(2, seq(0,1, by=0.2), las=2)
 
 The $\chi$^2^ goodness of fit test in R uses the `chisq.test` function. By default the test will assume a null hypothesis with equal proportions of occurrences for each cell of the contingency table. You can alter this if your null hypothesis should have different expected frequencies. By default, R would enter expected frequencies based on diving the total number of items in our data frame evenly. Here, with four different combinations, the null frequencies would be each population x protection outcome occurring at a rate of 25%. However, this deviates a little from statistical recommendations. 
 
-It is recommended that you calculate expected frequencies that would occur when there is no association between the categories using the row and column totals. This can help account for differences in the number of samples collected in each category. For example, summing up the protected species, there are 40 species observed. The not protected species only has 33 total observations. There are also less species experiencing declines in the population compared to those experiencing stable/increasing population. The chi-squared statistic might pick up differences in these sample size by each category rather than the association between legal protection and population status. 
+It is recommended that you calculate expected frequencies that would occur when there is no association between the categories using the row and column totals. This can help account for differences in the number of samples collected in each category. For example, summing up the protected species, there are 40 species observed. The unprotected species only has 33 total observations. There are also less species experiencing declines in the population compared to those experiencing stable/increasing population. The chi-squared statistic might pick up differences in these sample size by each category rather than the association between legal protection and population status. 
 
 Expected frequencies can be calculated by multiplying row and column sums and dividing by the total number of observations. You can also enter expected proportions using the `p` argument if you have a hypothesis about the null proportions under a scientific premise. In this case, we only are looking for whether legal protection is _associated_ with population status. This means we will calculate expected values under the null:
 
@@ -348,7 +349,7 @@ mosaicplot(expectedFreq,
            main="Null hypothesis for no association")
 ```
 
-The `chisq.test` function expects our contingency table to be converted to a vector. The `as.vector` will turn the table into a vector. This process goes column by column. So in this case the `Not.Protected` column will be the first two numbers in the vector. The `p` argument allows you to specify the proportions that would occur under expected frequencies. These values must all add up to one.
+Next run the chi squared test indicating the actual and expected frequencies:
 
 ```{r echo =TRUE}
 #Conduct a chi-squared test
@@ -356,7 +357,7 @@ chisq.test(x=species, # actual data
            y=expectedFreq) # expected values under null
 ```
 
-Here the chi-squared test statistic has a p value well under 0.05. The null hypothesis can be rejected. Note there is a correction applied to 2x2 contigency tables (Yates' continuity correction) since the degrees of freedom is small. The null hypothesis assumed that each category combination would occur with equal frequencies. This means that the differences in population status for each legal protection category occur at rates that differ from random chance. We can conclude that legal protection status is associated with a higher number of species that have stable/increasing populations than expected by random chance. Species in areas that are not legally protected status have a higher number of species with declining populations than expected by random chance alone.
+Here the chi-squared test statistic has a p value well under 0.05. The null hypothesis can be rejected. Note there is a correction applied to 2x2 contigency tables (Yates' continuity correction) since the degrees of freedom is small. The null hypothesis assumed that each category combination would occur with equal frequencies. We can conclude that legal protection status is associated with a higher number of species that have stable/increasing populations than what would be expected by random chance. Species in areas that are not legally protected status have a higher number of species with declining populations than expected by random chance alone.
 
 
 

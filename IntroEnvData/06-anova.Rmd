@@ -78,10 +78,11 @@ In ANOVA,  the F statistic is used to evaluate differences in data between group
 
 <center>
 
-Source | Degrees of freedom | Sum of Squares | Mean square | F-ratio | P-value 
-_______|____________________|________________|_____________|_________|________
-Among groups | _a-1_ | $\sum_{i=1}^{a} \sum_{j=1}^{n}(\overline{Y_i}-\overline{Y})^{2}$ | $\frac{SS_{among}}{a-1}$ | $\frac{MS_{among}}{MS_{within}}$ | p(F-distribution with (_a-1_) and _a(n-1)_ degrees of freedom) 
-Within groups | _a(n-1)_ | $\sum_{i=1}^{a} \sum_{j=1}^{n}({Y_{ij}}-\overline{Y_{i}})^{2}$ |  | | 
+Source        | Degrees of freedom    | Sum of Squares    | Mean square  | F-ratio 
+______________|_______________________|____________________|_____________|_________
+Among groups  | _a-1_                | $\sum_{i=1}^{a}\sum_{j=1}^{n}(\overline{Y_i}-\overline{Y})^{2}$    |  $\frac{SS_{among}}{a-1}$   |    $\frac{MS_{among}}{MS_{within}}$
+Within groups |  _a(n-1)_              | $\sum_{i=1}^{a}\sum_{j=1}^{n}({Y_{ij}}-\overline{Y_{i}})^{2}$ | - | -
+
 
 Here _a_ represents the total number of groups and _n_ represents the number of observations within groups.
 

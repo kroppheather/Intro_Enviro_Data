@@ -18,7 +18,7 @@ _Hamilton College_
 4. Characterize climate using a probability distribution
 
 ## New functions & syntax
-`read.csv`,`%>%`, `filter`, `summarise`, `group_by`, `%>%`, `histogram`,`dnorm`, `pnorm`, `qnorm`
+`read.csv`,`%>%`, `filter`, `summarise`, `group_by`,  `histogram`,`dnorm`, `pnorm`, `qnorm`
 
 ```{r warning=FALSE,echo=FALSE, message=FALSE}
 library(imager)
@@ -28,9 +28,9 @@ library(imager)
 knitr::opts_chunk$set(comment = NA, class.output="bg-info" )
 ```
 
-## **Section 1:** The problem. How weird was yesterday's heatwave? Using long-term weather data to understand normals and climate.
+## The problem. How weird was yesterday's heatwave? Using long-term weather data to understand normals and climate.
 
-You have probably heard the phrase the "new normal" used to describe warmer temperatures, heatwaves, flooding, and drought that is driven by climate change. This phrase is often used in association with the steadily increasing global mean temperature and higher variability in temperature and precipitation under climate change. In this activity, you will explore how we determine what makes for "normal" weather and how the "new normal" is both literal and figurative in a shifting climate. First some terms: **climate** refers to the long term weather patterns for a place. It is summarized by averaging observations over many decades. **Weather** refers to the meteorological conditions over short periods (hourly, daily, annual).
+You have probably heard the phrase the "new normal" used to describe warmer temperatures, heatwaves, flooding, and drought that is driven by climate change. This phrase is often used in association with the steadily increasing global mean temperature and higher variability in temperature and precipitation under climate change. In this activity, you will explore how the "normal" conditions are determined. First some terms: **climate** refers to the long term weather patterns for a place. It is summarized by averaging observations over many decades. **Weather** refers to the meteorological conditions over short periods (hourly, daily, annual).
 
 On a global scale, the NASA Goddard Institute of Space Studies has been tracking daily land surface temperature anomalies since the 1950s on a global scale to track climate change. A calculation called an **anomaly**, is used to characterize the difference between an observed value and a mean or baseline value(`Anomaly = Observed - Mean`). Anomalies are often used to assess  temperature and precipitation in a year compare to the typical climatic conditions. 
 
@@ -41,7 +41,7 @@ The distribution of global annual temperature anomalies observed during each dec
 _Image source: NASA GISS, Scientific visualization Studio_
 </center>
 
-However, not all areas of the globe are changing uniformally. Some areas have experienced accelerated change. The Arctic is now warming 4 times faster than the rest of the globe (Rantanen _et al._ 2022). In contrast, other areas have experienced minimal change compared to the global average. In order to understand local changes in climate, scientists use long-term historical weather data with complete records (think daily temperature and precipitation for at least 5-8 continuous decades) to examine annual and decadal changes in weather. The **average annual air temperature** averages daily observations over a year and helps track if a year is warmer or cooler than previous years. The **Mean Annual Air Temperature (MAAT or MAT)** refers to the mean of many years of annual air temperature values (usually at least 20 years). Precipitation includes rainfall and frozen forms of precipitation like snow and sleet melted down to a liquid (expressed in units of depth of water, mm or inches). Precipitation amounts vary a lot day to day, but summing up the precipitation from every day over the year yields **Annual Precipitation**. **Mean Annual Precipitation (MAP)** refers to a long term average of annual precipitation over many years (at least 20 years). Since MAP and MAAT are taken over many years, they represent the general climate of an area. These two variables are often key determinants of the biome covering the land surface(types of vegetation and ecosystems). For example, warm areas with low annual precipitation are considered desert regions. An ecologist, Robert Whittaker, mapped out the biomes that result from different MAAT and MAP combinations across the globe.
+However, not all areas of the globe are changing uniformally. Some areas have experienced accelerated change. The Arctic is now warming four times faster than the rest of the globe (Rantanen _et al._ 2022). In contrast, other areas have experienced minimal change compared to the global average. In order to understand local changes in climate, scientists use long-term historical weather data with complete records (think daily temperature and precipitation for at least 5-8 continuous decades) to examine annual and decadal changes in weather. The **average annual air temperature** averages daily observations over a year and helps track if a year is warmer or cooler than previous years. The **Mean Annual Air Temperature (MAAT or MAT)** refers to the mean of many years of annual air temperature values (usually at least 20 years). Precipitation includes rainfall and frozen forms of precipitation like snow and sleet melted down to a liquid (expressed in units of depth of water, mm or inches). Precipitation amounts vary a lot day to day, but summing up the precipitation from every day over the year yields **Annual Precipitation**. **Mean Annual Precipitation (MAP)** refers to a long term average of annual precipitation over many years (at least 20 years). Since MAP and MAAT are taken over many years, they represent the general climate of an area. These two variables are often key determinants of the biome covering the land surface(types of vegetation and ecosystems). For example, warm areas with low annual precipitation are considered desert regions. An ecologist, Robert Whittaker, mapped out the biomes that result from different MAAT and MAP combinations across the globe.
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/Whittaker_Biome_Map_for_Global_Climate_Space.jpg){width=50%}
@@ -56,7 +56,7 @@ _Image source: Jcraine CC3_
 Summary statistics help describe data and compare observations. The **mean** is a measure of central tendency of our data. This often means calculating the **average** of our data. You have probably calculated it at some point by adding all of you observations (`x`) and dividing by the total number of observations (`n`):
 $$\frac{\sum_{i = 1}^{n}{x_i}}{n}$$
 
-In statistics, there is careful phrasing around the mean versus average, and mean may be used more specifically for a type of statistical concept called a probability distribution (more on this soon!) or when the data more broadly represents a population. In R, the function `mean()` calls the function for calculating an average so you will have to read into the nuance of mean vs average in each situation. We'll discuss this more at a later point. 
+In statistics, there is careful phrasing around the mean versus average, and mean may be used more specifically for a type of statistical concept called a probability distribution (more on this soon!) or when the data more broadly represents a population. In R, the function `mean()` calls the function for calculating an average. We'll discuss this more at a later point. 
 
 There are other ways to summarize the data. You can find the **maximum** using the `max()` function or the minimum using the `min()` function. You often will want to more than the typical value or the highest/lowest values in the data. Measures of the spread of the data are useful for understanding variation in the observations. Measures of spread like the **standard deviation** help capture how the data observations are spread out around the mean value. For example, the standard deviation of air temperatures in a year tells us about how much day to day variability there is around the annual average. The equation for calculating the standard deviation for a sample of data is:
 
@@ -65,15 +65,15 @@ $$\frac{\sum_{i = 1}^{n}{\sqrt{(x_i - \bar{x})^2}}}{n-1}$$
 Another statistic includes the **median**. This is the value in the middle of the data (R: `median`). This means that  50% of the observations are below the number and 50% are above.
 
 
-Often when you hear about record breaking temperatures in heat waves or cold snaps, these observations refer to a value of daily temperature maximum or minimums (highest and lowest temperature in a day) not previously observed in the weather record. Statistics can be used to describe how often we expect to observe these types of events or typical ranges of temperature in a day or year. For example, the amount a temperature or precipitation amount differs from the long term average can be described using the standard deviation as a measure of the distance from the mean (_e.g._ the value was 2 standard deviations from the mean). Weather events that fall out of typical occurrences of conditions are often classified as **extreme weather** events. For example, NOAA defines extreme temperatures or rain events as a value that occurs less than 10% of the time. NOAA provides climate graphs for areas with long term weather records that compare weather to climatic normal. Here the daily data is compared to the average daily temperature and the average total precipitation as the year progresses. Such observations help make predictions and decisions related to whether a year is on track to be wetter or drier than usual or warmer/colder. 
+Often when you hear about record breaking temperatures in heat waves or cold snaps, these observations refer to a value of daily temperature values not previously observed in the weather record. Statistics can be used to describe how often we expect to observe these types of events or typical ranges of temperature in a day or year. Weather events that fall out of typical occurrences of conditions are often classified as **extreme weather** events. For example, NOAA defines extreme temperatures or rain events as a value that occurs less than 10% of the time. NOAA provides climate graphs for areas with long term weather records that compare weather to climatic normal. Daily data is compared to the historical record of  daily temperature and cumulative precipitation (sum of precipitation for days in the year). Such observations help make predictions and decisions related to whether a year is on track to be wetter or drier than usual or warmer/colder. 
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/climate SYR.png){width=90%}
 </center>
 
-## **Section 2:** The Data.
+## The Data.
 
-In this tutorial and your homework, you will analyze weather data to get familiar with summary statistics, distributions, and data tables with many observations in R. The data that you will work with includes long-term data collected by the National Oceanic and Atmospheric Administration (NOAA) at six weather stations around the United States. NOAA has been observing weather for decades including measurements such as wind, air temperature, and precipitation. Below is an image of NOAA observing stations both past and current:
+In this tutorial and your homework, you will analyze weather data to characterize climate and get familiar with summary statistics, distributions, and data tables with many observations in R. The data that you will work with includes long-term data collected by the National Oceanic and Atmospheric Administration (NOAA) at six weather stations around the United States. NOAA has been observing weather for decades including measurements such as wind, air temperature, and precipitation. Below is an image of NOAA observing stations both past and current:
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/NOAA.png){width=50%}
@@ -85,9 +85,9 @@ The minimum and maximum daily air temperature and total precipitation are in the
 
 ## Using packages in R
 
-We have been learning to make plots using the built in functions in R including `mean` and `max`. While working with these basic plotting functions is useful, it can take a lot more coding to make a nicer looking figure. **Packages** add additional functions that are not located in the base functions in R. There are a total of 18,088 packages currently available on CRAN that expand the functions available in R. If you were to automatically have all of these packages and their functions loaded in R, it would take up  space and too many functions would have the same name. This is why you should load only the packages needed to run the code in your script in an R session.
+We have been learning to make plots using the built in functions in R including `mean` and `max`. While working with these basic functions is useful, it can lead to a lot more coding. **Packages** add additional functions that are not located in the base functions in R. There are a total of 18,088 packages currently available on CRAN that expand the functions available in R. If you were to automatically have all of these packages and their functions loaded in R, it would take up a lot of space and too many functions would have the same name. This is why you should load only the packages needed to run the code in your script in an R session.
 
-The first step in using a package, is to install it to your local computer using the `install.packages` function. **You only need to do run this once for a project in RStudio Cloud.** You will get a prompt asking what mirror you would like to download from. You may choose any mirror. Let's read in a package that helps with organizing data called `dplyr`. 
+The first step in using a package, is to install it to your local computer using the `install.packages` function. **You only need to do run this once for a project in RStudio Cloud.** You will get a prompt asking what mirror you would like to download from. You may choose any mirror in the US. Let's read in a package that helps with organizing data called `dplyr`. 
 
 ```{r echo=TRUE, eval=FALSE}
 install.packages("dplyr")
@@ -101,7 +101,7 @@ library(dplyr)
 
 ### _Reading in data_
 
-You will read in data using the `read.csv` function. A csv file (comma separated values) contains the text version of an excel spreadsheet where the values for each cell are included in the file and the designation of a new cell starts with a comma. You can always resave an .xlsx file as a .csv. You can save any excel or sheets file as a .csv file when you click save as. Let's read in a file I've already formatted for you.
+You will read in data using the `read.csv` function. A csv file (comma separated values) is a text version of an excel spreadsheet where the values for each cell are included in the file and the designation of a new cell starts with a comma. You can always resave an .xlsx file as a .csv. You can save any excel or sheets file as a .csv file when you click save as. Let's read in a file I've already formatted for you.
 
 There is one critical argument in `read.csv`, the **file path** including the name of the file. A file path tells R where to find the file within the computer file system. You will be able to see the file in the Files tab. The file system for RStudio cloud will always start with _Cloud_. You can see the file system structure written out in the red circle:
 
@@ -180,7 +180,7 @@ A helpful function for finding out all of the station names is the `unique` func
 unique(datW$NAME)
 ```
 
-You can subset to a single site by using the **filter** function in `dplyr`. `dplyr` allows you to use a type of syntax called a **pipe**. A **pipe** will chain functions and data frames together. The pipe is indicated with `%>%`. When a data frame is put before a pipe, any function run next in the pipe automatically refers to columns in the data frame. This saves you from typing in `data.frame$column` base formatting. Using the **filter** function allows you to subset data based on a relational statement. Any critera for which the statement is TRUE will be included in the output. 
+You can subset to a single site by using the **filter** function in `dplyr`. `dplyr` allows you to use a type of syntax called a **pipe**. A **pipe** will chain functions and data frames together. The pipe is indicated with `%>%`. When a data frame is put before a pipe, any function run after the pipe automatically refers to columns in the data frame. This saves you from typing in `data.frame$column` base formatting. Using the **filter** function allows you to subset data based on a relational statement. Any criteria in which the statement is TRUE will be included in the output. Filter the data to only include Aberdeen observations and calculation the average maximum temperature:
 
 ```{r echo=TRUE}
 # subset the data to a data frame with just Aberdeen
@@ -192,7 +192,7 @@ mean(aberdeenDaily$TMAX)
 
 ```
 
-You get a NA value here. That's because there is missing data in this data set. NA is a specification that allows you to know that the data is missing and we should not expect a value. NA is handled differently in R and is neither a number nor character. Luckily there is an argument in mean that allows us to ignore NAs in the calculation.
+You get a NA value here. That's because there is missing data in this data set. NA is a specification that allows you to know that the data is missing and we should not expect a value. NA is handled differently in R and is neither a number nor a character. Luckily there is an argument in mean that allows us to ignore NAs in the calculation.
 
 ```{r echo=TRUE}
 # look at the mean maximum temperature for Aberdeen
@@ -209,9 +209,9 @@ sd(aberdeenDaily$TMAX, na.rm=TRUE)
 
 Now you will see the  daily maximum temperature in Aberdeen is 14.6 &deg;C. Since this is the mean across many days over decades of observations, this value indicates the typical maximum daily temperature over a long time period. 
 
-## **Section 3a:** The approach. Summary statistics and visualizing data distributions.
+## Summary statistics and visualizing data distributions.
 
-The above method of calculating means from the previous is not very efficient. In order to calculate **mean annual temperature (MAT)**, we also must take the average of each annual average not the average across all days of observation (confusing, right?). We would have to calculate 71 years of averages for six locations, and that is way too much coding to do each calculation in its own line of code! However, you can use the `summarise` function to calculate means across an **groups**. For example This means that we want to treat `NAME` and `YEAR` as a **grouping variable**, and we want to treat each station as a different group. A group indicates that each unique value in the group describes a homogeneous feature (_e.g._ landcover, day of year). The `group_by` function in dplyr can be used to specify a grouping variable. `summarise` creates a new data frame with column labels for each group and any columns created in the function. 
+The above method of calculating means is not very efficient. In order to calculate **mean annual temperature (MAT)**, we also must take the average of each annual average not the average across all days of observation. We need to calculate 71 years of averages for six locations, and that is way too much coding to do each calculation in its own line of code! You can use the `summarise` function to calculate means across an **groups**. In this example, `NAME` and `YEAR` need to be used as a **grouping variable**. A group indicates that each unique value in the group describes a homogeneous feature (_e.g._ site, year, name). The `group_by` function in dplyr can be used to specify a grouping variable for the `sumarise` function. `summarise` creates a new data frame with column labels for each group and any columns created in the function. 
 
 ```{r echo=TRUE}
 # get the mean, standard deviation across all sites and years
@@ -223,7 +223,7 @@ averageTemp <- datW %>% # all data will be in datW
   
 ```
 
-If we want to calculate the Mean Annual Temperature (MAT), then we need to average the temperature for each location across all years. This can be done with aggregate again:
+In order to calculate the Mean Annual Temperature (MAT), the annual average temperature for each location needs to be averaged across all years. This can be done with `sumarise` again:
 
 ```{r echo=TRUE}
 #calculate the mean annual average temperature for all sites (MAT)
@@ -235,7 +235,7 @@ MAT <- averageTemp %>% # refer to averageTemp data frame
 
 These average temperature values from decades of temperature can tell you about the overall climatic conditions of the different locations in the data. You can use any function in aggregate. For example, you can replace `mean` with `max` to find the annual average temperature value observed in the data.
 
-Finally, we will want to explore an individual location in more detail. It will be helpful to create a new data frame that only has the annual average temperature for the location in the Adirondack Park (Stillwater Reservoir). We can create a new data frame by subsetting the `averageTemp` data frame and assigning it a name:
+Finally, we will want to explore an individual location in more detail. It will be helpful to create a new data frame that only has the annual average temperature for the location in the Adirondack Park (Stillwater Reservoir). We can create a new data frame by filtering the `averageTemp` data frame and assigning it a name:
 
 ```{r echo=TRUE}
 # create a data frame for only Stillwater Reservoir MAT (located in Adirondack park)
@@ -261,7 +261,7 @@ for(i in 1:length(a)){
 
 ### _Histograms_
 
-There are over 155,000 daily observations in our data file and each site has over 70 years of data. Summary statistics are helpful, but it is important to visualize the data. A graphical tool called a **histogram** can help visualize how frequently certain values are observed in the data. This is called the **data distribution**. A histogram shows the frequency of temperature observations in different **bins**. The start and end of a bin is called a break in R. The `hist` function generates a histogram.
+With over 155,000 daily observations in our data file and each site has over 70 years of data. Summary statistics are helpful, but it is important to visualize the data. A graphical tool called a **histogram** can help visualize how frequently certain values are observed in the data. This is called the **data distribution**. A histogram shows the frequency of temperature observations in different **bins**. The start and end of a bin is called a break in R. The `hist` function generates a histogram.
 
 ```{r echo=TRUE}
 #make a histogram for Syracuse
@@ -322,14 +322,14 @@ legend("topleft", c("mean", "1 sd", "2 sd"),
        lwd=3, lty=c(1,2,3), col="tomato3", bty="n")
 ```
 
-You can see that the mean is fairly close to the center of the distribution and the observations that occur most frequently are within 1 standard deviation of the mean. Most of the data is within 2 standard deviations of the mean. These properties are meaningful statistically, in the next section, you will learn about more formal, mathematical ways to describe data distributions. 
+You can see that the mean is fairly close to the center of the distribution and the observations that occur most frequently are within one standard deviation of the mean. Most of the data is within two standard deviations of the mean. These properties are meaningful statistically, in the next section, you will learn about more formal, mathematical ways to describe data distributions. 
 
 
-## **Section 3b:** Probability distributions
+## Probability distributions
 
 ### _Normal distributions_
 
-The data distribution that we just viewed has a very particular shape. The temperature observations are most frequent around the mean and we rarely observe data 2 standard deviations from the mean. The distribution is also symmetrical. We can describe this occurrence of different values of data more formally with a **probability distribution**. Probability distributions have a lot of mathematical properties that are useful. We use **parameters** to help describe the shape of the data distribution. This temperature data follows a **normal distribution**. This type of distribution is very common and relies on **two parameters: the mean and standard deviation** to describe the data distribution. Let's take a look at a normal distribution assuming the mean and standard deviation parameters are equal to the ones observed in the Adirondack data:
+The data distribution that we just viewed has a very particular shape. The temperature observations are most frequent around the mean and we rarely observe data 2 standard deviations from the mean. The distribution is also symmetrical. We can describe this occurrence of different values of data more formally with a **probability distribution**. Probability distributions use mathematical properties to describe distributions of data. **Parameters** help describe the shape of the data distribution. This temperature data follows a **normal distribution**. The normal distribution is very commonly used and relies on **two parameters: the mean and standard deviation** to describe the data distribution. Let's take a look at a normal distribution assuming the mean and standard deviation parameters are equal to the ones observed in the Adirondack data:
 
 ```{r echo=FALSE}
 # make a sequence of temperature values
@@ -348,7 +348,7 @@ plot(xseq, # x data
      ylab="Probability density") # label y axis
 ```
 
-The distribution describes the probability density which is the relative occurrence of all values of data. The probability density is not a probability. The bell curve of the normal distribution follows a very specific shape. In fact, let's look at a special case of the normal distribution to better understand the shape. Below is an image of the normal distribution where zero represents the value at the mean of the data and tick marks are designated with standard deviations. This is called a **standard normal** or a **z distribution**. Data can be converted to this scale using the calculation: `(data - mean)/standard deviation`
+The distribution describes the probability density which is the relative occurrence of all values of data. The probability density is not a probability. The bell curve of the normal distribution follows a very specific shape. In fact, let's look at a special case of the normal distribution to better understand the shape. Below is an image of the normal distribution where the mean is equal to zero and the standard deviation is equal to one. This is called a **standard normal** or a **z distribution**. Data can be converted to this scale using the calculation: `(data - mean)/standard deviation`
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/Standard_Normal_Distribution.png)
@@ -420,6 +420,7 @@ You can now see the blue dashed line overlain on the histogram of Adirondack TAV
 ## _The normal probability distribution_
 
 Let's turn to daily data and think about what an abnormally warm day might entail. For this exercise, let's look at daily values for Aberdeen, Washington using the `aberdeenDaily` data frame that you created earlier:
+
 ```{r echo=TRUE}
 # preview the first few lines of aberdeen daily
 head(aberdeenDaily) 
@@ -461,7 +462,7 @@ points(x.plot,
        lty = 2)
 ```
 
-For a given value of the data, the normal distribution has a probability density associated with observing the value. The probability density doesn't mean anything at a given value of the data. However, when the normal distribution is integrated across a range of values, it yields a probability for the occurrence of the range of values. For those of you that haven't had calculus, integrating is essentially taking the area under the curve between a range of numbers. In my graph below, you can see the red shading indicates the area below the value of zero on the curve. We have to keep in mind that the range of the normal distribution extends from -$\infty$ to $\infty$. Let's start by taking a look at all values below freezing in the normal distribution for our Aberdeen weather data. Technically this is the probability of all temperatures below freezing from zero to -$\infty$. Functionally we know some low temperatures would be impossible to observe on earth and the probability of observing values closer to -$\infty$ will be minuscule. You'll notice that I cut off the axis at -10 and 30 degrees C where the occurrence of values outside of this range is so low, it looks like zero.
+When the normal distribution is integrated across a range of values, it yields a probability for the occurrence of the range of values. For those of you that haven't had calculus, integrating is essentially taking the area under the curve between a range of numbers. In my graph below, you can see the red shading indicates the area below the value of zero on the curve. We have to keep in mind that the range of the normal distribution extends from -$\infty$ to $\infty$. Let's start by taking a look at all values below freezing in the normal distribution for our Aberdeen weather data. Technically this is the probability of all temperatures below freezing from zero to -$\infty$. Functionally, many of the very low temperatures would be impossible to observe on earth and the probability of observing values closer to -$\infty$ will be minuscule. You'll notice that I cut off the axis at -10 and 30 degrees C where the occurrence of values outside of this range is so low, it looks like zero.
 
 ```{r echo=FALSE}
 plot(x.plot, y.scaled, type="l",
@@ -476,13 +477,13 @@ polygon(c(x.sub,rev(x.sub)),
 		col="tomato2", border =NA)
 ```
 
-Luckily we don't have to do any of the work calculating the probability. R has a built in suite of functions for working with probability distributions. You can run the help command documentation for all functions related to the normal distribution. Run the documentation on dnorm to see them all:
+R has a built in suite of functions for working with probability distributions. You can run the help command documentation for all functions related to the normal distribution. Run the documentation on dnorm to see them all:
 
 ```{r echo=TRUE}
 help(dnorm)
 ```
 
-R uses p to designate probability. If we use **pnorm**, we can enter a number as the first argument (the next two arguments are always the mean and standard deviation for the normal), the output will be the **probability of observing that value AND all values below it to -$\infty$.** Let's calculate the probability of below freezing temperatures. Don't forget that probabilities always range from 0 to 1. We would have to go integrate across the normal between values of -$\infty$ to $\infty$ to get a probability of 1 in the normal. Below we'll just focus on all values below freezing:
+R uses p to designate probability. If we use **pnorm**, we can enter a number as the first argument (the next two arguments are always the mean and standard deviation for the normal), the output will be the **probability of observing that value AND all values below it to -$\infty$.** Let's calculate the probability of below freezing temperatures. Don't forget that probabilities always range from 0 to 1. Integrating across the normal between values of -$\infty$ to $\infty$ to get a probability of 1 in the normal. Below we'll just focus on all values below freezing:
 
 ```{r echo=TRUE}
 #pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)
@@ -561,7 +562,7 @@ polygon(c(x.sub,rev(x.sub)),
 		col="darkgoldenrod3", border =NA)
 ```
 
-There **qnorm** function will return the value associated with a probability. This is the value in which all values at or below the value equal that probability. Let's use this to evaluate extreme weather events. Let's assume everything that occurs with a probability of less than 10% of the time (either hot or cold so anything above 95% or anything below 5%) is unusual. Let's examine what unusually high temperatures in Aberdeen start at: 
+There **qnorm** function will return the value associated with a probability. This is the value in which all values at or below the value equal that probability. Let's use this to evaluate extreme weather events. Let's assume everything that occurs with a probability of less than 10% of the time (either hot or cold so anything above 95% or anything below 5%) is unusual. Let's examine the temperature value that would be considered unusually high in Aberdeen: 
 
 ```{r echo=TRUE}
 #qnorm gives me the value at which all values and below equal the probability in my argument
@@ -573,7 +574,7 @@ qnorm(0.95,
 This means I expect 95% of the temperature observations to be below this value. Any temperature observations above this value will occur with a probability of 5%.
 
 
-**Note:** Throughout all of my code examples, you'll notice that I continued to copy and paste the same code for calculating the mean for site 1: ` mean(aberdeenDaily$TAVE,na.rm=TRUE)`. While I did this to help you remember what was going into the function, it gets confusing and messy in long functions. This is a perfect example of why we name variables (with short clear names!) to refer to later on. As this course progresses, we'll continue to work on creating clean code once you get more comfortable with R. 
+**Note:** Throughout all of my code examples, you'll notice that I continued to copy and paste the same code for calculating the mean for site 1: ` mean(aberdeenDaily$TAVE,na.rm=TRUE)`. While I did this to help you remember what was going into the function, it gets confusing and messy in long functions. This is a perfect example of why assigning variables names for frequently used functions/calculations is helpful. As this course progresses, we'll continue to work on creating clean code once you get more comfortable with R. 
 
 <center>
 ```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
@@ -618,7 +619,8 @@ legend("topleft",
        lwd=1, bty="n")
 ```
 
-You can see that the mean is higher in recent decades, shifting the distribution. We can look at the difference probability in each period. For example, let's look at the probability of daily temperatures exceeding 18 degrees C:
+You can see that the mean is higher in recent decades, shifting the distribution. For example, let's look at the probability of daily temperatures exceeding 18 degrees C in each distribution:
+
 ```{r echo=TRUE}
 # probability of  daily temeprature above 18 degrees in 1950- 1985
 1-pnorm(18,mean(AberdeenPast$TAVE,na.rm=TRUE),
@@ -703,7 +705,7 @@ legend("topright",
 
 ```
 
-**Note** There are too many distributions to name. Wikipedia has great overviews of different probability density functions, but beware that I have found occasional mistakes such as in the ranges of x values that the function spans. Wolfram Alpha has great, more accurate resources, but it can be a little dense and jump into more theory. You can take an entire class in probability (it's so cool!), but this class will only cover the basics needed for environmental applications.
+**Note** There are too many distributions to name. Wikipedia has great overviews of different probability density functions, but beware that I have found occasional mistakes such as in the ranges of x values that the function spans. Wolfram Alpha has great, accurate resources, but it can be a little dense and jump into more theory. You can take an entire class in probability (it's so cool!), but this class will only cover the basics needed for environmental applications.
 
 <center>
 ```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
@@ -719,7 +721,7 @@ for(i in 1:length(a)){
 </center>
 
 
-Great work! You just learned how to work with a lot of weather observations (>155,000)! Imagine trying to calculate 72 averages across 26,117 rows of data in Excel or Sheets. You just did that in one line of code! You also learned to use R to describe climate, summarize data, characterize rare events, and calculate a probability of occurrence. You will continue working on these problems throughout your homework to characterize climate and examine changes in temperature and precipitation in different regions of the United States.
+Great work! You just learned how to work with a lot of weather observations (>155,000)! Imagine trying to calculate 72 averages across 26,117 rows of data in Excel or Sheets. You just did that in a few lines of code! You also learned to use R to describe climate, summarize data, characterize rare events, and calculate a probability of occurrence. You will continue working on these problems throughout your homework to characterize climate and examine changes in temperature and precipitation in different regions of the United States.
 
 
 ## Citations

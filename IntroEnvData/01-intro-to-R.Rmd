@@ -39,10 +39,10 @@ knitr::opts_chunk$set(comment = NA, class.output="bg-info" )
 
 ## Getting to know Rstudio Cloud
 
-RStudio Cloud helps create a standardized computing environment for us as a class that is specifically meant to support working in R. This means that you can access the same computing environment and you only need to run a web browser on a personal or Hamilton computer. This will allow coursework to be readily completed from any computer whether you are on or off campus. It also means that you don't have to worry about installing R or storing data on your own personal computer.
+RStudio Cloud helps create a standardized computing environment that is specifically meant to support working in R. This means that you can access the same computing environment and you only need to run a web browser on a personal or Hamilton computer. This will allow coursework to be readily completed from any computer whether you are on or off campus. It also means that you don't have to worry about installing R or storing data on your own personal computer.
 
 
-You will have received an invitation to join the ENVST206-F21 **workspace** on RStudio Cloud through your Hamilton email. Once you have joined the workspace, you can access the projects section. A **project** is a collection of related R files and data.  **Assignments** are projects that are set up to be read only and you will make your own copy when you open it. Your copy will automatically be set up with your user profile once you save it. You will see a blue box next to the project name indicating that it is an assignment. You will have the option to start the assignment for the first time or continue if you already started it. 
+You will have received an invitation to join the ENVST206 **workspace** on RStudio Cloud through your Hamilton email. Once you join the workspace, you can access the projects section. A **project** is a collection of related R files and data. **Assignments** are projects that are set up to be read only and you will make your own copy when you open it. Your copy will automatically be set up with your user profile once you save it. You will see a blue box next to the project name indicating that it is an assignment. You will have the option to start the assignment for the first time or continue if you already started it. 
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/Assignment.png){width=50%}
@@ -80,7 +80,7 @@ Clicking a new script will prompt you to save into the file system created in ou
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/save prompt.png){width=50%}
 </center>
 
-You will see that saving your script will create a new file in the Files tab in the bottom right corner. This tab will be important when we start working with more data files.
+You will see that saving your script will create a new file in the _Files_ tab in the bottom right corner. This tab will be important when we start working with more data files.
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/file system.png){width=25%}
@@ -93,13 +93,13 @@ The script opens up above the console and is ready for you to code!
 </center>
 
  
- You can get a better idea for the script/console set up by writing a simple line of code in the script and running it. Using the function `print`, any text within the function will  be returned in the console. You can also use hashes `#` to make a **comment** so that you can document code. Let's take a look at how this works before getting into the details. Here is the code in my script:
+You can get a better idea for the script/console set up by writing a simple line of code in the script and running it. Using the function `print`, any text within the function will  be returned in the console. You can also use hashes `#` to make a **comment** so that you can document code. Let's take a look at how this works before getting into the details. Here is the code in my script:
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/first code.png){width=50%}
 </center>
 
-Nothing happens with this code until I run it in the console.You can run a line of code clicking in the line or a selection of code by highlighting it and pressing the run button (shown in the black circle).
+Nothing happens with this code until it is run in the console.You can run a line of code clicking in the line or a selection of code by highlighting it and pressing the run button (shown in the black circle).
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/running.png){width=50%}
@@ -111,7 +111,7 @@ There's a few things to pay attention to in the console when you run code. The `
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_1/Running explain.png){width=50%}
 </center>
 
- Any variables run in the console are part of your **working environment**. Variables allow you to refer to the same data or calculations throughout your current R session the computer's temporary memory. You'll learn more about R code in the next section to fully understand the utility of the working environment.  
+Any variables run in the console are part of your **working environment**. Variables allow you to refer to the same data or calculations throughout your current R session the computer's temporary memory. You'll learn more about R code in the next section to fully understand the utility of the working environment.  
 
 <center>
 ```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
@@ -145,7 +145,7 @@ Since R is just like a sophisticated calculator, you can read in numerical opera
 
 ### _Variables_
 
-Typing in calculations can quickly become redundant and difficult when you have many observations. Creating a **variable** allows you to refer to the same object by typing its name. You can create a variable by first typing a name, then typing the assigner `<-` (`=` also works, but is not R convention). Anything to the right of the assigner will be refered to with the name you give. Below is an example where I know I will want to use the number 244435600 many times so I will give it a shorter, easier to remember name.
+Typing in calculations can quickly become redundant and difficult when you have many observations. Creating a **variable** allows you to refer to the same object by typing its name. You can create a variable by first typing a name, then typing the assigner `<-`. Note that `=` also works, but is not R convention. Anything to the right of the assigner will be referred to with the name you give. Below is an example. Here a large number (244435600) will be given a shorter, easier to remember name.
 
 ```{r echo=TRUE}
 # name my number
@@ -167,7 +167,7 @@ A vector is a one dimensional array of data. You can make a vector in R using th
 peaks <- c(5344,5114,4960)
 ```
 
-You will notice that both functions `print` and `c` are text followed by parentheses. This is a detail to pay attention to for the R **syntax**. Syntax refers to the rulues and structure of a coding language. What you learned about `#` and `<-`  are  examples of R syntax since these symbols have a specific meaning. Any time you see the format `anyName()` you can know this is a **function**. Functions are a key part of R. You already used functions by runnidn `c` and `print`. They expect certain inputs called **arguments** (like our numbers in the _c_ function used to create peaks vector). Functions will also perform a task that saves you a lot of extra coding. You can immediately see the utility of functions by running summary statistics functions like: `mean` (average value of a vector), `min` (minimum value in a vector), `max` (maximum value in a vector).
+You will notice that both functions `print` and `c` are text followed by parentheses. This is a detail to pay attention to for the R **syntax**. Syntax refers to the rules and structure of a coding language. What you learned about `#` and `<-`  are  examples of R syntax since these symbols have a specific meaning. Any time you see the format `anyName()` you can know this is a **function**. Functions are a key part of R. You already used functions by running `c` and `print`. They expect certain inputs called **arguments** (like our numbers in the _c_ function used to create peaks vector). Functions will perform a task that saves you a lot of extra coding. You can immediately see the utility of functions by running summary statistics functions like: `mean` (average value of a vector), `min` (minimum value in a vector), `max` (maximum value in a vector).
 
 ```{r echo=TRUE}
 # calculate the mean of peaks
@@ -225,7 +225,7 @@ peaks[1]
 
 ### _Data frames_
 
-The final basic type of data that will be useful to keep in mind is a data frame. **Data frames** are a matrix with column names and sometimes row names. All observations in a row are associated. Each column will have the same type of data. For example, you can make a dataframe with all of the high peaks information using the 'data.frame' function. For the `data.frame` arguments, you specify each vector to include as a column and the name of the column (left side of each equal sign).
+The final basic type of data that will be useful to keep in mind is a data frame. **Data frames** are a matrix with column names and sometimes row names. All observations in a row are associated. Each column will have the same type of data. For example, you can make a data frame with all of the high peaks information using the 'data.frame' function. For the `data.frame` arguments, you specify each vector to include as a column and the name of the column (left side of each equal sign).
 
 ```{r echo=TRUE}
 # make a datframee
