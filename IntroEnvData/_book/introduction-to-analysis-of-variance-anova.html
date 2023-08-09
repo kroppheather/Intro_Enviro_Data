@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> Using the normal probability distribution</a></li>
 <li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
 <li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
 </ul></li>
@@ -305,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Work with data related to measures of biodiversity</li>
 <li>Learn to conduct an ANOVA in R</li>
-<li>Visualize and interpret ANOVA</li>
+<li>Visualize and interpret an ANOVA</li>
 </ol>
 </div>
 <div id="new-functions-syntax-5" class="section level2 hasAnchor" number="7.2">
@@ -315,14 +315,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="measuring-biodiversity-the-data" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Measuring biodiversity: the data<a href="introduction-to-analysis-of-variance-anova.html#measuring-biodiversity-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A decline in <strong>biodiversity</strong> is a common environmental concern. Biodiversity is a concept related to a wide range in the number of species (plant, fungi, and animal) and abundance of populations in a species. Anthropogenic impacts on the environment via habitat loss, increased global temperatures, and pollution can all negatively impact the abundance of living organisms. Extinction of organisms as a result of these impacts is decreasing biodiversity. There are a number of ways to measure biodiversity. <strong>Species richness</strong> is the number of different types of species present in a particular location. It is typically measured as a numerical count of species and collected from observations that look for presence/absence of different species. <strong>Diversity indices</strong> account for both the number of different types of species and the evenness of the number of individuals in each type of species.</p>
-<p>The urban environment can affect survival and reproduction of some insect species. Urban built environments are often warmer environments with less water availability, particularly in drier regions of California. Buildings and pavement can remove habitat and warmer temperatures on these surfaces may render them unsuitable for insects. Residential areas of urban environments can provide more vegetated environments, but plant cover is often not native and mostly dominated by a single plant cover such as grass. Some insects may be well equipped to survive in many urban environments and there is a concern that urbanization can drive declines in the diversity of insects. This may negatively impact essential part of ecosystems driving pollination, the food web, and the decomposition of plant material.</p>
+<p>The urban environment can affect survival and reproduction of some insect species. Built environments are warmer environments with less water availability, particularly in drier regions of California. Residential areas of urban environments can provide more vegetated environments, but plant cover is often not native and mostly dominated by a single plant cover such as grass. Some insects are not well equipped to survive in many urban environments and there is a concern that urbanization can drive declines in the diversity of insects. This may negatively impact essential part of ecosystems driving pollination, the food web, and the decomposition of plant material.</p>
 <p>To evaluate the impact of the urban environment on insects, Adams <em>et al.</em> (2019) trapped insects across the Los Angeles area and examined the number of species at each location. Below is a map of sampling locations used in the study across differing levels of urbanization.</p>
 <center>
 <p><img src="photos/tutorial_6/Los_Angeles_Aerial_view_2013.jpg" style="width:70.0%" /></p>
 <p><em>Aerial view of Los Angeles area highlights the varying levels of urbanization from the highly devleoped areas of commercial complexes and downtown to mountain parks Source: Tuxyso, CC BY-SA 3.0, via Wikimedia Commons</em></p>
 </center>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="introduction-to-analysis-of-variance-anova.html#cb149-1" tabindex="-1"></a><span class="co">#read in insect data</span></span>
-<span id="cb149-2"><a href="introduction-to-analysis-of-variance-anova.html#cb149-2" tabindex="-1"></a>datI <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity06/insect_richness.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction-to-analysis-of-variance-anova.html#cb145-1" tabindex="-1"></a><span class="co">#read in insect data</span></span>
+<span id="cb145-2"><a href="introduction-to-analysis-of-variance-anova.html#cb145-2" tabindex="-1"></a>datI <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity06/insect_richness.csv&quot;</span>)</span></code></pre></div>
 <pre class="bg-info"><code>  urbanType urbanName Richness lawn
 1         3  Suburban       30  Yes
 2         8 Developed        3  Yes
@@ -332,20 +332,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 6         8 Developed       15   No</code></pre>
 <p>As you learned in class, ANOVA is a widely used technique for testing for differences in three or more groups. ANOVA will be useful for examining the insect species richness across an urban gradient in Los Angles. The <code>Richness</code> and the <code>urbanName</code> column will be used for the test. <code>urbanName</code> gives the type of urban environment the species richness was measured in. You will want to specify <code>urbanName</code> as a factor to work best in the ANOVA. The <code>urbanType</code> column provides an identifying number originally used in by the authors. We are only focusing on a few urban areas in this analysis. Below is a table that provides a more detailed description of each area used in the study site. The numbers in the table coincide with the <code>urbanType</code> column.</p>
 <center>
-<img src="photos/tutorial_6/urbanclass.png" style="width:40.0%" />
+<p><img src="photos/tutorial_6/urbanclass.png" style="width:40.0%" /></p>
 _Table describing urban type classification from Adams <em>et al.</em> (2019)
 </center>
 <p>It will be helpful to convert the names to factors in R.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="introduction-to-analysis-of-variance-anova.html#cb151-1" tabindex="-1"></a>datI<span class="sc">$</span>urbanName <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datI<span class="sc">$</span>urbanName)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction-to-analysis-of-variance-anova.html#cb147-1" tabindex="-1"></a>datI<span class="sc">$</span>urbanName <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datI<span class="sc">$</span>urbanName)</span></code></pre></div>
 </div>
 <div id="anova-overview" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> ANOVA overview<a href="introduction-to-analysis-of-variance-anova.html#anova-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In ANOVA, the F statistic is used to evaluate differences in data between groups. Here the F-ratio that we use for our statistical evaluation is calculated based on the variance of the data around the mean. First the <strong>among group (SS<sub>among</sub>, sometimes referred to as between)</strong> sum of squares calculates the squared difference between each group mean and the overall mean of all the data and sums up the differences for all groups. The <strong>within group (SS<sub>within</sub>, also referred to as residual)</strong> sum of squares calculates the squared difference between each data observation and its group mean and sums these differences for all observations. The <strong>mean squares</strong> is then calculated using the number of groups (<em>SS<sub>among</sub></em>) and both the number of groups and observations (<em>SS<sub>within</sub></em>). This table also shows the total SS for good measure, but we don’t often look at it since <em>SS<sub>total</sub></em> = <em>SS<sub>among</sub></em> + <em>SS<sub>within</sub></em>. The F-ratio is calculated by dividing the mean square for among groups by within groups. The p-value provides a probability for observing the calculated F-ratio and all values greater under the null distribution. You will want to use the standard confidence level of 0.05 to make your assessment.</p>
+<p>In ANOVA, the F-ratio is a statistic that is used to evaluate differences in data between groups. First the <strong>among group (SS<sub>among</sub>, sometimes referred to as between)</strong> sum of squares calculates the squared difference between each group mean and the overall mean of all the data and sums up the differences for all groups. The <strong>within group (SS<sub>within</sub>, also referred to as residual)</strong> sum of squares calculates the squared difference between each data observation and its group mean and sums these differences for all observations. The <strong>mean squares</strong> is then calculated using the number of groups (<em>SS<sub>among</sub></em>) and both the number of groups and observations (<em>SS<sub>within</sub></em>). The F-ratio is calculated by dividing the mean square for among groups by within groups (see table below). The p-value provides a probability for observing the calculated F-ratio and all values higher than the ratio. For this class, we can assume the confidence level of 0.05 to make your assessment.</p>
 <center>
-<p>Source | Degrees of freedom | Sum of Squares | Mean square | F-ratio
-______________|_______________________|____________________|_____________|_________
-Among groups | <em>a-1</em> | <span class="math inline">\(\sum_{i=1}^{a}\sum_{j=1}^{n}(\overline{Y_i}-\overline{Y})^{2}\)</span> | <span class="math inline">\(\frac{SS_{among}}{a-1}\)</span> | <span class="math inline">\(\frac{MS_{among}}{MS_{within}}\)</span>
-Within groups | <em>a(n-1)</em> | <span class="math inline">\(\sum_{i=1}^{a}\sum_{j=1}^{n}({Y_{ij}}-\overline{Y_{i}})^{2}\)</span> | - | -</p>
+<img src="photos/tutorial_6/table.png" />
+</center>
 <p>Here <em>a</em> represents the total number of groups and <em>n</em> represents the number of observations within groups.</p>
 </div>
 <div id="anova-in-r" class="section level2 hasAnchor" number="7.5">
@@ -353,10 +351,10 @@ Within groups | <em>a(n-1)</em> | <span class="math inline">\(\sum_{i=1}^{a}\sum
 <div id="checking-assumptions-1" class="section level3 hasAnchor" number="7.5.1">
 <h3><span class="header-section-number">7.5.1</span> <em>Checking assumptions</em><a href="introduction-to-analysis-of-variance-anova.html#checking-assumptions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Next you will run the ANOVA test on the insect data to examine whether the different urban environments impact species richness. Before checking the assumptions, it’s a good idea to visualize the data. I’ll show the data using the plots from class that help visualize the different values used in ANOVA. The grey points show individual observations overlain on the boxplot for each group. The red points show the group mean and the blue line shows the mean for all the data.</p>
-<img src="Intro-EnvData_files/figure-html/unnamed-chunk-143-1.png" width="672" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-144-1.png" width="672" />
 </center>
 <p>The first assumption is <strong>normality</strong> for each group. You must check normality for each individual group. Don’t forget that <code>unique</code> can be helpful for getting the names for each group:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="introduction-to-analysis-of-variance-anova.html#cb152-1" tabindex="-1"></a><span class="fu">unique</span>(datI<span class="sc">$</span>urbanName)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="introduction-to-analysis-of-variance-anova.html#cb148-1" tabindex="-1"></a><span class="fu">unique</span>(datI<span class="sc">$</span>urbanName)</span></code></pre></div>
 <pre class="bg-info"><code>[1] Suburban  Developed Dense     Natural  
 Levels: Dense Developed Natural Suburban</code></pre>
 <p>The sample size is small enough to use the Shapiro Wilk’s test.</p>
@@ -382,23 +380,23 @@ data:  datI$Richness[datI$urbanName == &quot;Natural&quot;]
 W = 0.91559, p-value = 0.2514</code></pre>
 <p>The null hypothesis is that the data are normally distributed. Here, each group is higher than our confidencle level of 0.05.</p>
 <p>The second assumption of <strong>equal variance</strong> can be checked with the Bartlett test.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="introduction-to-analysis-of-variance-anova.html#cb158-1" tabindex="-1"></a><span class="fu">bartlett.test</span>(datI<span class="sc">$</span>Richness<span class="sc">~</span>datI<span class="sc">$</span>urbanName)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="introduction-to-analysis-of-variance-anova.html#cb154-1" tabindex="-1"></a><span class="fu">bartlett.test</span>(datI<span class="sc">$</span>Richness<span class="sc">~</span>datI<span class="sc">$</span>urbanName)</span></code></pre></div>
 <pre class="bg-info"><code>
     Bartlett test of homogeneity of variances
 
 data:  datI$Richness by datI$urbanName
 Bartlett&#39;s K-squared = 1.2091, df = 3, p-value = 0.7508</code></pre>
-<p>Both equal variance and normality assumptions are appropriate for the data. The other assumptions are that observations are <strong>independent</strong> of each other and <strong>correctly classified</strong> in each group. Since this data comes from a peer reviewed study that uses the same type of statistics (frequentist), we can assume that the research design and data are set up to meet these assumptions.</p>
+<p>Both equal variance and normality assumptions are appropriate for the data. The other assumptions are that observations are <strong>independent</strong> of each other and <strong>correctly classified</strong> in each group. Since this data comes from a peer reviewed study that also uses frequentist statistics, we can assume that the research design and data are set up to meet these assumptions.</p>
 </div>
 <div id="running-the-anova" class="section level3 hasAnchor" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> <em>Running the ANOVA</em><a href="introduction-to-analysis-of-variance-anova.html#running-the-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Now that you’ve had a chance to check the assumptions and visualize the data, you are ready to run the ANOVA in R. There are two steps to this test in R. You first specify a linear model with the <code>lm</code> function. The next step is to run the ANOVA calcluations using <code>aov</code> function. Both of these functions will simply run the calculations. To view the ANOVA table of results, you will print the table using the <code>summary</code> function. In the <code>lm</code> function we will specify a formula <code>Richness ~ Urban</code>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introduction-to-analysis-of-variance-anova.html#cb160-1" tabindex="-1"></a><span class="co">#specify model for species richness and urban type</span></span>
-<span id="cb160-2"><a href="introduction-to-analysis-of-variance-anova.html#cb160-2" tabindex="-1"></a>in.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(datI<span class="sc">$</span>Richness <span class="sc">~</span> datI<span class="sc">$</span>urbanName)</span>
-<span id="cb160-3"><a href="introduction-to-analysis-of-variance-anova.html#cb160-3" tabindex="-1"></a><span class="co">#run the ANOVA</span></span>
-<span id="cb160-4"><a href="introduction-to-analysis-of-variance-anova.html#cb160-4" tabindex="-1"></a>in.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(in.mod)</span>
-<span id="cb160-5"><a href="introduction-to-analysis-of-variance-anova.html#cb160-5" tabindex="-1"></a><span class="co">#print out ANOVA table</span></span>
-<span id="cb160-6"><a href="introduction-to-analysis-of-variance-anova.html#cb160-6" tabindex="-1"></a><span class="fu">summary</span>(in.aov)</span></code></pre></div>
+<p>Now that you’ve had a chance to check the assumptions and visualize the data, you are ready to run the ANOVA in R. There are two steps to this test in R. You first specify a linear model with the <code>lm</code> function. The next step is to run the ANOVA calculations using <code>aov</code> function. Both of these functions will simply run the calculations. To view the ANOVA table of results, you will print the table using the <code>summary</code> function. In the <code>lm</code> function we will specify a formula <code>Richness ~ Urban</code>.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="introduction-to-analysis-of-variance-anova.html#cb156-1" tabindex="-1"></a><span class="co">#specify model for species richness and urban type</span></span>
+<span id="cb156-2"><a href="introduction-to-analysis-of-variance-anova.html#cb156-2" tabindex="-1"></a>in.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(datI<span class="sc">$</span>Richness <span class="sc">~</span> datI<span class="sc">$</span>urbanName)</span>
+<span id="cb156-3"><a href="introduction-to-analysis-of-variance-anova.html#cb156-3" tabindex="-1"></a><span class="co">#run the ANOVA</span></span>
+<span id="cb156-4"><a href="introduction-to-analysis-of-variance-anova.html#cb156-4" tabindex="-1"></a>in.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(in.mod)</span>
+<span id="cb156-5"><a href="introduction-to-analysis-of-variance-anova.html#cb156-5" tabindex="-1"></a><span class="co">#print out ANOVA table</span></span>
+<span id="cb156-6"><a href="introduction-to-analysis-of-variance-anova.html#cb156-6" tabindex="-1"></a><span class="fu">summary</span>(in.aov)</span></code></pre></div>
 <pre class="bg-info"><code>                Df Sum Sq Mean Sq F value  Pr(&gt;F)   
 datI$urbanName   3   1944   647.9   4.898 0.00254 **
 Residuals      236  31216   132.3                   
@@ -409,10 +407,10 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="post-hoc-comparisons" class="section level3 hasAnchor" number="7.5.3">
 <h3><span class="header-section-number">7.5.3</span> <em>Post hoc comparisons </em><a href="introduction-to-analysis-of-variance-anova.html#post-hoc-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The ANOVA results alone do not give us a complete picture of the differences between urban landcover types. Some groups actually look quite similar. You must check to see how the means compare between groups to make a full statistical conclusion. You would want to highlight that only some groups may differ from each other when drawing conclusions about the urban environment impacts on species richness. This pairwise comparison between groups is called a post hoc test. Tukey’s HSD (Honestly Significant Difference) test can be used to conduct this comparison.There is a simple built in function in R. You just have to give the name of the variable that has the ANOVA results.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="introduction-to-analysis-of-variance-anova.html#cb162-1" tabindex="-1"></a><span class="co">#run Tukey HSD</span></span>
-<span id="cb162-2"><a href="introduction-to-analysis-of-variance-anova.html#cb162-2" tabindex="-1"></a>tukeyT <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(in.aov)</span>
-<span id="cb162-3"><a href="introduction-to-analysis-of-variance-anova.html#cb162-3" tabindex="-1"></a><span class="co">#view results</span></span>
-<span id="cb162-4"><a href="introduction-to-analysis-of-variance-anova.html#cb162-4" tabindex="-1"></a>tukeyT</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="introduction-to-analysis-of-variance-anova.html#cb158-1" tabindex="-1"></a><span class="co">#run Tukey HSD</span></span>
+<span id="cb158-2"><a href="introduction-to-analysis-of-variance-anova.html#cb158-2" tabindex="-1"></a>tukeyT <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(in.aov)</span>
+<span id="cb158-3"><a href="introduction-to-analysis-of-variance-anova.html#cb158-3" tabindex="-1"></a><span class="co">#view results</span></span>
+<span id="cb158-4"><a href="introduction-to-analysis-of-variance-anova.html#cb158-4" tabindex="-1"></a>tukeyT</span></code></pre></div>
 <pre class="bg-info"><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
 
@@ -426,12 +424,12 @@ Suburban-Dense      3.785714  -0.8060261  8.3774547 0.1456297
 Natural-Developed  11.150000   1.7397324 20.5602676 0.0128693
 Suburban-Developed  2.352381  -2.6776186  7.3823805 0.6210733
 Suburban-Natural   -8.797619 -17.9810999  0.3858618 0.0658910</code></pre>
-<p>Here you will notice that there are two group names in each row indicating which groups are being compared. A significant difference between groups means that the confidence interval in the difference between the means will not overlap with zero and will have a p-value below our confidence level threshold of 0.05. Note that this test prints a <code>p-adj</code> value. This means it has made some adjustments to account for the fact that were a comparing many means and should account for this in our calculations.</p>
+<p>Here you will notice that there are two group names in each row indicating which groups are being compared. A significant difference between groups is indicated when the confidence interval for the difference between the means does not overlap with zero. The p-value will also be below our confidence level threshold of 0.05. Note that this test prints a <code>p-adj</code> value. This means it has made some adjustments to account for the fact that were a comparing many means and should account for this in our calculations.</p>
 <p>You can also use the <code>plot</code> function and input the entire test variable to generate a plot that shows the confidence levels for the mean comparisons. This can help you get a better visualization for how close these intervals are to zero since there are a lot of numbers printed out in the table.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introduction-to-analysis-of-variance-anova.html#cb164-1" tabindex="-1"></a><span class="co">#make a plot</span></span>
-<span id="cb164-2"><a href="introduction-to-analysis-of-variance-anova.html#cb164-2" tabindex="-1"></a><span class="co">#make axes labels smaller than usual to fit on plot using cex.axis </span></span>
-<span id="cb164-3"><a href="introduction-to-analysis-of-variance-anova.html#cb164-3" tabindex="-1"></a><span class="fu">plot</span>(tukeyT, <span class="at">cex.axis=</span><span class="fl">0.75</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="introduction-to-analysis-of-variance-anova.html#cb160-1" tabindex="-1"></a><span class="co">#make a plot</span></span>
+<span id="cb160-2"><a href="introduction-to-analysis-of-variance-anova.html#cb160-2" tabindex="-1"></a><span class="co">#make axes labels smaller than usual to fit on plot using cex.axis </span></span>
+<span id="cb160-3"><a href="introduction-to-analysis-of-variance-anova.html#cb160-3" tabindex="-1"></a><span class="fu">plot</span>(tukeyT, <span class="at">cex.axis=</span><span class="fl">0.75</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
 </div>
 <div id="interpreting-the-results" class="section level3 hasAnchor" number="7.5.4">
 <h3><span class="header-section-number">7.5.4</span> <em>Interpreting the results </em><a href="introduction-to-analysis-of-variance-anova.html#interpreting-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -439,24 +437,24 @@ Suburban-Natural   -8.797619 -17.9810999  0.3858618 0.0658910</code></pre>
 <p>Typically a bar or box plot is used to show the means or quartiles of each group with letters above the data to indicate when groups are similar. For example, an ANOVA with four groups that all significantly differed from each other would show a different letter for each group like a,b,c,d. </p>
 <p>The Tukey HSD results indicate that the Dense, Developed, and Suburban are all similar. Natural differs from Dense and Developed, but not Suburban. Multiple letters can be used for a group. Dense, Developed, and Suburban all get the letter <code>a</code>. Natural will get the letter <code>b</code>. Since Suburban is similar to Natural, it will also get a <code>b</code>.</p>
 <p>The best way to add labels to a base plot in R is the the <code>text</code> function. The arguments are <code>text(x coordinates, y coordinates, text labels to add)</code>. In the code below, the coordinates and labels will be set up as vectors.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="introduction-to-analysis-of-variance-anova.html#cb165-1" tabindex="-1"></a><span class="co"># box plot</span></span>
-<span id="cb165-2"><a href="introduction-to-analysis-of-variance-anova.html#cb165-2" tabindex="-1"></a><span class="fu">plot</span>(datI<span class="sc">$</span>Richness <span class="sc">~</span> datI<span class="sc">$</span>urbanName, </span>
-<span id="cb165-3"><a href="introduction-to-analysis-of-variance-anova.html#cb165-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Urban surface&quot;</span>,</span>
-<span id="cb165-4"><a href="introduction-to-analysis-of-variance-anova.html#cb165-4" tabindex="-1"></a>     <span class="at">ylab=</span> <span class="st">&quot;Insect species Richness&quot;</span>,</span>
-<span id="cb165-5"><a href="introduction-to-analysis-of-variance-anova.html#cb165-5" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">60</span>))</span>
-<span id="cb165-6"><a href="introduction-to-analysis-of-variance-anova.html#cb165-6" tabindex="-1"></a><span class="co"># x coordinates for labels</span></span>
-<span id="cb165-7"><a href="introduction-to-analysis-of-variance-anova.html#cb165-7" tabindex="-1"></a>xname <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Dense&quot;</span>,<span class="st">&quot;Developed&quot;</span>,<span class="st">&quot;Natural&quot;</span>,<span class="st">&quot;Suburban&quot;</span>))</span>
-<span id="cb165-8"><a href="introduction-to-analysis-of-variance-anova.html#cb165-8" tabindex="-1"></a><span class="co"># y coordinates for labels</span></span>
-<span id="cb165-9"><a href="introduction-to-analysis-of-variance-anova.html#cb165-9" tabindex="-1"></a>ylabel <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">50</span>,<span class="dv">55</span>)</span>
-<span id="cb165-10"><a href="introduction-to-analysis-of-variance-anova.html#cb165-10" tabindex="-1"></a><span class="co"># labels to add</span></span>
-<span id="cb165-11"><a href="introduction-to-analysis-of-variance-anova.html#cb165-11" tabindex="-1"></a>textName <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;a,b&quot;</span>)</span>
-<span id="cb165-12"><a href="introduction-to-analysis-of-variance-anova.html#cb165-12" tabindex="-1"></a><span class="co"># add letters to existing plot</span></span>
-<span id="cb165-13"><a href="introduction-to-analysis-of-variance-anova.html#cb165-13" tabindex="-1"></a><span class="fu">text</span>(xname, <span class="co">#x coordinate</span></span>
-<span id="cb165-14"><a href="introduction-to-analysis-of-variance-anova.html#cb165-14" tabindex="-1"></a>     ylabel, <span class="co">#y coordinate</span></span>
-<span id="cb165-15"><a href="introduction-to-analysis-of-variance-anova.html#cb165-15" tabindex="-1"></a>     textName) <span class="co"># labels</span></span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="introduction-to-analysis-of-variance-anova.html#cb161-1" tabindex="-1"></a><span class="co"># box plot</span></span>
+<span id="cb161-2"><a href="introduction-to-analysis-of-variance-anova.html#cb161-2" tabindex="-1"></a><span class="fu">plot</span>(datI<span class="sc">$</span>Richness <span class="sc">~</span> datI<span class="sc">$</span>urbanName, </span>
+<span id="cb161-3"><a href="introduction-to-analysis-of-variance-anova.html#cb161-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Urban surface&quot;</span>,</span>
+<span id="cb161-4"><a href="introduction-to-analysis-of-variance-anova.html#cb161-4" tabindex="-1"></a>     <span class="at">ylab=</span> <span class="st">&quot;Insect species Richness&quot;</span>,</span>
+<span id="cb161-5"><a href="introduction-to-analysis-of-variance-anova.html#cb161-5" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">60</span>))</span>
+<span id="cb161-6"><a href="introduction-to-analysis-of-variance-anova.html#cb161-6" tabindex="-1"></a><span class="co"># x coordinates for labels</span></span>
+<span id="cb161-7"><a href="introduction-to-analysis-of-variance-anova.html#cb161-7" tabindex="-1"></a>xname <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Dense&quot;</span>,<span class="st">&quot;Developed&quot;</span>,<span class="st">&quot;Natural&quot;</span>,<span class="st">&quot;Suburban&quot;</span>))</span>
+<span id="cb161-8"><a href="introduction-to-analysis-of-variance-anova.html#cb161-8" tabindex="-1"></a><span class="co"># y coordinates for labels</span></span>
+<span id="cb161-9"><a href="introduction-to-analysis-of-variance-anova.html#cb161-9" tabindex="-1"></a>ylabel <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">50</span>,<span class="dv">55</span>)</span>
+<span id="cb161-10"><a href="introduction-to-analysis-of-variance-anova.html#cb161-10" tabindex="-1"></a><span class="co"># labels to add</span></span>
+<span id="cb161-11"><a href="introduction-to-analysis-of-variance-anova.html#cb161-11" tabindex="-1"></a>textName <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;a,b&quot;</span>)</span>
+<span id="cb161-12"><a href="introduction-to-analysis-of-variance-anova.html#cb161-12" tabindex="-1"></a><span class="co"># add letters to existing plot</span></span>
+<span id="cb161-13"><a href="introduction-to-analysis-of-variance-anova.html#cb161-13" tabindex="-1"></a><span class="fu">text</span>(xname, <span class="co">#x coordinate</span></span>
+<span id="cb161-14"><a href="introduction-to-analysis-of-variance-anova.html#cb161-14" tabindex="-1"></a>     ylabel, <span class="co">#y coordinate</span></span>
+<span id="cb161-15"><a href="introduction-to-analysis-of-variance-anova.html#cb161-15" tabindex="-1"></a>     textName) <span class="co"># labels</span></span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-151-1.png" width="672" /></p>
 <center>
-<img src="Intro-EnvData_files/figure-html/unnamed-chunk-151-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-152-1.png" width="768" />
 </center>
 </div>
 </div>

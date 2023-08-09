@@ -169,7 +169,7 @@ for(i in 1:length(a)){
 
 ## Data wrangling with `dplyr`
 
-The `dplyr` package contains a number of helpful functions for data wrangling. 
+Let's install the `dplyr` package that you used in Chapter 2:
 
 ```{r eval=FALSE}
 install.packages("dplyr")
@@ -195,17 +195,8 @@ You'll notice the output is a little different. Tidyverse contains a data struct
 
 ### Filtering data
 
-You can use the `filter` function to subset data just like you did with the `[]` bracket notation. You use the same relational and logical statements covered in activity 2. Here's a refresher:
-Operator | Interpretation | Type
----------|----------------|-----
-`==`       | equal to       | relational
-`!=`       | not equal to   | relational
-`>`       | more than (not including)   | relational
-`>=`       | more than or equal to   | relational
-`< `      | less than (not including)   | relational
-`<=`       | less than or equal to   | relational
-`&`        | and                     | logical
-`|`       | or                      | logical
+You can use the `filter` function to subset data. Refer back to Chapter 2 for a refresher on filder and  using relational and logical statements. 
+
 
 Let's remove any hours that don't have all four observations present:
 

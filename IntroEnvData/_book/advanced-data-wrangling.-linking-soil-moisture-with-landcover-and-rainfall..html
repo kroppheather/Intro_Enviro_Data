@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> Using the normal probability distribution</a></li>
 <li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
 <li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
 </ul></li>
@@ -335,8 +335,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-data-soil-moisture" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> The data: soil moisture<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-data-soil-moisture" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>soil_moisture.csv</code> file contains hourly soil moisture for each location.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb166-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
-<span id="cb166-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb166-2" tabindex="-1"></a>soil <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/soil_moisture.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb162-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
+<span id="cb162-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb162-2" tabindex="-1"></a>soil <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/soil_moisture.csv&quot;</span>)</span></code></pre></div>
 <pre class="bg-info"><code>  location doy hour soil.moist
 1 ag field 190    0  0.3469002
 2 ag field 190    1  0.3456291
@@ -346,23 +346,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 6 ag field 190    5  0.3412638</code></pre>
 <p>The <code>location</code> column labels the type of land cover at the location of measurement. <code>doy</code> contains the day of year and <code>hour</code> is the hour in the day (0- 23) that the data was collected. The <code>soil.moist</code> column contains the volumetric soil moisture (cm <sup>3</sup> water cm <sup>-3</sup> soil).</p>
 <p>The <code>campus.csv</code> contains data from the campus weather station. You will use the <code>na.strings</code> argument to account formatting of the weather station data logger. Missing data is stored as <code>#N/A</code> rather than <code>NA</code>. The <code>na.strings</code> argument will convert these characters to NA in R.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb168-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
-<span id="cb168-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb168-2" tabindex="-1"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/campus.csv&quot;</span>,</span>
-<span id="cb168-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb168-3" tabindex="-1"></a>                 <span class="at">na.strings=</span> <span class="st">&quot;#N/A&quot;</span>)</span></code></pre></div>
-<pre class="bg-info"><code>           Timestamps Solar.Rad.W.m2 Precipitation.mm wind.m.s
-1 2022-05-31 19:00:00          122.4                0     0.64
-2 2022-05-31 19:15:00           65.7                0     0.77
-3 2022-05-31 19:30:00           47.1                0     0.58
-4 2022-05-31 19:45:00           33.9                0     0.62
-5 2022-05-31 20:00:00           21.1                0     0.57
-6 2022-05-31 20:15:00           12.7                0     0.54
-  air.temp.c
-1       27.8
-2       27.2
-3       26.7
-4       25.9
-5       25.0
-6       24.2</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb164-1" tabindex="-1"></a><span class="co">#read in soil moisture data</span></span>
+<span id="cb164-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb164-2" tabindex="-1"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity07/campus.csv&quot;</span>,</span>
+<span id="cb164-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb164-3" tabindex="-1"></a>                 <span class="at">na.strings=</span> <span class="st">&quot;#N/A&quot;</span>)</span></code></pre></div>
+<pre class="bg-info"><code>           Timestamps Solar.Rad.W.m2 Precipitation.mm wind.m.s air.temp.c
+1 2022-05-31 19:00:00          122.4                0     0.64       27.8
+2 2022-05-31 19:15:00           65.7                0     0.77       27.2
+3 2022-05-31 19:30:00           47.1                0     0.58       26.7
+4 2022-05-31 19:45:00           33.9                0     0.62       25.9
+5 2022-05-31 20:00:00           21.1                0     0.57       25.0
+6 2022-05-31 20:15:00           12.7                0     0.54       24.2</code></pre>
 <p>The weather data is collected every 15 minutes. The <code>Timestamps</code> columns contains the date and time information. <code>Solar.Rad.W.m2</code> column contains the solar radiation (W m<sup>-2</sup>), <code>Precipitation.mm</code> contains the precipitation data. We will only look at data in the summer of 2022. During the summer, the only form of precipitation is rainfall (no hail or snow). <code>wind.m.s</code> contains the average wind speed (m s<sup>-1</sup>). <code>air.temp.c</code> is the air temperature (degrees C).</p>
 </div>
 </div>
@@ -371,51 +364,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-lubridate-package" class="section level3 hasAnchor" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> The lubridate package<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#the-lubridate-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lubridate makes working with dates easier than base R. Let’s install and load the package:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb170-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lubridate&quot;</span>)</span>
-<span id="cb170-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb170-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb166-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lubridate&quot;</span>)</span>
+<span id="cb166-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb166-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
 <p><a href="https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf" class="uri">https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf</a></p>
 </div>
 <div id="parsing-datetime" class="section level3 hasAnchor" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> Parsing date/time<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#parsing-datetime" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In base R, you had to specify the date formatting with <code>as.Date</code> to convert the vector from characters to date. <code>lubridate</code> makes standardizing dates easier with the function that is named based on the order of your date formatting where <code>y</code>=year, <code>m</code>= month, <code>d</code> = day, <code>h</code> = hour, <code>m</code>=minute, <code>s</code>. The function works by combing the date and time elements that are in your date data. If both are in the same column then you separate the date and time letters with an underscore. You can set the timezone with the argument <code>tz</code></p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb171-1" tabindex="-1"></a>exampleDate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2021-01-10 05:23:30&quot;</span>)</span>
-<span id="cb171-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb171-2" tabindex="-1"></a><span class="co">#parse date with year, month, day hour:minute:second</span></span>
-<span id="cb171-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb171-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb167-1" tabindex="-1"></a>exampleDate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2021-01-10 05:23:30&quot;</span>)</span>
+<span id="cb167-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb167-2" tabindex="-1"></a><span class="co">#parse date with year, month, day hour:minute:second</span></span>
+<span id="cb167-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb167-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate)</span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-1" tabindex="-1"></a><span class="co">#parse date with timezone so that it is always in NY time</span></span>
-<span id="cb173-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-2" tabindex="-1"></a><span class="co">#will account for daylight savings. Time local to NY</span></span>
-<span id="cb173-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb169-1" tabindex="-1"></a><span class="co">#parse date with timezone so that it is always in NY time</span></span>
+<span id="cb169-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb169-2" tabindex="-1"></a><span class="co">#will account for daylight savings. Time local to NY</span></span>
+<span id="cb169-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb169-3" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 EST&quot;</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-1" tabindex="-1"></a><span class="co">#eastern standard time (note this doesn&#39;t work during daylight savings)</span></span>
-<span id="cb175-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-2" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;EST&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb171-1" tabindex="-1"></a><span class="co">#eastern standard time (note this doesn&#39;t work during daylight savings)</span></span>
+<span id="cb171-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb171-2" tabindex="-1"></a><span class="fu">ymd_hms</span>(exampleDate, <span class="at">tz=</span><span class="st">&quot;EST&quot;</span>)</span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;2021-01-10 05:23:30 EST&quot;</code></pre>
 <p>You can reformat the date in a weather data <code>Timestamps</code> column:</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb177-1" tabindex="-1"></a>weather<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(weather<span class="sc">$</span>Timestamps, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb173-1" tabindex="-1"></a>weather<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(weather<span class="sc">$</span>Timestamps, <span class="at">tz=</span><span class="st">&quot;America/New_York&quot;</span>)</span></code></pre></div>
 </div>
 <div id="extracting-information-from-dates" class="section level3 hasAnchor" number="8.4.3">
 <h3><span class="header-section-number">8.4.3</span> Extracting information from dates<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#extracting-information-from-dates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are many functions in <code>lubridate</code> to extract information for dates. You can use the <code>year</code> function to extract just the year from the date. The only argument is the vector of dates:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb178-1" tabindex="-1"></a><span class="fu">year</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb174-1" tabindex="-1"></a><span class="fu">year</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
 <p>You can get the day of year with <code>yday</code>:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb179-1" tabindex="-1"></a>weather<span class="sc">$</span>doy <span class="ot">&lt;-</span> <span class="fu">yday</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb175-1" tabindex="-1"></a>weather<span class="sc">$</span>doy <span class="ot">&lt;-</span> <span class="fu">yday</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
 <p>You can also add the hour the measurement was taken</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-1" tabindex="-1"></a>weather<span class="sc">$</span>hour <span class="ot">&lt;-</span> <span class="fu">hour</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb176-1" tabindex="-1"></a>weather<span class="sc">$</span>hour <span class="ot">&lt;-</span> <span class="fu">hour</span>(weather<span class="sc">$</span>date)</span></code></pre></div>
 <p>You will notice the soil moisture had the day of year and hour for information about the time/date. You now have this information for the campus weather. Note that there are four observations for every hour since the data is taken every hour.</p>
 <center>
-<img src="Intro-EnvData_files/figure-html/unnamed-chunk-164-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-165-1.png" width="768" />
 </center>
 </div>
 </div>
 <div id="data-wrangling-with-dplyr" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> Data wrangling with <code>dplyr</code><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#data-wrangling-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The <code>dplyr</code> package contains a number of helpful functions for data wrangling.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb181-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
-<span id="cb181-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb181-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>Let’s install the <code>dplyr</code> package that you used in Chapter 2:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb177-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb177-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb177-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>You’ll want to compare the precipitation data to the soil moisture data. That will allow you to examine increases in soil moisture due to rainfall. Let’s sum up the total precipitation that occurred in the hour rather than using the individual 15 minute increments. We will want to apply to sum function to each unique <code>doy</code> and <code>hour</code> function. This means that we want to treat <code>doy</code> and <code>hour</code> as <strong>grouping variables</strong>. A group indicates that each unique value in the group describes a homogeneous feature (<em>e.g.</em> landcover, day of year). Use the <code>group_by</code> function to specify a grouping variable and sum the preciptation and count the number of observations:.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-1" tabindex="-1"></a>weatherHour <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> <span class="co"># start with weather</span></span>
-<span id="cb182-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-2" tabindex="-1"></a>  <span class="fu">group_by</span>(doy, hour) <span class="sc">%&gt;%</span> <span class="co"># doy and hour are groups</span></span>
-<span id="cb182-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">precip.mm =</span> <span class="fu">sum</span>(Precipitation.mm, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="co"># sum precipitation into a new column called precip.mm</span></span>
-<span id="cb182-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-4" tabindex="-1"></a>          <span class="at">n.precip =</span> <span class="fu">length</span>(<span class="fu">na.omit</span>(Precipitation.mm))  ) <span class="co"># number of observations used to calculate precip.mm with NA omitted</span></span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb178-1" tabindex="-1"></a>weatherHour <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> <span class="co"># start with weather</span></span>
+<span id="cb178-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb178-2" tabindex="-1"></a>  <span class="fu">group_by</span>(doy, hour) <span class="sc">%&gt;%</span> <span class="co"># doy and hour are groups</span></span>
+<span id="cb178-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb178-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">precip.mm =</span> <span class="fu">sum</span>(Precipitation.mm, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="co"># sum precipitation into a new column called precip.mm</span></span>
+<span id="cb178-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb178-4" tabindex="-1"></a>          <span class="at">n.precip =</span> <span class="fu">length</span>(<span class="fu">na.omit</span>(Precipitation.mm))  ) <span class="co"># number of observations used to calculate precip.mm with NA omitted</span></span></code></pre></div>
 <pre class="bg-info"><code># A tibble: 6 × 4
 # Groups:   doy [2]
     doy  hour precip.mm n.precip
@@ -430,25 +423,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You’ll notice the output is a little different. Tidyverse contains a data structure called a <strong>tibble</strong> A tibble is a data frame that makes it easier to access the information associated with a data frame including any relevant groups (see doy and hour listed) and the type of data in each column.</p>
 <div id="filtering-data" class="section level3 hasAnchor" number="8.5.1">
 <h3><span class="header-section-number">8.5.1</span> Filtering data<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#filtering-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>You can use the <code>filter</code> function to subset data just like you did with the <code>[]</code> bracket notation. You use the same relational and logical statements covered in activity 2. Here’s a refresher:
-Operator | Interpretation | Type
-———|—————-|—–
-<code>==</code> | equal to | relational
-<code>!=</code> | not equal to | relational
-<code>&gt;</code> | more than (not including) | relational
-<code>&gt;=</code> | more than or equal to | relational
-<code>&lt;</code> | less than (not including) | relational
-<code>&lt;=</code> | less than or equal to | relational
-<code>&amp;</code> | and | logical
-<code>|</code> | or | logical</p>
+<p>You can use the <code>filter</code> function to subset data. Refer back to Chapter 2 for a refresher on filder and using relational and logical statements.</p>
 <p>Let’s remove any hours that don’t have all four observations present:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-1" tabindex="-1"></a>weatherData <span class="ot">&lt;-</span> weatherHour <span class="sc">%&gt;%</span> <span class="co"># refer to weatherHour data frame</span></span>
-<span id="cb184-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-2" tabindex="-1"></a>  <span class="fu">filter</span>(n.precip <span class="sc">==</span> <span class="dv">4</span>) <span class="co"># only keep rows with exactly 4 observations in the hour </span></span>
-<span id="cb184-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-3" tabindex="-1"></a><span class="co"># rows in new data frame</span></span>
-<span id="cb184-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-4" tabindex="-1"></a><span class="fu">nrow</span>(weatherData)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-1" tabindex="-1"></a>weatherData <span class="ot">&lt;-</span> weatherHour <span class="sc">%&gt;%</span> <span class="co"># refer to weatherHour data frame</span></span>
+<span id="cb180-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-2" tabindex="-1"></a>  <span class="fu">filter</span>(n.precip <span class="sc">==</span> <span class="dv">4</span>) <span class="co"># only keep rows with exactly 4 observations in the hour </span></span>
+<span id="cb180-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-3" tabindex="-1"></a><span class="co"># rows in new data frame</span></span>
+<span id="cb180-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb180-4" tabindex="-1"></a><span class="fu">nrow</span>(weatherData)</span></code></pre></div>
 <pre class="bg-info"><code>[1] 3358</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb186-1" tabindex="-1"></a><span class="co"># rows in old data frame</span></span>
-<span id="cb186-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb186-2" tabindex="-1"></a><span class="fu">nrow</span>(weatherHour)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-1" tabindex="-1"></a><span class="co"># rows in old data frame</span></span>
+<span id="cb182-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb182-2" tabindex="-1"></a><span class="fu">nrow</span>(weatherHour)</span></code></pre></div>
 <pre class="bg-info"><code>[1] 3365</code></pre>
 </div>
 <div id="joining-data-tables" class="section level3 hasAnchor" number="8.5.2">
@@ -460,9 +443,9 @@ Operator | Interpretation | Type
 <p>Let’s explore the types of joins by combining the soil moisture and precipitation observations.</p>
 <p>A <strong>left</strong> join preserves the structure of the left table (<code>left_join</code>. Any data present in the left table are kept. Columns from the right table are matched to the identifying columns in the left table. Any data present in the left table, but not in the right table results in missing data in the new columns. Data are present in the right table but not in the left are not added in the join. The <strong>right</strong> join follows the same rules (<code>right_join</code>), preserving the structure of the right table.</p>
 <p>You can do a join with soil moisture as the left table and the hourly precipitation weather data as the right table. Each function is named by the type of join.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-1" tabindex="-1"></a>soilLeftJoin <span class="ot">&lt;-</span> <span class="fu">left_join</span>(soil, <span class="co"># left table</span></span>
-<span id="cb188-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
-<span id="cb188-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-1" tabindex="-1"></a>soilLeftJoin <span class="ot">&lt;-</span> <span class="fu">left_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb184-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb184-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb184-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
 <pre class="bg-info"><code>[1] 1512</code></pre>
 <pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
@@ -472,7 +455,20 @@ Operator | Interpretation | Type
 4 ag field 190    3  0.3434466         0        4
 5 ag field 190    4  0.3423160         0        4
 6 ag field 190    5  0.3412638         0        4</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb192-1" tabindex="-1"></a>soilRightJoin <span class="ot">&lt;-</span> <span class="fu">right_join</span>(soil, <span class="co"># left table</span></span>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-1" tabindex="-1"></a>soilRightJoin <span class="ot">&lt;-</span> <span class="fu">right_join</span>(soil, <span class="co"># left table</span></span>
+<span id="cb188-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
+<span id="cb188-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb188-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
+<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
+<pre class="bg-info"><code>[1] 4366</code></pre>
+<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
+1 ag field 190    0  0.3469002         0        4
+2 ag field 190    1  0.3456291         0        4
+3 ag field 190    2  0.3443037         0        4
+4 ag field 190    3  0.3434466         0        4
+5 ag field 190    4  0.3423160         0        4
+6 ag field 190    5  0.3412638         0        4</code></pre>
+<p>A <strong>full</strong> join keeps all observations in the join. If data are present in one table, but not the other, missing values are added.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb192-1" tabindex="-1"></a>soilFullJoin <span class="ot">&lt;-</span> <span class="fu">full_join</span>(soil, <span class="co"># left table</span></span>
 <span id="cb192-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb192-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
 <span id="cb192-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb192-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
@@ -484,23 +480,10 @@ Operator | Interpretation | Type
 4 ag field 190    3  0.3434466         0        4
 5 ag field 190    4  0.3423160         0        4
 6 ag field 190    5  0.3412638         0        4</code></pre>
-<p>A <strong>full</strong> join keeps all observations in the join. If data are present in one table, but not the other, missing values are added.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb196-1" tabindex="-1"></a>soilFullJoin <span class="ot">&lt;-</span> <span class="fu">full_join</span>(soil, <span class="co"># left table</span></span>
+<p>A <strong>inner</strong> join only keeps observations present in both tables.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb196-1" tabindex="-1"></a>soilInnerJoin <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(soil, <span class="co"># left table</span></span>
 <span id="cb196-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb196-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
 <span id="cb196-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb196-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
-<pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
-<pre class="bg-info"><code>[1] 4366</code></pre>
-<pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
-1 ag field 190    0  0.3469002         0        4
-2 ag field 190    1  0.3456291         0        4
-3 ag field 190    2  0.3443037         0        4
-4 ag field 190    3  0.3434466         0        4
-5 ag field 190    4  0.3423160         0        4
-6 ag field 190    5  0.3412638         0        4</code></pre>
-<p>A <strong>inner</strong> join only keeps observations present in both tables.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-1" tabindex="-1"></a>soilInnerJoin <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(soil, <span class="co"># left table</span></span>
-<span id="cb200-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-2" tabindex="-1"></a>                          weatherData, <span class="co"># right table</span></span>
-<span id="cb200-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-3" tabindex="-1"></a>                          <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;hour&quot;</span>)) <span class="co">#identifier columns</span></span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;number of rows:&quot;</code></pre>
 <pre class="bg-info"><code>[1] 1512</code></pre>
 <pre class="bg-info"><code>  location doy hour soil.moist precip.mm n.precip
@@ -511,35 +494,35 @@ Operator | Interpretation | Type
 5 ag field 190    4  0.3423160         0        4
 6 ag field 190    5  0.3412638         0        4</code></pre>
 <center>
-<img src="Intro-EnvData_files/figure-html/unnamed-chunk-177-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-178-1.png" width="768" />
 </center>
 </div>
 </div>
 <div id="conclusions" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> Conclusions<a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#conclusions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can now look at the data side by side. Let’s combine everything we have learned and look at the soil moisture on the hour with the most precipitation. For example, you can compare soil moisture at the hour with the most precipitation.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb204-1" tabindex="-1"></a><span class="co"># soil moisture on the day and hour with the most precipitation:</span></span>
-<span id="cb204-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb204-2" tabindex="-1"></a>maxSoil <span class="ot">&lt;-</span> soilInnerJoin <span class="sc">%&gt;%</span> <span class="co"># use joind data</span></span>
-<span id="cb204-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb204-3" tabindex="-1"></a>  <span class="fu">filter</span>(precip.mm <span class="sc">==</span> <span class="fu">max</span>(precip.mm)) <span class="co"># look at hour and day with the highest precipitation</span></span>
-<span id="cb204-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb204-4" tabindex="-1"></a>maxSoil</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-1" tabindex="-1"></a><span class="co"># soil moisture on the day and hour with the most precipitation:</span></span>
+<span id="cb200-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-2" tabindex="-1"></a>maxSoil <span class="ot">&lt;-</span> soilInnerJoin <span class="sc">%&gt;%</span> <span class="co"># use joind data</span></span>
+<span id="cb200-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-3" tabindex="-1"></a>  <span class="fu">filter</span>(precip.mm <span class="sc">==</span> <span class="fu">max</span>(precip.mm)) <span class="co"># look at hour and day with the highest precipitation</span></span>
+<span id="cb200-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb200-4" tabindex="-1"></a>maxSoil</span></code></pre></div>
 <pre class="bg-info"><code>    location doy hour soil.moist precip.mm n.precip
 1   ag field 199   11  0.4348943     6.221        4
 2  deciduous 199   11  0.3212613     6.221        4
 3 mowed lawn 199   11  0.3097192     6.221        4</code></pre>
 <p>You can also look at a time series of each data value:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-1" tabindex="-1"></a><span class="co">#calculate a decimal doy for plotting</span></span>
-<span id="cb206-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-2" tabindex="-1"></a>soilInnerJoin<span class="sc">$</span>TIME <span class="ot">=</span> soilInnerJoin<span class="sc">$</span>doy<span class="sc">+</span>(soilInnerJoin<span class="sc">$</span>hour<span class="sc">/</span><span class="dv">24</span>)</span>
-<span id="cb206-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-3" tabindex="-1"></a></span>
-<span id="cb206-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-4" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>soil.moist, <span class="at">color=</span>location))<span class="sc">+</span></span>
-<span id="cb206-5"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-5" tabindex="-1"></a>         <span class="fu">geom_point</span>()<span class="sc">+</span> </span>
-<span id="cb206-6"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-6" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb206-7"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)<span class="sc">+</span> </span>
-<span id="cb206-8"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb206-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Soil moisture (cm3, cm-3)&quot;</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-179-1.png" width="960" /></p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-1" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>precip.mm))<span class="sc">+</span></span>
-<span id="cb207-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-2" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span> </span>
-<span id="cb207-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb207-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Rainfall (mm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-1" tabindex="-1"></a><span class="co">#calculate a decimal doy for plotting</span></span>
+<span id="cb202-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-2" tabindex="-1"></a>soilInnerJoin<span class="sc">$</span>TIME <span class="ot">=</span> soilInnerJoin<span class="sc">$</span>doy<span class="sc">+</span>(soilInnerJoin<span class="sc">$</span>hour<span class="sc">/</span><span class="dv">24</span>)</span>
+<span id="cb202-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-3" tabindex="-1"></a></span>
+<span id="cb202-4"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-4" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>soil.moist, <span class="at">color=</span>location))<span class="sc">+</span></span>
+<span id="cb202-5"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-5" tabindex="-1"></a>         <span class="fu">geom_point</span>()<span class="sc">+</span> </span>
+<span id="cb202-6"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-6" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb202-7"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb202-8"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb202-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Soil moisture (cm3, cm-3)&quot;</span>)</span></code></pre></div>
 <p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-180-1.png" width="960" /></p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-1" tabindex="-1"></a><span class="fu">ggplot</span>(soilInnerJoin, <span class="fu">aes</span>(<span class="at">x=</span>TIME, <span class="at">y=</span>precip.mm))<span class="sc">+</span></span>
+<span id="cb203-2"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-2" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span> </span>
+<span id="cb203-3"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#cb203-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Day of Year&quot;</span>, <span class="at">y=</span><span class="st">&quot;Rainfall (mm)&quot;</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-181-1.png" width="960" /></p>
 <p>You can see that the fallow agricultural field and mowed lawn have the greatest increases in soil moisture after rainfall. The mowed lawn also has the greatest dry down in between rainfall events. Using these data wrangling skills, you will continue to explore patterns in soil moisture in activity 7.</p>
 </div>
 <div id="citations-4" class="section level2 hasAnchor" number="8.7">

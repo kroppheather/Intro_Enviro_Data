@@ -85,7 +85,7 @@ The minimum and maximum daily air temperature and total precipitation are in the
 
 ## Using packages in R
 
-We have been learning to make plots using the built in functions in R including `mean` and `max`. While working with these basic functions is useful, it can lead to a lot more coding. **Packages** add additional functions that are not located in the base functions in R. There are a total of 18,088 packages currently available on CRAN that expand the functions available in R. If you were to automatically have all of these packages and their functions loaded in R, it would take up a lot of space and too many functions would have the same name. This is why you should load only the packages needed to run the code in your script in an R session.
+We have been learning to use the built in functions in R including `mean` and `max`. While working with these basic functions is useful, it can lead to a lot more coding. **Packages** add additional functions that are not located in the base functions in R. There are a total of 18,088 packages currently available on CRAN that expand the functions available in R. If you were to simultaneously use all of these packages and their functions loaded in R, it would take up a lot of space and too many functions would have the same name. This is why you should load only the packages needed to run the code in your script in an R session.
 
 The first step in using a package, is to install it to your local computer using the `install.packages` function. **You only need to do run this once for a project in RStudio Cloud.** You will get a prompt asking what mirror you would like to download from. You may choose any mirror in the US. Let's read in a package that helps with organizing data called `dplyr`. 
 
@@ -192,7 +192,7 @@ mean(aberdeenDaily$TMAX)
 
 ```
 
-You get a NA value here. That's because there is missing data in this data set. NA is a specification that allows you to know that the data is missing and we should not expect a value. NA is handled differently in R and is neither a number nor a character. Luckily there is an argument in mean that allows us to ignore NAs in the calculation.
+You get a NA value here. That's because there is missing data in this data set. NA is a specification that indicates the data is missing. NA is handled differently in R and is neither a number nor a character. Luckily there is an argument in mean that allows us to ignore NAs in the calculation.
 
 ```{r echo=TRUE}
 # look at the mean maximum temperature for Aberdeen
@@ -208,6 +208,19 @@ sd(aberdeenDaily$TMAX, na.rm=TRUE)
 ```
 
 Now you will see the  daily maximum temperature in Aberdeen is 14.6 &deg;C. Since this is the mean across many days over decades of observations, this value indicates the typical maximum daily temperature over a long time period. 
+
+<center>
+```{r echo=FALSE, warning=FALSE,fig.width=8,fig.height=1.5}
+par(bg = rgb(229/255,214/255,232/255), mai=c(0,0.2,0,7))
+plot(load.image("/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/Leaf5.png"),   axes=FALSE)
+a <- strwrap("Why would it be poor practice to use a zero instead of a NA for missing data?",width=70)
+text(1300,75, "Check your understanding:", font=2, xpd=T, cex=1.25,adj = c(0,0))
+for(i in 1:length(a)){
+  text(1300,75+(i*400),paste(a[i]), xpd=T, cex=1.25,adj = c(0,0))
+}
+```
+
+</center>
 
 ## Summary statistics and visualizing data distributions.
 
@@ -261,7 +274,7 @@ for(i in 1:length(a)){
 
 ### _Histograms_
 
-With over 155,000 daily observations in our data file and each site has over 70 years of data. Summary statistics are helpful, but it is important to visualize the data. A graphical tool called a **histogram** can help visualize how frequently certain values are observed in the data. This is called the **data distribution**. A histogram shows the frequency of temperature observations in different **bins**. The start and end of a bin is called a break in R. The `hist` function generates a histogram.
+Summary statistics are helpful, but it is important to visualize the data. A graphical tool called a **histogram** can help visualize how frequently certain values are observed in the data. This is called the **data distribution**. A histogram shows the frequency of temperature observations in different **bins**. The start and end of a bin is called a break in R. The `hist` function generates a histogram.
 
 ```{r echo=TRUE}
 #make a histogram for Syracuse
@@ -348,7 +361,7 @@ plot(xseq, # x data
      ylab="Probability density") # label y axis
 ```
 
-The distribution describes the probability density which is the relative occurrence of all values of data. The probability density is not a probability. The bell curve of the normal distribution follows a very specific shape. In fact, let's look at a special case of the normal distribution to better understand the shape. Below is an image of the normal distribution where the mean is equal to zero and the standard deviation is equal to one. This is called a **standard normal** or a **z distribution**. Data can be converted to this scale using the calculation: `(data - mean)/standard deviation`
+The distribution describes the probability density, the relative occurrence of all values of data. The probability density is not a probability. The bell curve of the normal distribution follows a very specific shape. In fact, let's look at a special case of the normal distribution to better understand the shape. Below is an image of the normal distribution where the mean is equal to zero and the standard deviation is equal to one. This is called a **standard normal** or a **z distribution**. Data can be converted to this scale using the calculation: `(data - mean)/standard deviation`
 
 <center>
 ![](/Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/tutorial_2/Standard_Normal_Distribution.png)
@@ -356,7 +369,7 @@ The distribution describes the probability density which is the relative occurre
 
 
 
-Probability distributions all have functions in R. Below, you can see the `dnorm` function is used to generate the probability density for a range of temperature values in the plot. Remember this probability density alone just gives us the overall shape and relative occurrence, but the density at any given value is not an actual probability. The arguments for `dnorm`, values to calculate the probability density, the mean, and the standard deviation. You can **plot** a normal distribution like the one above by making a sequence of numbers (`seq`) to draw the curve for. A plot will require basic, x and y data. You can always check the documentation of a function using the `help()` function. Simply run help with the name of a function to find the arguments and default settings in a function. Below is an example for dnorm:
+Probability distributions all have functions in R. Below, you can see the `dnorm` function is used to generate the probability density for a range of temperature values in the plot. Remember this probability density alone just gives us the overall shape and relative occurrence, but the density at any given value is not an actual probability. The arguments for `dnorm` include the values of the data (x) used to calculate the probability density, the mean, and the standard deviation. You can **plot** a normal distribution like the one above by making a sequence of numbers (`seq`) to draw the curve for. A plot will require basic, x and y data. You can always check the documentation of a function using the `help()` function. Simply run help with the name of a function to find the arguments and default settings in a function. Below is an example for dnorm:
 ```{r eval=FALSE}
 help(dnorm)
 ```
@@ -417,7 +430,7 @@ points(x.plot,
 
 You can now see the blue dashed line overlain on the histogram of Adirondack TAVE values. This is the normal distribution using the mean and standard deviation calculated from the data. You'll notice the normal distribution does a good job of modeling our data. Sometimes it underestimates a data bin and other areas are overestimated, but overall it mirrors the distribution of our data. This means we can rely on properties of the normal to help describe our data statistically! We'll learn a little more in the coming weeks about all of the functionality this offers.
 
-## _The normal probability distribution_
+## Using the normal probability distribution
 
 Let's turn to daily data and think about what an abnormally warm day might entail. For this exercise, let's look at daily values for Aberdeen, Washington using the `aberdeenDaily` data frame that you created earlier:
 
@@ -483,7 +496,7 @@ R has a built in suite of functions for working with probability distributions. 
 help(dnorm)
 ```
 
-R uses p to designate probability. If we use **pnorm**, we can enter a number as the first argument (the next two arguments are always the mean and standard deviation for the normal), the output will be the **probability of observing that value AND all values below it to -$\infty$.** Let's calculate the probability of below freezing temperatures. Don't forget that probabilities always range from 0 to 1. Integrating across the normal between values of -$\infty$ to $\infty$ to get a probability of 1 in the normal. Below we'll just focus on all values below freezing:
+R uses p to designate probability. In **pnorm**, a value in the data is the first argument (the next two arguments are always the mean and standard deviation for the normal). The output will be the **probability of observing that value AND all values below it to -$\infty$.** Let's calculate the probability of below freezing temperatures. Don't forget that probabilities always range from 0 to 1. Integrating across the normal between values of -$\infty$ to $\infty$ to get a probability of 1 in the normal. Below we'll just focus on all values below freezing:
 
 ```{r echo=TRUE}
 #pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)
@@ -540,7 +553,7 @@ polygon(c(x.sub,rev(x.sub)),
 		col="darkgoldenrod3", border =NA)
 ```
 
-Now let's evaluate the probability of high temperatures. Knowing that the entire distribution adds up to 1, you can also find the area above a value by subtracting the probability below that given value from 1. For example, let's look at the probability of temperatures above 20 degrees C. 
+Now let's evaluate the probability of high temperatures. Knowing that the entire distribution adds up to 1, you can find the **probability for a data value and all values above it** by subtracting the pnorm probability from 1. For example, let's look at the probability of temperatures above 20 degrees C. 
 ```{r echo=TRUE}
 #pnrom of 20 gives me all probability (area of the curve) below 20 
 #subtracting from one leaves me with the area above 20
@@ -562,7 +575,7 @@ polygon(c(x.sub,rev(x.sub)),
 		col="darkgoldenrod3", border =NA)
 ```
 
-There **qnorm** function will return the value associated with a probability. This is the value in which all values at or below the value equal that probability. Let's use this to evaluate extreme weather events. Let's assume everything that occurs with a probability of less than 10% of the time (either hot or cold so anything above 95% or anything below 5%) is unusual. Let's examine the temperature value that would be considered unusually high in Aberdeen: 
+There **qnorm** function will return the value associated with a probability. This is the value in which all values at or below the value are equal to that probability. Let's use this to evaluate extreme weather events. Let's assume everything that occurs with a probability of less than 10% of the time (either hot or cold so anything above 95% or anything below 5%) is unusual. Let's examine the temperature value that would be considered unusually high in Aberdeen: 
 
 ```{r echo=TRUE}
 #qnorm gives me the value at which all values and below equal the probability in my argument

@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.7.1" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions"><i class="fa fa-check"></i><b>3.7.1</b> <em>Normal distributions</em></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> <em>The normal probability distribution</em></a></li>
+<li class="chapter" data-level="3.8" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#using-the-normal-probability-distribution"><i class="fa fa-check"></i><b>3.8</b> Using the normal probability distribution</a></li>
 <li class="chapter" data-level="3.9" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#other-distributions"><i class="fa fa-check"></i><b>3.9</b> <em>Other distributions</em></a></li>
 <li class="chapter" data-level="3.10" data-path="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#citations"><i class="fa fa-check"></i><b>3.10</b> Citations</a></li>
 </ul></li>
@@ -324,10 +324,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="photos/tutorial_5/Selawik_Lake_by_Sentinel-2.jpg" /></p>
 <em>Example of Satellite imagery that can be used to measure and characterize lakes and surface water. Image credit: Contains modified Copernicus Sentinel data 2018, CC BY-SA 3.0 IGO, via Wikimedia Commons.</em>
 </center>
-<p>Surface water can be seen as the black areas in the photographs. Above the red arrow indicates the presence of the beaver dam that appeared in 2012 and the subsequent flooding. Yellow arrows indicate the areas where the frozen ground (permafrost) is beginning to thaw due to the newly formed surface water coverage.</p>
 <p>Jones and his coauthors analyzed satellite imagery to identify the presence of beaver dams and changes in surface water in the Baldwin Peninsula Alaska. We will work with the data that examines the surface water area and the number of beaver dams over almost two decades in the tundra.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introduction-to-linear-regression.html#cb128-1" tabindex="-1"></a>datB <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity05/beaver_dam.csv&quot;</span>)</span>
-<span id="cb128-2"><a href="introduction-to-linear-regression.html#cb128-2" tabindex="-1"></a><span class="fu">head</span>(datB)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="introduction-to-linear-regression.html#cb124-1" tabindex="-1"></a>datB <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity05/beaver_dam.csv&quot;</span>)</span>
+<span id="cb124-2"><a href="introduction-to-linear-regression.html#cb124-2" tabindex="-1"></a><span class="fu">head</span>(datB)</span></code></pre></div>
 <pre class="bg-info"><code>  year dams.n area.ha
 1 2002      2     594
 2 2007      6     610
@@ -336,51 +335,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 5 2010     15     618
 6 2011     31     625</code></pre>
 <p>Here, we are interested in evaluating whether the presence of beaver dams is increasing surface water in the tundra. You will want to focus on the <code>dams.n</code> column which contains the total number of beaver dams in the area and the total area of surface water in hectares: <code>area.ha</code>.</p>
-<p>Let’s start by taking a look at the data. Here you will make a <strong>scatter plot</strong> to visualize the data. You can use the <code>plot</code> function with to generate a scatter plot with x and y data. You will also notice that I am labeling the axes (with units!!!) and specifying that filled in points should be used.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="introduction-to-linear-regression.html#cb130-1" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, datB<span class="sc">$</span>area.h, </span>
-<span id="cb130-2"><a href="introduction-to-linear-regression.html#cb130-2" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb130-3"><a href="introduction-to-linear-regression.html#cb130-3" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
-<span id="cb130-4"><a href="introduction-to-linear-regression.html#cb130-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Surface water area (ha)&quot;</span>,</span>
-<span id="cb130-5"><a href="introduction-to-linear-regression.html#cb130-5" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Number of beaver dams&quot;</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<p>Let’s start by taking a look at the data using a <strong>scatter plot</strong> to visualize the data. You can use the <code>plot</code> function with to generate a scatter plot with x and y data. You will also notice that I am labeling the axes (with units!!!) and specifying that filled in points should be used.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introduction-to-linear-regression.html#cb126-1" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, datB<span class="sc">$</span>area.h, </span>
+<span id="cb126-2"><a href="introduction-to-linear-regression.html#cb126-2" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb126-3"><a href="introduction-to-linear-regression.html#cb126-3" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
+<span id="cb126-4"><a href="introduction-to-linear-regression.html#cb126-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Surface water area (ha)&quot;</span>,</span>
+<span id="cb126-5"><a href="introduction-to-linear-regression.html#cb126-5" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Number of beaver dams&quot;</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 </div>
 <div id="set-up-the-regression" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> <em>Set up the regression</em><a href="introduction-to-linear-regression.html#set-up-the-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Just by looking at the scatter plot, the relationship looks fairly linear. The <code>lm</code> argument is used to specify a linear model. This is the function that will run the linear regression and provide all of the test information. Many of the linear regression assumptions are related to the <strong>residuals</strong>. You have to run the regression in order to look at the residuals. Note that this is a little different than previous hypothesis tests that required running the assumption checks before running the test. The <code>rstandand</code> function returns standardized residuals.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="introduction-to-linear-regression.html#cb131-1" tabindex="-1"></a><span class="co">#set up regression</span></span>
-<span id="cb131-2"><a href="introduction-to-linear-regression.html#cb131-2" tabindex="-1"></a>dam.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(datB<span class="sc">$</span>area.ha <span class="sc">~</span> datB<span class="sc">$</span>dams.n)</span>
-<span id="cb131-3"><a href="introduction-to-linear-regression.html#cb131-3" tabindex="-1"></a><span class="co">#get standardized residuals</span></span>
-<span id="cb131-4"><a href="introduction-to-linear-regression.html#cb131-4" tabindex="-1"></a>dam.res <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(dam.mod)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction-to-linear-regression.html#cb127-1" tabindex="-1"></a><span class="co">#set up regression</span></span>
+<span id="cb127-2"><a href="introduction-to-linear-regression.html#cb127-2" tabindex="-1"></a>dam.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(datB<span class="sc">$</span>area.ha <span class="sc">~</span> datB<span class="sc">$</span>dams.n)</span>
+<span id="cb127-3"><a href="introduction-to-linear-regression.html#cb127-3" tabindex="-1"></a><span class="co">#get standardized residuals</span></span>
+<span id="cb127-4"><a href="introduction-to-linear-regression.html#cb127-4" tabindex="-1"></a>dam.res <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(dam.mod)</span></code></pre></div>
 </div>
 <div id="checking-assumptions" class="section level3 hasAnchor" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> <em>Checking assumptions</em><a href="introduction-to-linear-regression.html#checking-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let’s assess all assumptions of the regression before interpreting results. First we’ll check normality of the residuals:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="introduction-to-linear-regression.html#cb132-1" tabindex="-1"></a><span class="co">#set up qq plot</span></span>
-<span id="cb132-2"><a href="introduction-to-linear-regression.html#cb132-2" tabindex="-1"></a><span class="fu">qqnorm</span>(dam.res)</span>
-<span id="cb132-3"><a href="introduction-to-linear-regression.html#cb132-3" tabindex="-1"></a><span class="co">#add qq line</span></span>
-<span id="cb132-4"><a href="introduction-to-linear-regression.html#cb132-4" tabindex="-1"></a><span class="fu">qqline</span>(dam.res)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<p>Let’s assess all assumptions of the regression before interpreting results. First we’ll check normality of the residuals using a QQ plot. <strong>QQ plots</strong> are another method for checking normality and are more robust than Shapiro Wilks when there is a large sample size. If the data are normally distributed, the data points should mostly follow the line in the qqplot indicating that the data distribution tracks what is expected from a normal distribution.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introduction-to-linear-regression.html#cb128-1" tabindex="-1"></a><span class="co">#set up qq plot</span></span>
+<span id="cb128-2"><a href="introduction-to-linear-regression.html#cb128-2" tabindex="-1"></a><span class="fu">qqnorm</span>(dam.res)</span>
+<span id="cb128-3"><a href="introduction-to-linear-regression.html#cb128-3" tabindex="-1"></a><span class="co">#add qq line</span></span>
+<span id="cb128-4"><a href="introduction-to-linear-regression.html#cb128-4" tabindex="-1"></a><span class="fu">qqline</span>(dam.res)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
 <p>You’ll notice that the points in the QQ plot mostly follow the line, but the last couple points deviate more from the line. You can also use the Shapiro-Wilks test if you are feeling unsure about whether this is significant enough to be non-normal.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="introduction-to-linear-regression.html#cb133-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(dam.res)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="introduction-to-linear-regression.html#cb129-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(dam.res)</span></code></pre></div>
 <pre class="bg-info"><code>
     Shapiro-Wilk normality test
 
 data:  dam.res
 W = 0.92993, p-value = 0.3793</code></pre>
 <p>Next let’s check the residual plot. The <code>abline</code> function adds a line to a graph, and can be useful for visualizing patterns in residuals. A line at a residual value of zero can be used to assess if there are any trends in the residuals.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="introduction-to-linear-regression.html#cb135-1" tabindex="-1"></a><span class="co">#make residual plot</span></span>
-<span id="cb135-2"><a href="introduction-to-linear-regression.html#cb135-2" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, dam.res, </span>
-<span id="cb135-3"><a href="introduction-to-linear-regression.html#cb135-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;beaver damns&quot;</span>, </span>
-<span id="cb135-4"><a href="introduction-to-linear-regression.html#cb135-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;standardized residual&quot;</span>)</span>
-<span id="cb135-5"><a href="introduction-to-linear-regression.html#cb135-5" tabindex="-1"></a><span class="co">#add a horizontal line at zero</span></span>
-<span id="cb135-6"><a href="introduction-to-linear-regression.html#cb135-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="introduction-to-linear-regression.html#cb131-1" tabindex="-1"></a><span class="co">#make residual plot</span></span>
+<span id="cb131-2"><a href="introduction-to-linear-regression.html#cb131-2" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, dam.res, </span>
+<span id="cb131-3"><a href="introduction-to-linear-regression.html#cb131-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;beaver damns&quot;</span>, </span>
+<span id="cb131-4"><a href="introduction-to-linear-regression.html#cb131-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;standardized residual&quot;</span>)</span>
+<span id="cb131-5"><a href="introduction-to-linear-regression.html#cb131-5" tabindex="-1"></a><span class="co">#add a horizontal line at zero</span></span>
+<span id="cb131-6"><a href="introduction-to-linear-regression.html#cb131-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
 <p>You can see that there are no major concerns about the regression assumptions around the residuals. You can go ahead and interpret the results.</p>
 </div>
 <div id="interpreting-results" class="section level3 hasAnchor" number="6.3.4">
 <h3><span class="header-section-number">6.3.4</span> <em>Interpreting results</em><a href="introduction-to-linear-regression.html#interpreting-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can use the <code>summary</code> function to print out the regression table.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="introduction-to-linear-regression.html#cb136-1" tabindex="-1"></a><span class="fu">summary</span>(dam.mod )</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="introduction-to-linear-regression.html#cb132-1" tabindex="-1"></a><span class="fu">summary</span>(dam.mod )</span></code></pre></div>
 <pre class="bg-info"><code>
 Call:
 lm(formula = datB$area.ha ~ datB$dams.n)
@@ -400,18 +399,18 @@ Residual standard error: 9.251 on 10 degrees of freedom
 Multiple R-squared:  0.6097,    Adjusted R-squared:  0.5707 
 F-statistic: 15.62 on 1 and 10 DF,  p-value: 0.002718</code></pre>
 <p>It can also be helpful to view your regression line on your plot. Putting the regression model in the <em>abline</em> function will automatically draw the regression line.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="introduction-to-linear-regression.html#cb138-1" tabindex="-1"></a><span class="co">#make plot of beaver dams and surface water</span></span>
-<span id="cb138-2"><a href="introduction-to-linear-regression.html#cb138-2" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, datB<span class="sc">$</span>area.h, </span>
-<span id="cb138-3"><a href="introduction-to-linear-regression.html#cb138-3" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb138-4"><a href="introduction-to-linear-regression.html#cb138-4" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
-<span id="cb138-5"><a href="introduction-to-linear-regression.html#cb138-5" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Surface water area (ha)&quot;</span>,</span>
-<span id="cb138-6"><a href="introduction-to-linear-regression.html#cb138-6" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Number of beaver dams&quot;</span>)</span>
-<span id="cb138-7"><a href="introduction-to-linear-regression.html#cb138-7" tabindex="-1"></a><span class="co">#add regression line</span></span>
-<span id="cb138-8"><a href="introduction-to-linear-regression.html#cb138-8" tabindex="-1"></a><span class="co">#make line width thicker</span></span>
-<span id="cb138-9"><a href="introduction-to-linear-regression.html#cb138-9" tabindex="-1"></a><span class="fu">abline</span>(dam.mod, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="introduction-to-linear-regression.html#cb134-1" tabindex="-1"></a><span class="co">#make plot of beaver dams and surface water</span></span>
+<span id="cb134-2"><a href="introduction-to-linear-regression.html#cb134-2" tabindex="-1"></a><span class="fu">plot</span>(datB<span class="sc">$</span>dams.n, datB<span class="sc">$</span>area.h, </span>
+<span id="cb134-3"><a href="introduction-to-linear-regression.html#cb134-3" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb134-4"><a href="introduction-to-linear-regression.html#cb134-4" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
+<span id="cb134-5"><a href="introduction-to-linear-regression.html#cb134-5" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Surface water area (ha)&quot;</span>,</span>
+<span id="cb134-6"><a href="introduction-to-linear-regression.html#cb134-6" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Number of beaver dams&quot;</span>)</span>
+<span id="cb134-7"><a href="introduction-to-linear-regression.html#cb134-7" tabindex="-1"></a><span class="co">#add regression line</span></span>
+<span id="cb134-8"><a href="introduction-to-linear-regression.html#cb134-8" tabindex="-1"></a><span class="co">#make line width thicker</span></span>
+<span id="cb134-9"><a href="introduction-to-linear-regression.html#cb134-9" tabindex="-1"></a><span class="fu">abline</span>(dam.mod, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
 <center>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-125-1.png" width="768" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-126-1.png" width="768" /></p>
 </div>
 </div>
 <div id="multiple-linear-regression-what-makes-an-early-spring" class="section level2 hasAnchor" number="6.4">
@@ -429,67 +428,67 @@ F-statistic: 15.62 on 1 and 10 DF,  p-value: 0.002718</code></pre>
 <p><em>By U.S. Geological Survey - Digital representation of "Atlas of United States Trees" by Elbert L. Little, Jr. [1], Public Domain</em></p>
 </center>
 <p>Read in the data:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="introduction-to-linear-regression.html#cb139-1" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/red_maple_pheno.csv&quot;</span>)</span></code></pre></div>
-<p>The data contains the day of year (<code>doy</code>) that leaf out occured and the year (<code>year</code>) of occurrence. Day of year counts the days in the year where January 1st is day of year 1 and December 31st (non-leap year) is day of year 365. There are also latitude (<code>Lat</code>) and longitude (<code>Long</code>) observations for each leaf out event. Latitude can be associated with differences in solar radiation and temperature. Longitude lower values of longitude will be further west in the continental US and higher values will represent more eastern areas up to the Atlantic coast. There are meteorological data that describes the general environmental conditions including the maximum temperature (<code>Tmax</code>, <span class="math inline">\(^\circ\)</span> C ), minimum temperature (<code>Tmin</code>, <span class="math inline">\(^\circ\)</span> C ), precipitation (<code>Prcp</code>, mm) for each location of measurement. There is also an elevation observation (<code>elev</code>, m). Higher elevations can be associated with colder temperatures and longer periods of snow cover. There is also a description of whether the site is urban or rural (<code>siteDesc</code>, “Urban” or “Rural”). The main variable of interest is the <code>doy</code> variable that describes when the leaf out occurred. Let’s take a look at how that is related to to variables like the maximum temperature and precipitation.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="introduction-to-linear-regression.html#cb135-1" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/red_maple_pheno.csv&quot;</span>)</span></code></pre></div>
+<p>The data contains the day of year (<code>doy</code>) that leaf out occured and the year (<code>year</code>) of occurrence. Day of year counts the days in the year where January 1st is day of year 1 and December 31st (non-leap year) is day of year 365. There are also latitude (<code>Lat</code>) and longitude (<code>Long</code>) observations for each leaf out event. Latitude can be associated with differences in solar radiation and temperature. Lower values of longitude will be further west in the continental US and higher values will represent more eastern areas up to the Atlantic coast. The csv includes meteorological data for an observation including the maximum temperature (<code>Tmax</code>, <span class="math inline">\(^\circ\)</span> C ), minimum temperature (<code>Tmin</code>, <span class="math inline">\(^\circ\)</span> C ), precipitation (<code>Prcp</code>, mm) for each location of measurement. There is also an elevation observation (<code>elev</code>, m). Higher elevations can be associated with colder temperatures and longer periods of snow cover. There is also a description of whether the site is urban or rural (<code>siteDesc</code>, “Urban” or “Rural”). The main variable of interest is the <code>doy</code> variable that describes when the leaf out occurred. Let’s take a look at how that is related to to variables like the maximum temperature and precipitation.</p>
 </div>
 </div>
 <div id="panels-of-bivariate-plots" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> <em>Panels of bivariate plots</em><a href="introduction-to-linear-regression.html#panels-of-bivariate-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sometimes it useful to view bivariate plots (two variables) side by side for a multiple regression. You can look at plots side by side using the <code>par</code> function. <code>par</code> specifies parameters around plotting and you can use arguments like <code>mfrow</code> to specify showing multiple plots in a panel. The <code>mfrow</code> argument needs a vector of two numbers for input. The first number should be the number of rows of plots in the panel and second is the number of columns of plots.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction-to-linear-regression.html#cb140-1" tabindex="-1"></a><span class="co">#set up panel of plots with one row and two columns</span></span>
-<span id="cb140-2"><a href="introduction-to-linear-regression.html#cb140-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb140-3"><a href="introduction-to-linear-regression.html#cb140-3" tabindex="-1"></a><span class="fu">plot</span>(pheno<span class="sc">$</span>Tmax,pheno<span class="sc">$</span>doy, </span>
-<span id="cb140-4"><a href="introduction-to-linear-regression.html#cb140-4" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb140-5"><a href="introduction-to-linear-regression.html#cb140-5" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
-<span id="cb140-6"><a href="introduction-to-linear-regression.html#cb140-6" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Day of leaf out&quot;</span>,</span>
-<span id="cb140-7"><a href="introduction-to-linear-regression.html#cb140-7" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Maximum temperature (C)&quot;</span>)</span>
-<span id="cb140-8"><a href="introduction-to-linear-regression.html#cb140-8" tabindex="-1"></a><span class="fu">plot</span>(pheno<span class="sc">$</span>Lat,pheno<span class="sc">$</span>doy, </span>
-<span id="cb140-9"><a href="introduction-to-linear-regression.html#cb140-9" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb140-10"><a href="introduction-to-linear-regression.html#cb140-10" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
-<span id="cb140-11"><a href="introduction-to-linear-regression.html#cb140-11" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Day of leaf out&quot;</span>,</span>
-<span id="cb140-12"><a href="introduction-to-linear-regression.html#cb140-12" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Latitude (degrees)&quot;</span>)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-128-1.png" width="768" /></p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="introduction-to-linear-regression.html#cb136-1" tabindex="-1"></a><span class="co">#set up panel of plots with one row and two columns</span></span>
+<span id="cb136-2"><a href="introduction-to-linear-regression.html#cb136-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb136-3"><a href="introduction-to-linear-regression.html#cb136-3" tabindex="-1"></a><span class="fu">plot</span>(pheno<span class="sc">$</span>Tmax,pheno<span class="sc">$</span>doy, </span>
+<span id="cb136-4"><a href="introduction-to-linear-regression.html#cb136-4" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb136-5"><a href="introduction-to-linear-regression.html#cb136-5" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
+<span id="cb136-6"><a href="introduction-to-linear-regression.html#cb136-6" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Day of leaf out&quot;</span>,</span>
+<span id="cb136-7"><a href="introduction-to-linear-regression.html#cb136-7" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Maximum temperature (C)&quot;</span>)</span>
+<span id="cb136-8"><a href="introduction-to-linear-regression.html#cb136-8" tabindex="-1"></a><span class="fu">plot</span>(pheno<span class="sc">$</span>Lat,pheno<span class="sc">$</span>doy, </span>
+<span id="cb136-9"><a href="introduction-to-linear-regression.html#cb136-9" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb136-10"><a href="introduction-to-linear-regression.html#cb136-10" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;royalblue4&quot;</span>,</span>
+<span id="cb136-11"><a href="introduction-to-linear-regression.html#cb136-11" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Day of leaf out&quot;</span>,</span>
+<span id="cb136-12"><a href="introduction-to-linear-regression.html#cb136-12" tabindex="-1"></a>     <span class="at">xlab =</span>  <span class="st">&quot;Latitude (degrees)&quot;</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-129-1.png" width="768" /></p>
 <p>Rstudio will automatically default to using this <code>par</code> argument until you tell it to stop. You can either hit the <code>broom button</code> above the plot to clear your plotting area or you can also run the command:</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="introduction-to-linear-regression.html#cb141-1" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="introduction-to-linear-regression.html#cb137-1" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
 </div>
 <div id="check-for-multi-collinearity" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> <em>Check for multi-collinearity</em><a href="introduction-to-linear-regression.html#check-for-multi-collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Temperature appears to have an impact on the timing of leaf out, but we will want to see if other variables such as precipitation or elevation of the site may impact the timing of leaf out. Let’s see if there will be any issues looking at multiple variables at once. Let’s check for correlations. We’ll do a visual assessment and look at the correlations. You can use the plot function to generate a series of <strong>covariance plots</strong>. Covariance plots set up a matrix of plots and compares all possible combinations of variables. Notice that there is a formula used here, but there is no dependent variable only many independent variables that could be used in the regression.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction-to-linear-regression.html#cb142-1" tabindex="-1"></a><span class="fu">plot</span>( <span class="sc">~</span>  pheno<span class="sc">$</span>Lat <span class="sc">+</span> pheno<span class="sc">$</span>Tmax<span class="sc">+</span> pheno<span class="sc">$</span>Tmin <span class="sc">+</span>pheno<span class="sc">$</span>Prcp <span class="sc">+</span> pheno<span class="sc">$</span>elev <span class="sc">+</span> pheno<span class="sc">$</span>siteDesc)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p>Temperature appears to have an impact on the timing of leaf out, but we will want to see if other variables such as precipitation or elevation of the site may impact the timing of leaf out. Let’s see if there will be any issues looking at multiple variables at once. Let’s check for correlations. We’ll do a visual assessment and look at the correlations. You can use the plot function to generate a series of <strong>covariance plots</strong>. Covariance plots set up a matrix of plots that compares all possible combinations of variables. Notice that there is a formula used here, but there is no dependent variable only many independent variables that could be used in the regression.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="introduction-to-linear-regression.html#cb138-1" tabindex="-1"></a><span class="fu">plot</span>( <span class="sc">~</span>  pheno<span class="sc">$</span>Lat <span class="sc">+</span> pheno<span class="sc">$</span>Tmax<span class="sc">+</span> pheno<span class="sc">$</span>Tmin <span class="sc">+</span>pheno<span class="sc">$</span>Prcp <span class="sc">+</span> pheno<span class="sc">$</span>elev <span class="sc">+</span> pheno<span class="sc">$</span>siteDesc)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
 <p>You’ll notice that there are no real patterns between temperature and precipitation variables. However, variables such as latitude and both temperature variables look to have a tight linear relationship. Just visually you can see that including both latitude and the maximum temperature would be problematic. This is not surprising given that solar radiation plays a major role in warming the earth’s surface, and the input of solar radiation varies with latitude. In this case, we will want choose the variable that best represents the process and makes the most sense. Here, we know that temperature directly impacts metabolic activity and the ability of plants to come out of dormancy. Any patterns with latitude would likely be reflecting differences in temperature across latitude, and temperature is known to directly impact leaf out.</p>
 </div>
 <div id="run-the-regression" class="section level2 hasAnchor" number="6.7">
 <h2><span class="header-section-number">6.7</span> <em>Run the regression</em><a href="introduction-to-linear-regression.html#run-the-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s build a multiple regression that investigates the relationship between leaf out phenology and latitude, precipitation, longitude, and the urban/rural designation. You’ll notice the urban/rural designation is a character. You will want to code this as a zero and one for the regression. You can use the <code>ifelse</code> function to make this variable. <code>ifelse</code> uses three arguments: the first one is a logical statement to be evaluated, the second is a value to include in the vector if the statement is true, and the last is a value to include in the vector if statement is false.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="introduction-to-linear-regression.html#cb143-1" tabindex="-1"></a>pheno<span class="sc">$</span>urID <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pheno<span class="sc">$</span>siteDesc <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code></pre></div>
+<p>Let’s build a multiple regression that investigates the relationship between leaf out and latitude, precipitation, longitude, and the urban/rural designation. You’ll notice the urban/rural designation is a character. You will want to code this as a zero and one for the regression. You can use the <code>ifelse</code> function to make this variable. <code>ifelse</code> uses three arguments: the first one is a logical statement to be evaluated, the second is a value to include in the vector if the statement is true, and the last is a value to include in the vector if statement is false.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="introduction-to-linear-regression.html#cb139-1" tabindex="-1"></a>pheno<span class="sc">$</span>urID <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pheno<span class="sc">$</span>siteDesc <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code></pre></div>
 <p>Note that this will be a binary variable in our regression.You will think a little bit more about how to interpret those results after you run the regression.</p>
 <p>The multiple regression set up in R will look similar to the simple linear regression:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction-to-linear-regression.html#cb144-1" tabindex="-1"></a>mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(pheno<span class="sc">$</span>doy <span class="sc">~</span>  pheno<span class="sc">$</span>Lat <span class="sc">+</span> pheno<span class="sc">$</span>Prcp <span class="sc">+</span> pheno<span class="sc">$</span>Long <span class="sc">+</span> pheno<span class="sc">$</span>urID)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction-to-linear-regression.html#cb140-1" tabindex="-1"></a>mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(pheno<span class="sc">$</span>doy <span class="sc">~</span>  pheno<span class="sc">$</span>Lat <span class="sc">+</span> pheno<span class="sc">$</span>Prcp <span class="sc">+</span> pheno<span class="sc">$</span>Long <span class="sc">+</span> pheno<span class="sc">$</span>urID)</span></code></pre></div>
 <p>Notice how instead of one variable there is now an added plus sign for each new variable. Now you can evaluate the assumptions just like the simple linear regression (assuming you already looked at multicollinearity before running the regression).</p>
 <p>Note that there are 1,244 observations in this data and the Shapiro Wilks test is not meant for data with more than 1,000 observations. You will want to use the qqnorm evaluation:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction-to-linear-regression.html#cb145-1" tabindex="-1"></a><span class="co">#get residuals</span></span>
-<span id="cb145-2"><a href="introduction-to-linear-regression.html#cb145-2" tabindex="-1"></a>mlr.res <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(mlr)</span>
-<span id="cb145-3"><a href="introduction-to-linear-regression.html#cb145-3" tabindex="-1"></a><span class="co">#check normality</span></span>
-<span id="cb145-4"><a href="introduction-to-linear-regression.html#cb145-4" tabindex="-1"></a><span class="fu">qqnorm</span>(mlr.res)</span>
-<span id="cb145-5"><a href="introduction-to-linear-regression.html#cb145-5" tabindex="-1"></a><span class="fu">qqline</span>(mlr.res)</span></code></pre></div>
-<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
-<p>You also will want to use the fitted values for your regression in your residual plot given that there are multiple covariates in this case. You can calculate the <strong>fitted values</strong> from the regression line for each observation using the <code>fitted</code> function:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="introduction-to-linear-regression.html#cb146-1" tabindex="-1"></a><span class="co">#get fitted values</span></span>
-<span id="cb146-2"><a href="introduction-to-linear-regression.html#cb146-2" tabindex="-1"></a>mlFitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mlr)</span>
-<span id="cb146-3"><a href="introduction-to-linear-regression.html#cb146-3" tabindex="-1"></a></span>
-<span id="cb146-4"><a href="introduction-to-linear-regression.html#cb146-4" tabindex="-1"></a><span class="co">#make residual plot</span></span>
-<span id="cb146-5"><a href="introduction-to-linear-regression.html#cb146-5" tabindex="-1"></a><span class="fu">plot</span>(mlFitted,mlr.res,<span class="at">pch=</span><span class="dv">19</span>, </span>
-<span id="cb146-6"><a href="introduction-to-linear-regression.html#cb146-6" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;regression fitted values&quot;</span>,</span>
-<span id="cb146-7"><a href="introduction-to-linear-regression.html#cb146-7" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;residual&quot;</span>)</span>
-<span id="cb146-8"><a href="introduction-to-linear-regression.html#cb146-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="introduction-to-linear-regression.html#cb141-1" tabindex="-1"></a><span class="co">#get residuals</span></span>
+<span id="cb141-2"><a href="introduction-to-linear-regression.html#cb141-2" tabindex="-1"></a>mlr.res <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(mlr)</span>
+<span id="cb141-3"><a href="introduction-to-linear-regression.html#cb141-3" tabindex="-1"></a><span class="co">#check normality</span></span>
+<span id="cb141-4"><a href="introduction-to-linear-regression.html#cb141-4" tabindex="-1"></a><span class="fu">qqnorm</span>(mlr.res)</span>
+<span id="cb141-5"><a href="introduction-to-linear-regression.html#cb141-5" tabindex="-1"></a><span class="fu">qqline</span>(mlr.res)</span></code></pre></div>
 <p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
+<p>You also will want to use the fitted values for your regression in your residual plot given that there are multiple covariates in this case. You can calculate the <strong>fitted values</strong> from the regression line for each observation using the <code>fitted</code> function:</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction-to-linear-regression.html#cb142-1" tabindex="-1"></a><span class="co">#get fitted values</span></span>
+<span id="cb142-2"><a href="introduction-to-linear-regression.html#cb142-2" tabindex="-1"></a>mlFitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mlr)</span>
+<span id="cb142-3"><a href="introduction-to-linear-regression.html#cb142-3" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="introduction-to-linear-regression.html#cb142-4" tabindex="-1"></a><span class="co">#make residual plot</span></span>
+<span id="cb142-5"><a href="introduction-to-linear-regression.html#cb142-5" tabindex="-1"></a><span class="fu">plot</span>(mlFitted,mlr.res,<span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb142-6"><a href="introduction-to-linear-regression.html#cb142-6" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;regression fitted values&quot;</span>,</span>
+<span id="cb142-7"><a href="introduction-to-linear-regression.html#cb142-7" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;residual&quot;</span>)</span>
+<span id="cb142-8"><a href="introduction-to-linear-regression.html#cb142-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
 <p><em>Does it seem strange to you that there are many data points at the same x value in this graph? What about in the bivariate plots of temperature? If it does seem strange, good eye! We will cover these issues in the homework.</em></p>
 </div>
 <div id="interpret-the-regression" class="section level2 hasAnchor" number="6.8">
 <h2><span class="header-section-number">6.8</span> <em>Interpret the regression</em><a href="introduction-to-linear-regression.html#interpret-the-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Next let’s look at the regression table to evaluate the relationships with leaf out.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction-to-linear-regression.html#cb147-1" tabindex="-1"></a><span class="fu">summary</span>(mlr)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="introduction-to-linear-regression.html#cb143-1" tabindex="-1"></a><span class="fu">summary</span>(mlr)</span></code></pre></div>
 <pre class="bg-info"><code>
 Call:
 lm(formula = pheno$doy ~ pheno$Lat + pheno$Prcp + pheno$Long + 
@@ -513,12 +512,12 @@ Residual standard error: 16.92 on 924 degrees of freedom
   (315 observations deleted due to missingness)
 Multiple R-squared:  0.6168,    Adjusted R-squared:  0.6152 
 F-statistic: 371.9 on 4 and 924 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Let’s think a little more about how this urban/rural variable and how to interpret it in a regression. Keep in mind that urban built environments can have surfaces that are typically much warmer than surrounding natural vegetated environments. Dark paved surfaces and buildings absorb greater levels of solar radiation, resulting in higher temperatures in the immediate urban area. Remember urban sites will be marked with a one and rural areas are marked with a zero. Consider the interpretation of the slope coefficient <em>x<sub>1</sub></em> versus <em>x<sub>0</sub></em>. Remember urban sites will be marked with a one and rural areas are marked with a zero.</p>
-<center>
-<img src="Intro-EnvData_files/figure-html/unnamed-chunk-136-1.png" width="768" />
-</center>
+<p>Let’s think a little more about how this urban/rural variable and how to interpret it in a regression. Keep in mind that urban built environments can have surfaces that are typically much warmer than surrounding natural vegetated environments. Dark paved surfaces and buildings absorb greater levels of solar radiation, resulting in higher temperatures in the immediate urban area. Remember urban sites will be marked with a one and rural areas are marked with a zero.</p>
 <center>
 <img src="Intro-EnvData_files/figure-html/unnamed-chunk-137-1.png" width="768" />
+</center>
+<center>
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-138-1.png" width="768" />
 </center>
 </div>
 <div id="citations-2" class="section level2 hasAnchor" number="6.9">

@@ -25,7 +25,7 @@ summary-statistics-and-visualizing-data-distributions.
 histograms
 probability-distributions
 normal-distributions
-the-normal-probability-distribution
+using-the-normal-probability-distribution
 other-distributions
 citations
 visualizing-data
