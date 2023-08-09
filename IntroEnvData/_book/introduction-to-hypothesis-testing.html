@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 5 Introduction to hypothesis testing | Introduction to Environmental Data and R" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="//Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png" />
+  
   <meta property="og:description" content="ENVST 206: Intro to Environmental Data, Hamilton College" />
   <meta name="github-repo" content="kroppheather/Intro_Enviro_data" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 5 Introduction to hypothesis testing | Introduction to Environmental Data and R" />
   
   <meta name="twitter:description" content="ENVST 206: Intro to Environmental Data, Hamilton College" />
-  <meta name="twitter:image" content="//Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png" />
+  
 
 <meta name="author" content="Heather Kropp" />
 
@@ -137,9 +137,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">An Introduction to Environmental Data</a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#course-learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Course Learning objectives</a></li>
@@ -281,9 +278,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.7" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4"><i class="fa fa-check"></i><b>8.7</b> Citations</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -337,8 +331,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </center>
 <p><em>Example of a grazing exclosure by Hugh Venables, CC BY-SA 2.0, via Wikimedia</em> Commons</p>
 <p>They measured many components of the carbon cycle including how much carbon dioxide was released from the soil versus taken in by plants. This is called net ecosystem exchange (<code>NEE</code> in g CO<sub>2</sub> m<sup>–2</sup> day<sup>–1</sup>) and it was measured in plots with exclosures (exclusion, lemmings cannot enter the plot, no herbivory) and without exclosures (control, lemmings can freely graze in the plot). Methane is another greenhouse gas that can be released by bacteria in Arctic soils typically when soils are flooded or hold a high volume of water. The vegetation at the soil surface can influence the release of methane from soils. Some plants allow methane to readily escape the soil. Plant water use and leaf also influences the amount of water in the soil. Methane emissions from Arctic soils are a major research focus of Arctic climate change research since changes in methane production in Arctic soils may amplify climate change. Other measurements also included factors that influence the carbon cycle such as soil temperature (<code>SoilTemp_1</code>, ° C). Higher soil temperature can lead to greater microbial activity leading to greater greenhouse gas emissions. The tutorial will focus on analyzing the impacts of lemming grazing of vegetation on methane fluxes. Here’s a look at the data:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-to-hypothesis-testing.html#cb105-1" tabindex="-1"></a><span class="co">#file path on Rstudio cloud</span></span>
-<span id="cb105-2"><a href="introduction-to-hypothesis-testing.html#cb105-2" tabindex="-1"></a>lemmings <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity04/lemming_JEco_HerbEx.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introduction-to-hypothesis-testing.html#cb99-1" tabindex="-1"></a><span class="co">#file path on Rstudio cloud</span></span>
+<span id="cb99-2"><a href="introduction-to-hypothesis-testing.html#cb99-2" tabindex="-1"></a>lemmings <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/activity04/lemming_JEco_HerbEx.csv&quot;</span>)</span></code></pre></div>
 <pre class="bg-info"><code>  PLOT herbivory_trt  CH4_Flux          NEE SoilTemp_1
 1  21C           Ctl -5.708030 -0.072987056       10.6
 2  22C           Ctl  3.301541  0.475255463       15.6
@@ -347,27 +341,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 5  15C           Ctl 17.189540  2.391257958        6.1
 6  11C           Ctl 15.736118  0.008257762        7.8</code></pre>
 <p>Here, there are three variables in this data, there are CH<sub>4</sub> fluxes (<code>CH4_Flux</code> mgC m<sup>–2</sup> day<sup>–1</sup>) and there is an herbivory treatment column (<code>herbivory_trt</code>) where a value of <em>Ctl</em> indicates that it was a control plot with no exclosure that was was open to lemming grazing. The <em>Ex</em> rows will indicate that an exclosure was applied preventing lemmings from accessing the site. The net ecosystem exchange column represents the amount of CO<sub>2</sub> produced in the plot (<code>NEE</code>, mgC m<sup>–2</sup> day<sup>–1</sup>). A negative value means that the plants are taking in more CO<sub>2</sub> through photosynthesis than what gets released through respiration by plants and decomposition. It will be helpful to treat the herbivory column as a factor:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introduction-to-hypothesis-testing.html#cb107-1" tabindex="-1"></a><span class="co">#convert treatment data to factor</span></span>
-<span id="cb107-2"><a href="introduction-to-hypothesis-testing.html#cb107-2" tabindex="-1"></a>lemmings<span class="sc">$</span>herbivory_trt <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction-to-hypothesis-testing.html#cb101-1" tabindex="-1"></a><span class="co">#convert treatment data to factor</span></span>
+<span id="cb101-2"><a href="introduction-to-hypothesis-testing.html#cb101-2" tabindex="-1"></a>lemmings<span class="sc">$</span>herbivory_trt <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
 <p><code>ggplot2</code> will be used plotting in this tutorial. To follow along, install the package and load it to the environment:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="introduction-to-hypothesis-testing.html#cb108-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="introduction-to-hypothesis-testing.html#cb102-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>A <strong>boxplot</strong> will help visualize the differences in methane fluxes between treatments. Here positive values indicate that methane is being emitted from the plot and a negative value indicates that there is methane uptake occurring over the plot surface. Let’s also use the <code>stat_summary</code> function in ggplot2 to add the mean to the plot too. This will really help with getting a sense for the range of data:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introduction-to-hypothesis-testing.html#cb109-1" tabindex="-1"></a><span class="fu">ggplot</span>(lemmings, <span class="fu">aes</span>(<span class="at">x=</span>herbivory_trt, <span class="at">y=</span>CH4_Flux))<span class="sc">+</span> <span class="co"># data </span></span>
-<span id="cb109-2"><a href="introduction-to-hypothesis-testing.html#cb109-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span> <span class="co"># box plot geometry</span></span>
-<span id="cb109-3"><a href="introduction-to-hypothesis-testing.html#cb109-3" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="co"># add points</span></span>
-<span id="cb109-4"><a href="introduction-to-hypothesis-testing.html#cb109-4" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="co"># for the mean</span></span>
-<span id="cb109-5"><a href="introduction-to-hypothesis-testing.html#cb109-5" tabindex="-1"></a>               <span class="at">col=</span><span class="st">&quot;tomato3&quot;</span>, <span class="co"># color (will be red points)</span></span>
-<span id="cb109-6"><a href="introduction-to-hypothesis-testing.html#cb109-6" tabindex="-1"></a>               <span class="at">size=</span><span class="dv">4</span>)<span class="sc">+</span> <span class="co"># size of point</span></span>
-<span id="cb109-7"><a href="introduction-to-hypothesis-testing.html#cb109-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Herbivory treatment&quot;</span>,</span>
-<span id="cb109-8"><a href="introduction-to-hypothesis-testing.html#cb109-8" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Methane flux (mgC m –2 day–1)&quot;</span>)<span class="sc">+</span> <span class="co"># change the axis labels</span></span>
-<span id="cb109-9"><a href="introduction-to-hypothesis-testing.html#cb109-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># plot with no gridlines</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction-to-hypothesis-testing.html#cb103-1" tabindex="-1"></a><span class="fu">ggplot</span>(lemmings, <span class="fu">aes</span>(<span class="at">x=</span>herbivory_trt, <span class="at">y=</span>CH4_Flux))<span class="sc">+</span> <span class="co"># data </span></span>
+<span id="cb103-2"><a href="introduction-to-hypothesis-testing.html#cb103-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span> <span class="co"># box plot geometry</span></span>
+<span id="cb103-3"><a href="introduction-to-hypothesis-testing.html#cb103-3" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="co"># add points</span></span>
+<span id="cb103-4"><a href="introduction-to-hypothesis-testing.html#cb103-4" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="co"># for the mean</span></span>
+<span id="cb103-5"><a href="introduction-to-hypothesis-testing.html#cb103-5" tabindex="-1"></a>               <span class="at">col=</span><span class="st">&quot;tomato3&quot;</span>, <span class="co"># color (will be red points)</span></span>
+<span id="cb103-6"><a href="introduction-to-hypothesis-testing.html#cb103-6" tabindex="-1"></a>               <span class="at">size=</span><span class="dv">4</span>)<span class="sc">+</span> <span class="co"># size of point</span></span>
+<span id="cb103-7"><a href="introduction-to-hypothesis-testing.html#cb103-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Herbivory treatment&quot;</span>,</span>
+<span id="cb103-8"><a href="introduction-to-hypothesis-testing.html#cb103-8" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Methane flux (mgC m –2 day–1)&quot;</span>)<span class="sc">+</span> <span class="co"># change the axis labels</span></span>
+<span id="cb103-9"><a href="introduction-to-hypothesis-testing.html#cb103-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># plot with no gridlines</span></span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 <p>The boxplot shows breaks the data up into quartiles (the values where we observe 0, 25, 50, 75,and 100% of the data). Here the thick black lines show the median of the data. This is the value where 50% of the data observations are above the value and below the value. The grey shaded box shows the range between 25-75%. The whiskers or lines show the rest of the range of data. Note that this function automatically separates potential outliers and shows them as open points. However, this is based on a calculation and these observations may be legitimate observations to include in our analysis. In this case, the observation is well within an observable and reasonable range, it just does not occur frequently in the exclusion plots. We have no reason to believe this data should be thrown out and will keep it in our analysis.</p>
 <p>Looking at the means for each group can also help contextualize the typical methane fluxes in each plot. The <code>tapply</code> function is similar to aggregate, and allows you to apply a function to an index. It returns a vector of output with each element labeled with the index value.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="introduction-to-hypothesis-testing.html#cb110-1" tabindex="-1"></a>meansCH4 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(lemmings<span class="sc">$</span>CH4_Flux,<span class="co">#data </span></span>
-<span id="cb110-2"><a href="introduction-to-hypothesis-testing.html#cb110-2" tabindex="-1"></a>                   lemmings<span class="sc">$</span>herbivory_trt,<span class="co">#index for each calculation</span></span>
-<span id="cb110-3"><a href="introduction-to-hypothesis-testing.html#cb110-3" tabindex="-1"></a>                   <span class="st">&quot;mean&quot;</span>) <span class="co">#function to use</span></span>
-<span id="cb110-4"><a href="introduction-to-hypothesis-testing.html#cb110-4" tabindex="-1"></a>meansCH4</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="introduction-to-hypothesis-testing.html#cb104-1" tabindex="-1"></a>meansCH4 <span class="ot">&lt;-</span> <span class="fu">tapply</span>(lemmings<span class="sc">$</span>CH4_Flux,<span class="co">#data </span></span>
+<span id="cb104-2"><a href="introduction-to-hypothesis-testing.html#cb104-2" tabindex="-1"></a>                   lemmings<span class="sc">$</span>herbivory_trt,<span class="co">#index for each calculation</span></span>
+<span id="cb104-3"><a href="introduction-to-hypothesis-testing.html#cb104-3" tabindex="-1"></a>                   <span class="st">&quot;mean&quot;</span>) <span class="co">#function to use</span></span>
+<span id="cb104-4"><a href="introduction-to-hypothesis-testing.html#cb104-4" tabindex="-1"></a>meansCH4</span></code></pre></div>
 <pre class="bg-info"><code>      Ctl        Ex 
 18.814645  5.714765 </code></pre>
 <p>At first glance, the means seem to be different. The exclusion plot mean of 5.7 g C m<sup>–2</sup> day<sup>–1</sup> seems lower than the control plot mean of 18.8 g C m<sup>–2</sup> day<sup>–1</sup>, but we need to account for the uncertainty around the mean. The t-test can help support our conclusions.</p>
@@ -394,9 +388,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="assumption-of-normality" class="section level4 hasAnchor" number="5.3.3.2">
 <h4><span class="header-section-number">5.3.3.2</span> <em>Assumption of Normality</em><a href="introduction-to-hypothesis-testing.html#assumption-of-normality" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>It can be difficult to assess normality visually especially for small sample size. Some data may be assumed to be normal based on underlying knowledge about the data. If you are unsure, the Shapiro-Wilk test can be used to test normality more quantitatively (for sample size &lt; 2,000). In R, the function for the Shapiro Wilk test is <em>shapiro.test</em> and the only argument is the vector of data that you want to test. Since each treatment group must be tested directly, we will subset the treatments directly in the function using the <code>[]</code> notation with the relational statement:</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="introduction-to-hypothesis-testing.html#cb112-1" tabindex="-1"></a><span class="co">#use the shapiro wilks test to look for normality in each treatment</span></span>
-<span id="cb112-2"><a href="introduction-to-hypothesis-testing.html#cb112-2" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing plots</span></span>
-<span id="cb112-3"><a href="introduction-to-hypothesis-testing.html#cb112-3" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="introduction-to-hypothesis-testing.html#cb106-1" tabindex="-1"></a><span class="co">#use the shapiro wilks test to look for normality in each treatment</span></span>
+<span id="cb106-2"><a href="introduction-to-hypothesis-testing.html#cb106-2" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing plots</span></span>
+<span id="cb106-3"><a href="introduction-to-hypothesis-testing.html#cb106-3" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
 <pre class="bg-info"><code>
     Shapiro-Wilk normality test
 
@@ -406,8 +400,8 @@ W = 0.87763, p-value = 0.08173</code></pre>
 <p><strong>H<sub>0</sub>:</strong> the data are normally distributed.</p>
 <p><strong>H<sub>A</sub>:</strong> the data are not normally distributed.</p>
 <p>You’ll use the conventional confidence level (<span class="math inline">\(\alpha\)</span> = 0.05) for our statistics in this class. In this test, we’ll rely on the p-value associated with the test statistic to assess how this outcome compares to our confidence level. A p-value of less than 0.05 would indicate that we should reject our null hypothesis since it would be unlikely to observe this test statistic value if the data were normally distributed. If the p-value is greater than 0.05, then we can assume that our data is normally distributed. You can see that the control plots do not deviate from a normal distribution. Next let’s test the exclusion plots:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="introduction-to-hypothesis-testing.html#cb114-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
-<span id="cb114-2"><a href="introduction-to-hypothesis-testing.html#cb114-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ex&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="introduction-to-hypothesis-testing.html#cb108-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
+<span id="cb108-2"><a href="introduction-to-hypothesis-testing.html#cb108-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ex&quot;</span>])</span></code></pre></div>
 <pre class="bg-info"><code>
     Shapiro-Wilk normality test
 
@@ -420,8 +414,8 @@ W = 0.93325, p-value = 0.4158</code></pre>
 <p><strong>H<sub>0</sub>:</strong> Groups have similar variances</p>
 <p><strong>H<sub>A</sub>:</strong> Groups do not have similar variances</p>
 <p>Here accepting the null would confirm the assumption that the variances do not differ between groups. A p-value of less than 0.05 would indicate we would be unlikely to observe the difference in variances under the null hypothesis.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="introduction-to-hypothesis-testing.html#cb116-1" tabindex="-1"></a><span class="co">#use bartlett test since testing for equal variance</span></span>
-<span id="cb116-2"><a href="introduction-to-hypothesis-testing.html#cb116-2" tabindex="-1"></a><span class="fu">bartlett.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="introduction-to-hypothesis-testing.html#cb110-1" tabindex="-1"></a><span class="co">#use bartlett test since testing for equal variance</span></span>
+<span id="cb110-2"><a href="introduction-to-hypothesis-testing.html#cb110-2" tabindex="-1"></a><span class="fu">bartlett.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt)</span></code></pre></div>
 <pre class="bg-info"><code>
     Bartlett test of homogeneity of variances
 
@@ -429,7 +423,7 @@ data:  lemmings$CH4_Flux by lemmings$herbivory_trt
 Bartlett&#39;s K-squared = 0.21236, df = 1, p-value = 0.6449</code></pre>
 <p>Here, the test statistic is well above 0.05 so you can assume the variances are equal and accept the null hypothesis.</p>
 <center>
-<img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-102-1.png" width="768" />
 </center>
 </div>
 </div>
@@ -443,7 +437,7 @@ Bartlett&#39;s K-squared = 0.21236, df = 1, p-value = 0.6449</code></pre>
 <img src="/Users/hkropp/Documents/GitHub/Intro_EnvData/bookdown/IntroEnvData/photos/tutorial_4/t%20test.png" style="width:50.0%" />
 </center>
 <p>In R, the <code>t.test</code> function performs a t-test. Keep in mind this is a two sample t-test. Our data is formatted so that the identifier of the treatments is in the <code>herbivory_trt</code> column and the data for both groups is in the <code>CH4_Flux</code> column. The easiest way to tell R how to use this data is using a <strong>formula</strong> expression. Typically formulas follow this expression: <code>Dependent variable ~ Independent variables</code>. That symbol is called a <em>tilde</em> and the key for it is usually just above your tab key and next to the 1 key on your keyboard. Whenever, you see an expression you can think of it as <em>dependent variable <strong>is a function of</strong> the independent variables</em>. This is a common way to express statistical relationships and we will build on it with more complex relationships. Here we’ll use this formula notation to indicate that the t-test for <code>CH4_Flux</code> data should be a function of the groups indicated by the <code>herbivory_trt</code> column.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="introduction-to-hypothesis-testing.html#cb118-1" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="introduction-to-hypothesis-testing.html#cb112-1" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux <span class="sc">~</span> lemmings<span class="sc">$</span>herbivory_trt, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre class="bg-info"><code>
     Two Sample t-test
 
@@ -469,16 +463,16 @@ mean in group Ctl  mean in group Ex
 <img src="/Users/hkropp/Documents/GitHub/Intro_EnvData/bookdown/IntroEnvData/photos/tutorial_4/one%20t%20test.png" style="width:50.0%" />
 </center>
 <p>The one sample t-test still requires normally distributed data. We checked this group before using the shapiro test, but here is a reminder:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="introduction-to-hypothesis-testing.html#cb120-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
-<span id="cb120-2"><a href="introduction-to-hypothesis-testing.html#cb120-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="introduction-to-hypothesis-testing.html#cb114-1" tabindex="-1"></a><span class="co">#shapiro-wilk test on grazing exclusion plots</span></span>
+<span id="cb114-2"><a href="introduction-to-hypothesis-testing.html#cb114-2" tabindex="-1"></a><span class="fu">shapiro.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>])</span></code></pre></div>
 <pre class="bg-info"><code>
     Shapiro-Wilk normality test
 
 data:  lemmings$CH4_Flux[lemmings$herbivory_trt == &quot;Ctl&quot;]
 W = 0.87763, p-value = 0.08173</code></pre>
 <p>Now you can run the one sample t-test. The <code>mu</code> argument provides the mean value used in the null hypothesis (set to zero in our case):</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="introduction-to-hypothesis-testing.html#cb122-1" tabindex="-1"></a><span class="co"># one sided t test with the null mean set to zero</span></span>
-<span id="cb122-2"><a href="introduction-to-hypothesis-testing.html#cb122-2" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>], <span class="at">mu=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="introduction-to-hypothesis-testing.html#cb116-1" tabindex="-1"></a><span class="co"># one sided t test with the null mean set to zero</span></span>
+<span id="cb116-2"><a href="introduction-to-hypothesis-testing.html#cb116-2" tabindex="-1"></a><span class="fu">t.test</span>(lemmings<span class="sc">$</span>CH4_Flux[lemmings<span class="sc">$</span>herbivory_trt <span class="sc">==</span> <span class="st">&quot;Ctl&quot;</span>], <span class="at">mu=</span><span class="dv">0</span>)</span></code></pre></div>
 <pre class="bg-info"><code>
     One Sample t-test
 
@@ -492,7 +486,7 @@ mean of x
  18.81465 </code></pre>
 <p>The t-test shows the range in the 95% confidence interval does not overlap with zero (with the lower interval at least 4 mg C per day above zero) and the p value is below the confidence level. This is a strong indicator that the methane produced in the control plot does significantly differ from zero. This helps tell us that under typical tundra conditions that include lemming grazing methane production is not negligible with a mean well above zero. This helps add context that tundra ecosystems can be a source of methane under typical, untreated conditions that allow for natural herbivory and grazing by small rodents and lemmings.</p>
 <center>
-<img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-106-1.png" width="768" />
 </center>
 </div>
 <div id="introduction-to-chi-squared-test" class="section level2 hasAnchor" number="5.5">
@@ -501,18 +495,18 @@ mean of x
 <h3><span class="header-section-number">5.5.1</span> <em>The data</em><a href="introduction-to-hypothesis-testing.html#the-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The next test is useful if you want to collect categorical data (also known as nominal data). Categorical data fits into distinct predefined categories. For example, if you counted the number of blue and red cars driving down College Hill Road in an hour, you have data in two distinct categories: # of red cars and # of blue cars.</p>
 <p>Farnsworth (2004) looked at the influence of legal protections on populations of rare plant species. Here we have two variables each with two outcomes. The first describes legal protection with outcomes being <em>protected</em> or <em>not protected</em>. The second is the status of population: <em>stable/increasing</em> or <em>decreasing</em>. Here a decreasing observation for a species would indicate that the number of plants in that species is declining over time. You will set up our data in a <strong>contigency table</strong>. Rows and columns are assigned the outcomes for the two different variables and each cell of the table shows the number of observations in those categories. Each observation describes the number of species</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="introduction-to-hypothesis-testing.html#cb124-1" tabindex="-1"></a><span class="co">#set up contigency table</span></span>
-<span id="cb124-2"><a href="introduction-to-hypothesis-testing.html#cb124-2" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">32</span>), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb124-3"><a href="introduction-to-hypothesis-testing.html#cb124-3" tabindex="-1"></a><span class="fu">colnames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
-<span id="cb124-4"><a href="introduction-to-hypothesis-testing.html#cb124-4" tabindex="-1"></a><span class="fu">rownames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="introduction-to-hypothesis-testing.html#cb118-1" tabindex="-1"></a><span class="co">#set up contigency table</span></span>
+<span id="cb118-2"><a href="introduction-to-hypothesis-testing.html#cb118-2" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">32</span>), <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb118-3"><a href="introduction-to-hypothesis-testing.html#cb118-3" tabindex="-1"></a><span class="fu">colnames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
+<span id="cb118-4"><a href="introduction-to-hypothesis-testing.html#cb118-4" tabindex="-1"></a><span class="fu">rownames</span>(species) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
 <p>You can use a mosaic plot to visualize the proportion of the total observations in each category. You will see the size of the boxes is weighted by the proportion of species within each category. A larger box indicates that there are more observations in a category.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="introduction-to-hypothesis-testing.html#cb125-1" tabindex="-1"></a><span class="co">#make a mosaic plot with an informative title and axes labels</span></span>
-<span id="cb125-2"><a href="introduction-to-hypothesis-testing.html#cb125-2" tabindex="-1"></a><span class="fu">mosaicplot</span>(species, </span>
-<span id="cb125-3"><a href="introduction-to-hypothesis-testing.html#cb125-3" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>), <span class="co"># add color to rows</span></span>
-<span id="cb125-4"><a href="introduction-to-hypothesis-testing.html#cb125-4" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>, <span class="co"># x label</span></span>
-<span id="cb125-5"><a href="introduction-to-hypothesis-testing.html#cb125-5" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>, <span class="co"># y label</span></span>
-<span id="cb125-6"><a href="introduction-to-hypothesis-testing.html#cb125-6" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Legal protection impacts on populations&quot;</span>) <span class="co"># title</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction-to-hypothesis-testing.html#cb119-1" tabindex="-1"></a><span class="co">#make a mosaic plot with an informative title and axes labels</span></span>
+<span id="cb119-2"><a href="introduction-to-hypothesis-testing.html#cb119-2" tabindex="-1"></a><span class="fu">mosaicplot</span>(species, </span>
+<span id="cb119-3"><a href="introduction-to-hypothesis-testing.html#cb119-3" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>), <span class="co"># add color to rows</span></span>
+<span id="cb119-4"><a href="introduction-to-hypothesis-testing.html#cb119-4" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>, <span class="co"># x label</span></span>
+<span id="cb119-5"><a href="introduction-to-hypothesis-testing.html#cb119-5" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>, <span class="co"># y label</span></span>
+<span id="cb119-6"><a href="introduction-to-hypothesis-testing.html#cb119-6" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Legal protection impacts on populations&quot;</span>) <span class="co"># title</span></span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 <p>If legal protections don’t have any impact on populations, we would expect the species to be randomly distributed in each population status category and legal protection category.</p>
 </div>
 <div id="chi-squared-test" class="section level3 hasAnchor" number="5.5.2">
@@ -526,40 +520,40 @@ The test statistic is calculated by comparing the observations to expectations:
 </center>
 <p>This statistic uses a <span class="math inline">\(\chi\)</span><sup>2</sup> distribution to evaluate how likely we are to observe deviations from the expected value under the null hypothesis. Higher deviations from expected values result in a greater <span class="math inline">\(\chi\)</span><sup>2</sup> statistic.</p>
 <center>
-<img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="672" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-109-1.png" width="672" />
 </center>
 <p>The <span class="math inline">\(\chi\)</span><sup>2</sup> goodness of fit test in R uses the <code>chisq.test</code> function. By default the test will assume a null hypothesis with equal proportions of occurrences for each cell of the contingency table. You can alter this if your null hypothesis should have different expected frequencies. By default, R would enter expected frequencies based on diving the total number of items in our data frame evenly. Here, with four different combinations, the null frequencies would be each population x protection outcome occurring at a rate of 25%. However, this deviates a little from statistical recommendations.</p>
 <p>It is recommended that you calculate expected frequencies that would occur when there is no association between the categories using the row and column totals. This can help account for differences in the number of samples collected in each category. For example, summing up the protected species, there are 40 species observed. The not protected species only has 33 total observations. There are also less species experiencing declines in the population compared to those experiencing stable/increasing population. The chi-squared statistic might pick up differences in these sample size by each category rather than the association between legal protection and population status.</p>
 <p>Expected frequencies can be calculated by multiplying row and column sums and dividing by the total number of observations. You can also enter expected proportions using the <code>p</code> argument if you have a hypothesis about the null proportions under a scientific premise. In this case, we only are looking for whether legal protection is <em>associated</em> with population status. This means we will calculate expected values under the null:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introduction-to-hypothesis-testing.html#cb126-1" tabindex="-1"></a><span class="co">#total number of species counted</span></span>
-<span id="cb126-2"><a href="introduction-to-hypothesis-testing.html#cb126-2" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(species)</span>
-<span id="cb126-3"><a href="introduction-to-hypothesis-testing.html#cb126-3" tabindex="-1"></a><span class="co"># sum up rows of population status</span></span>
-<span id="cb126-4"><a href="introduction-to-hypothesis-testing.html#cb126-4" tabindex="-1"></a>tot.decline <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">1</span>, ])</span>
-<span id="cb126-5"><a href="introduction-to-hypothesis-testing.html#cb126-5" tabindex="-1"></a>tot.increase <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">2</span>, ])</span>
-<span id="cb126-6"><a href="introduction-to-hypothesis-testing.html#cb126-6" tabindex="-1"></a><span class="co"># sum up columns for protection</span></span>
-<span id="cb126-7"><a href="introduction-to-hypothesis-testing.html#cb126-7" tabindex="-1"></a>tot.noProtect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[,<span class="dv">1</span>])</span>
-<span id="cb126-8"><a href="introduction-to-hypothesis-testing.html#cb126-8" tabindex="-1"></a>tot.protect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[, <span class="dv">2</span>])</span>
-<span id="cb126-9"><a href="introduction-to-hypothesis-testing.html#cb126-9" tabindex="-1"></a></span>
-<span id="cb126-10"><a href="introduction-to-hypothesis-testing.html#cb126-10" tabindex="-1"></a><span class="co">#calculate expected values:</span></span>
-<span id="cb126-11"><a href="introduction-to-hypothesis-testing.html#cb126-11" tabindex="-1"></a>expectedFreq <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(tot.decline<span class="sc">*</span>tot.noProtect, <span class="co"># each cell multiplies sums</span></span>
-<span id="cb126-12"><a href="introduction-to-hypothesis-testing.html#cb126-12" tabindex="-1"></a>                         tot.decline<span class="sc">*</span>tot.protect,</span>
-<span id="cb126-13"><a href="introduction-to-hypothesis-testing.html#cb126-13" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.noProtect,</span>
-<span id="cb126-14"><a href="introduction-to-hypothesis-testing.html#cb126-14" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.protect),</span>
-<span id="cb126-15"><a href="introduction-to-hypothesis-testing.html#cb126-15" tabindex="-1"></a>                       <span class="at">byrow=</span><span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">2</span>)<span class="sc">/</span>tot <span class="co"># divide by total numer</span></span>
-<span id="cb126-16"><a href="introduction-to-hypothesis-testing.html#cb126-16" tabindex="-1"></a></span>
-<span id="cb126-17"><a href="introduction-to-hypothesis-testing.html#cb126-17" tabindex="-1"></a><span class="fu">colnames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
-<span id="cb126-18"><a href="introduction-to-hypothesis-testing.html#cb126-18" tabindex="-1"></a><span class="fu">rownames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="introduction-to-hypothesis-testing.html#cb120-1" tabindex="-1"></a><span class="co">#total number of species counted</span></span>
+<span id="cb120-2"><a href="introduction-to-hypothesis-testing.html#cb120-2" tabindex="-1"></a>tot <span class="ot">&lt;-</span> <span class="fu">sum</span>(species)</span>
+<span id="cb120-3"><a href="introduction-to-hypothesis-testing.html#cb120-3" tabindex="-1"></a><span class="co"># sum up rows of population status</span></span>
+<span id="cb120-4"><a href="introduction-to-hypothesis-testing.html#cb120-4" tabindex="-1"></a>tot.decline <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">1</span>, ])</span>
+<span id="cb120-5"><a href="introduction-to-hypothesis-testing.html#cb120-5" tabindex="-1"></a>tot.increase <span class="ot">&lt;-</span>  <span class="fu">sum</span>(species[<span class="dv">2</span>, ])</span>
+<span id="cb120-6"><a href="introduction-to-hypothesis-testing.html#cb120-6" tabindex="-1"></a><span class="co"># sum up columns for protection</span></span>
+<span id="cb120-7"><a href="introduction-to-hypothesis-testing.html#cb120-7" tabindex="-1"></a>tot.noProtect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[,<span class="dv">1</span>])</span>
+<span id="cb120-8"><a href="introduction-to-hypothesis-testing.html#cb120-8" tabindex="-1"></a>tot.protect <span class="ot">&lt;-</span> <span class="fu">sum</span>(species[, <span class="dv">2</span>])</span>
+<span id="cb120-9"><a href="introduction-to-hypothesis-testing.html#cb120-9" tabindex="-1"></a></span>
+<span id="cb120-10"><a href="introduction-to-hypothesis-testing.html#cb120-10" tabindex="-1"></a><span class="co">#calculate expected values:</span></span>
+<span id="cb120-11"><a href="introduction-to-hypothesis-testing.html#cb120-11" tabindex="-1"></a>expectedFreq <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(tot.decline<span class="sc">*</span>tot.noProtect, <span class="co"># each cell multiplies sums</span></span>
+<span id="cb120-12"><a href="introduction-to-hypothesis-testing.html#cb120-12" tabindex="-1"></a>                         tot.decline<span class="sc">*</span>tot.protect,</span>
+<span id="cb120-13"><a href="introduction-to-hypothesis-testing.html#cb120-13" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.noProtect,</span>
+<span id="cb120-14"><a href="introduction-to-hypothesis-testing.html#cb120-14" tabindex="-1"></a>                         tot.increase<span class="sc">*</span>tot.protect),</span>
+<span id="cb120-15"><a href="introduction-to-hypothesis-testing.html#cb120-15" tabindex="-1"></a>                       <span class="at">byrow=</span><span class="cn">TRUE</span>, <span class="at">ncol=</span><span class="dv">2</span>)<span class="sc">/</span>tot <span class="co"># divide by total numer</span></span>
+<span id="cb120-16"><a href="introduction-to-hypothesis-testing.html#cb120-16" tabindex="-1"></a></span>
+<span id="cb120-17"><a href="introduction-to-hypothesis-testing.html#cb120-17" tabindex="-1"></a><span class="fu">colnames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Not.protected&quot;</span>, <span class="st">&quot;Protected&quot;</span>)</span>
+<span id="cb120-18"><a href="introduction-to-hypothesis-testing.html#cb120-18" tabindex="-1"></a><span class="fu">rownames</span>(expectedFreq ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Declining&quot;</span>, <span class="st">&quot;Stable.Increase&quot;</span>)</span></code></pre></div>
 <p>Let’s look at the mosaic plot to see the expected outcomes for the null hypothesis: there is no association between legal protection and population status:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction-to-hypothesis-testing.html#cb127-1" tabindex="-1"></a><span class="fu">mosaicplot</span>(expectedFreq, </span>
-<span id="cb127-2"><a href="introduction-to-hypothesis-testing.html#cb127-2" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>),</span>
-<span id="cb127-3"><a href="introduction-to-hypothesis-testing.html#cb127-3" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>,</span>
-<span id="cb127-4"><a href="introduction-to-hypothesis-testing.html#cb127-4" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>,</span>
-<span id="cb127-5"><a href="introduction-to-hypothesis-testing.html#cb127-5" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Null hypothesis for no association&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="introduction-to-hypothesis-testing.html#cb121-1" tabindex="-1"></a><span class="fu">mosaicplot</span>(expectedFreq, </span>
+<span id="cb121-2"><a href="introduction-to-hypothesis-testing.html#cb121-2" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;tomato3&quot;</span>, <span class="st">&quot;royalblue4&quot;</span>),</span>
+<span id="cb121-3"><a href="introduction-to-hypothesis-testing.html#cb121-3" tabindex="-1"></a>           <span class="at">xlab=</span><span class="st">&quot;population status&quot;</span>,</span>
+<span id="cb121-4"><a href="introduction-to-hypothesis-testing.html#cb121-4" tabindex="-1"></a>           <span class="at">ylab=</span><span class="st">&quot;legal protection&quot;</span>,</span>
+<span id="cb121-5"><a href="introduction-to-hypothesis-testing.html#cb121-5" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Null hypothesis for no association&quot;</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>The <code>chisq.test</code> function expects our contingency table to be converted to a vector. The <code>as.vector</code> will turn the table into a vector. This process goes column by column. So in this case the <code>Not.Protected</code> column will be the first two numbers in the vector. The <code>p</code> argument allows you to specify the proportions that would occur under expected frequencies. These values must all add up to one.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introduction-to-hypothesis-testing.html#cb128-1" tabindex="-1"></a><span class="co">#Conduct a chi-squared test</span></span>
-<span id="cb128-2"><a href="introduction-to-hypothesis-testing.html#cb128-2" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="at">x=</span>species, <span class="co"># actual data</span></span>
-<span id="cb128-3"><a href="introduction-to-hypothesis-testing.html#cb128-3" tabindex="-1"></a>           <span class="at">y=</span>expectedFreq) <span class="co"># expected values under null</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="introduction-to-hypothesis-testing.html#cb122-1" tabindex="-1"></a><span class="co">#Conduct a chi-squared test</span></span>
+<span id="cb122-2"><a href="introduction-to-hypothesis-testing.html#cb122-2" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="at">x=</span>species, <span class="co"># actual data</span></span>
+<span id="cb122-3"><a href="introduction-to-hypothesis-testing.html#cb122-3" tabindex="-1"></a>           <span class="at">y=</span>expectedFreq) <span class="co"># expected values under null</span></span></code></pre></div>
 <pre class="bg-info"><code>
     Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 
@@ -567,7 +561,7 @@ data:  species
 X-squared = 7.9642, df = 1, p-value = 0.004771</code></pre>
 <p>Here the chi-squared test statistic has a p value well under 0.05. The null hypothesis can be rejected. Note there is a correction applied to 2x2 contigency tables (Yates’ continuity correction) since the degrees of freedom is small. The null hypothesis assumed that each category combination would occur with equal frequencies. This means that the differences in population status for each legal protection category occur at rates that differ from random chance. We can conclude that legal protection status is associated with a higher number of species that have stable/increasing populations than expected by random chance. Species in areas that are not legally protected status have a higher number of species with declining populations than expected by random chance alone.</p>
 <center>
-<img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="768" />
+<img src="Intro-EnvData_files/figure-html/unnamed-chunk-113-1.png" width="768" />
 </center>
 </div>
 </div>
@@ -620,8 +614,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-stats.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,
@@ -631,7 +625,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

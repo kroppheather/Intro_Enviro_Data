@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 3 Is this normal? Evaluating historical weather data to understand extremes, changes, and climate. | Introduction to Environmental Data and R" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="//Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png" />
+  
   <meta property="og:description" content="ENVST 206: Intro to Environmental Data, Hamilton College" />
   <meta name="github-repo" content="kroppheather/Intro_Enviro_data" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 3 Is this normal? Evaluating historical weather data to understand extremes, changes, and climate. | Introduction to Environmental Data and R" />
   
   <meta name="twitter:description" content="ENVST 206: Intro to Environmental Data, Hamilton College" />
-  <meta name="twitter:image" content="//Users/hkropp/Documents/GitHub/Intro_Enviro_Data/IntroEnvData/photos/data.png" />
+  
 
 <meta name="author" content="Heather Kropp" />
 
@@ -137,9 +137,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">An Introduction to Environmental Data</a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#course-learning-objectives"><i class="fa fa-check"></i><b>1.1</b> Course Learning objectives</a></li>
@@ -281,9 +278,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.7" data-path="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html"><a href="advanced-data-wrangling.-linking-soil-moisture-with-landcover-and-rainfall..html#citations-4"><i class="fa fa-check"></i><b>8.7</b> Citations</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -363,17 +357,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb35-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Once the package is installed, you will need to load the package into your current session using the <strong>library</strong> function. <strong>You will run this every time you start a new R session.</strong></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb36-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:imager&#39;:
-
-    where</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
 <div id="reading-in-data" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> <em>Reading in data</em><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#reading-in-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You will read in data using the <code>read.csv</code> function. A csv file (comma separated values) contains the text version of an excel spreadsheet where the values for each cell are included in the file and the designation of a new cell starts with a comma. You can always resave an .xlsx file as a .csv. You can save any excel or sheets file as a .csv file when you click save as. Let’s read in a file I’ve already formatted for you.</p>
@@ -386,9 +369,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <img src="photos/tutorial_2/dataname2.png" style="width:33.0%" />
 </center>
 <p>The csv file is the one that you will want to read in. This means that you will read in the file using the entire file path as follows:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-1" tabindex="-1"></a><span class="co"># read in data</span></span>
-<span id="cb41-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-2" tabindex="-1"></a><span class="co"># cloud is always lowercase</span></span>
-<span id="cb41-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-3" tabindex="-1"></a>datW <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/noaa_weather/weather_data.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb37-1" tabindex="-1"></a><span class="co"># read in data</span></span>
+<span id="cb37-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb37-2" tabindex="-1"></a><span class="co"># cloud is always lowercase</span></span>
+<span id="cb37-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb37-3" tabindex="-1"></a>datW <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/cloud/project/noaa_weather/weather_data.csv&quot;</span>)</span></code></pre></div>
 <p>You will see <code>datW</code> appear in your global environment when you run the script. If you click on the blue button, a preview will show you the column names, data type, and the first few rows of data in each column.</p>
 <center>
 <img src="photos/tutorial_2/bluebutton2.png" style="width:50.0%" />
@@ -402,9 +385,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <img src="photos/tutorial_2/Data2.png" style="width:75.0%" />
 </center>
 <p>Before you move on, average daily temperature is often more helpful to evaluate temperature than maximum and minimum. The average daily temperature is usually halfway between the minimum and maximum so you can calculate it from the NOAA data. We can calculate it as follows:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb42-1" tabindex="-1"></a><span class="co"># calculate the average daily temperature</span></span>
-<span id="cb42-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb42-2" tabindex="-1"></a><span class="co"># This temperature will be halfway between the minimum and maximum temperature</span></span>
-<span id="cb42-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb42-3" tabindex="-1"></a>datW<span class="sc">$</span>TAVE <span class="ot">&lt;-</span> datW<span class="sc">$</span>TMIN <span class="sc">+</span> ((datW<span class="sc">$</span>TMAX<span class="sc">-</span>datW<span class="sc">$</span>TMIN)<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb38-1" tabindex="-1"></a><span class="co"># calculate the average daily temperature</span></span>
+<span id="cb38-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb38-2" tabindex="-1"></a><span class="co"># This temperature will be halfway between the minimum and maximum temperature</span></span>
+<span id="cb38-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb38-3" tabindex="-1"></a>datW<span class="sc">$</span>TAVE <span class="ot">&lt;-</span> datW<span class="sc">$</span>TMIN <span class="sc">+</span> ((datW<span class="sc">$</span>TMAX<span class="sc">-</span>datW<span class="sc">$</span>TMIN)<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
 <p>Notice how you were able to type in a single calculation and it was applied to all rows of <code>TMIN</code> and <code>TMAX</code> in <code>datW</code>. For this calculation, I created a new column in <code>datW</code> called <code>TAVE</code>. Remember the convention for referring to a column in a data frame is always <code>dataframe$column</code>.</p>
 </div>
 <div id="subsetting" class="section level3 hasAnchor" number="3.5.2">
@@ -463,8 +446,8 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 </tbody>
 </table>
 <p>A helpful function for finding out all of the station names is the <code>unique</code> function that gives all unique values without repeating them. You can refer to a single column in a data frame using the notation: <code>data.frame$column.name</code>:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb43-1" tabindex="-1"></a><span class="co">#get station names</span></span>
-<span id="cb43-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb43-2" tabindex="-1"></a><span class="fu">unique</span>(datW<span class="sc">$</span>NAME)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb39-1" tabindex="-1"></a><span class="co">#get station names</span></span>
+<span id="cb39-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb39-2" tabindex="-1"></a><span class="fu">unique</span>(datW<span class="sc">$</span>NAME)</span></code></pre></div>
 <pre class="bg-info"><code>[1] &quot;SYRACUSE HANCOCK INTERNATIONAL AIRPORT, NY US&quot;
 [2] &quot;STILLWATER RESERVOIR, NY US&quot;                  
 [3] &quot;BARROW AIRPORT, AK US&quot;                        
@@ -472,21 +455,21 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 [5] &quot;ABERDEEN, WA US&quot;                              
 [6] &quot;PHOENIX AIRPORT, AZ US&quot;                       </code></pre>
 <p>You can subset to a single site by using the <strong>filter</strong> function in <code>dplyr</code>. <code>dplyr</code> allows you to use a type of syntax called a <strong>pipe</strong>. A <strong>pipe</strong> will chain functions and data frames together. The pipe is indicated with <code>%&gt;%</code>. When a data frame is put before a pipe, any function run next in the pipe automatically refers to columns in the data frame. This saves you from typing in <code>data.frame$column</code> base formatting. Using the <strong>filter</strong> function allows you to subset data based on a relational statement. Any critera for which the statement is TRUE will be included in the output.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-1" tabindex="-1"></a><span class="co"># subset the data to a data frame with just Aberdeen</span></span>
-<span id="cb45-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-2" tabindex="-1"></a>aberdeenDaily <span class="ot">&lt;-</span> datW <span class="sc">%&gt;%</span></span>
-<span id="cb45-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-3" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;ABERDEEN, WA US&quot;</span>)</span>
-<span id="cb45-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-4" tabindex="-1"></a></span>
-<span id="cb45-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-5" tabindex="-1"></a><span class="co"># look at the mean maximum temperature for Aberdeen</span></span>
-<span id="cb45-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-6" tabindex="-1"></a><span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TMAX)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-1" tabindex="-1"></a><span class="co"># subset the data to a data frame with just Aberdeen</span></span>
+<span id="cb41-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-2" tabindex="-1"></a>aberdeenDaily <span class="ot">&lt;-</span> datW <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-3" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;ABERDEEN, WA US&quot;</span>)</span>
+<span id="cb41-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-4" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-5" tabindex="-1"></a><span class="co"># look at the mean maximum temperature for Aberdeen</span></span>
+<span id="cb41-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb41-6" tabindex="-1"></a><span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TMAX)</span></code></pre></div>
 <pre class="bg-info"><code>[1] NA</code></pre>
 <p>You get a NA value here. That’s because there is missing data in this data set. NA is a specification that allows you to know that the data is missing and we should not expect a value. NA is handled differently in R and is neither a number nor character. Luckily there is an argument in mean that allows us to ignore NAs in the calculation.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-1" tabindex="-1"></a><span class="co"># look at the mean maximum temperature for Aberdeen</span></span>
-<span id="cb47-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-2" tabindex="-1"></a><span class="co"># with na.rm argument set to true to ingnore NA</span></span>
-<span id="cb47-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-3" tabindex="-1"></a><span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TMAX, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb43-1" tabindex="-1"></a><span class="co"># look at the mean maximum temperature for Aberdeen</span></span>
+<span id="cb43-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb43-2" tabindex="-1"></a><span class="co"># with na.rm argument set to true to ingnore NA</span></span>
+<span id="cb43-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb43-3" tabindex="-1"></a><span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TMAX, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre class="bg-info"><code>[1] 14.6133</code></pre>
 <p>You will also want to calculate the <strong>standard deviation</strong> with the function <code>sd</code>. This measures the spread of the observations around the mean, and is in the same units as the mean.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb49-1" tabindex="-1"></a><span class="co"># next look at the standard deviation</span></span>
-<span id="cb49-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb49-2" tabindex="-1"></a><span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TMAX, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-1" tabindex="-1"></a><span class="co"># next look at the standard deviation</span></span>
+<span id="cb45-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb45-2" tabindex="-1"></a><span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TMAX, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre class="bg-info"><code>[1] 5.757165</code></pre>
 <p>Now you will see the daily maximum temperature in Aberdeen is 14.6 °C. Since this is the mean across many days over decades of observations, this value indicates the typical maximum daily temperature over a long time period.</p>
 </div>
@@ -494,42 +477,40 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <div id="section-3a-the-approach.-summary-statistics-and-visualizing-data-distributions." class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> <strong>Section 3a:</strong> The approach. Summary statistics and visualizing data distributions.<a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#section-3a-the-approach.-summary-statistics-and-visualizing-data-distributions." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The above method of calculating means from the previous is not very efficient. In order to calculate <strong>mean annual temperature (MAT)</strong>, we also must take the average of each annual average not the average across all days of observation (confusing, right?). We would have to calculate 71 years of averages for six locations, and that is way too much coding to do each calculation in its own line of code! However, you can use the <code>summarise</code> function to calculate means across an <strong>groups</strong>. For example This means that we want to treat <code>NAME</code> and <code>YEAR</code> as a <strong>grouping variable</strong>, and we want to treat each station as a different group. A group indicates that each unique value in the group describes a homogeneous feature (<em>e.g.</em> landcover, day of year). The <code>group_by</code> function in dplyr can be used to specify a grouping variable. <code>summarise</code> creates a new data frame with column labels for each group and any columns created in the function.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-1" tabindex="-1"></a><span class="co"># get the mean, standard deviation across all sites and years</span></span>
-<span id="cb51-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-2" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-3" tabindex="-1"></a>averageTemp <span class="ot">&lt;-</span> datW <span class="sc">%&gt;%</span> <span class="co"># all data will be in datW</span></span>
-<span id="cb51-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-4" tabindex="-1"></a>  <span class="fu">group_by</span>(NAME, YEAR) <span class="sc">%&gt;%</span> <span class="co"># NAME and YEAR as groups</span></span>
-<span id="cb51-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TAVE=</span><span class="fu">mean</span>(TAVE, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="co"># calculate average for each station x year</span></span>
-<span id="cb51-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-6" tabindex="-1"></a>            <span class="at">TAVE.sd =</span> <span class="fu">sd</span>(TAVE, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="co"># standard deviation</span></span></code></pre></div>
-<pre><code>`summarise()` has grouped output by &#39;NAME&#39;. You can override
-using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-1" tabindex="-1"></a><span class="co"># get the mean, standard deviation across all sites and years</span></span>
+<span id="cb47-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-2" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-3" tabindex="-1"></a>averageTemp <span class="ot">&lt;-</span> datW <span class="sc">%&gt;%</span> <span class="co"># all data will be in datW</span></span>
+<span id="cb47-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-4" tabindex="-1"></a>  <span class="fu">group_by</span>(NAME, YEAR) <span class="sc">%&gt;%</span> <span class="co"># NAME and YEAR as groups</span></span>
+<span id="cb47-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TAVE=</span><span class="fu">mean</span>(TAVE, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="co"># calculate average for each station x year</span></span>
+<span id="cb47-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb47-6" tabindex="-1"></a>            <span class="at">TAVE.sd =</span> <span class="fu">sd</span>(TAVE, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="co"># standard deviation</span></span></code></pre></div>
 <p>If we want to calculate the Mean Annual Temperature (MAT), then we need to average the temperature for each location across all years. This can be done with aggregate again:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-1" tabindex="-1"></a><span class="co">#calculate the mean annual average temperature for all sites (MAT)</span></span>
-<span id="cb53-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-2" tabindex="-1"></a>MAT <span class="ot">&lt;-</span> averageTemp <span class="sc">%&gt;%</span> <span class="co"># refer to averageTemp data frame</span></span>
-<span id="cb53-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-3" tabindex="-1"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">%&gt;%</span> <span class="co"># group by station name</span></span>
-<span id="cb53-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MAT =</span> <span class="fu">mean</span>(TAVE)) <span class="co"># calculate the mean for each station</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb48-1" tabindex="-1"></a><span class="co">#calculate the mean annual average temperature for all sites (MAT)</span></span>
+<span id="cb48-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb48-2" tabindex="-1"></a>MAT <span class="ot">&lt;-</span> averageTemp <span class="sc">%&gt;%</span> <span class="co"># refer to averageTemp data frame</span></span>
+<span id="cb48-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb48-3" tabindex="-1"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">%&gt;%</span> <span class="co"># group by station name</span></span>
+<span id="cb48-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb48-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MAT =</span> <span class="fu">mean</span>(TAVE)) <span class="co"># calculate the mean for each station</span></span></code></pre></div>
 <p>These average temperature values from decades of temperature can tell you about the overall climatic conditions of the different locations in the data. You can use any function in aggregate. For example, you can replace <code>mean</code> with <code>max</code> to find the annual average temperature value observed in the data.</p>
 <p>Finally, we will want to explore an individual location in more detail. It will be helpful to create a new data frame that only has the annual average temperature for the location in the Adirondack Park (Stillwater Reservoir). We can create a new data frame by subsetting the <code>averageTemp</code> data frame and assigning it a name:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb54-1" tabindex="-1"></a><span class="co"># create a data frame for only Stillwater Reservoir MAT (located in Adirondack park)</span></span>
-<span id="cb54-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb54-2" tabindex="-1"></a>adk <span class="ot">&lt;-</span> averageTemp <span class="sc">%&gt;%</span></span>
-<span id="cb54-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb54-3" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;STILLWATER RESERVOIR, NY US&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb49-1" tabindex="-1"></a><span class="co"># create a data frame for only Stillwater Reservoir MAT (located in Adirondack park)</span></span>
+<span id="cb49-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb49-2" tabindex="-1"></a>adk <span class="ot">&lt;-</span> averageTemp <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb49-3" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;STILLWATER RESERVOIR, NY US&quot;</span>) </span></code></pre></div>
 <center>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="768" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-32-1.png" width="768" /></p>
 </center>
 <div id="histograms" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> <em>Histograms</em><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are over 155,000 daily observations in our data file and each site has over 70 years of data. Summary statistics are helpful, but it is important to visualize the data. A graphical tool called a <strong>histogram</strong> can help visualize how frequently certain values are observed in the data. This is called the <strong>data distribution</strong>. A histogram shows the frequency of temperature observations in different <strong>bins</strong>. The start and end of a bin is called a break in R. The <code>hist</code> function generates a histogram.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-1" tabindex="-1"></a><span class="co">#make a histogram for Syracuse</span></span>
-<span id="cb55-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-2" tabindex="-1"></a><span class="fu">hist</span>(adk<span class="sc">$</span>TAVE,<span class="co">#data </span></span>
-<span id="cb55-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-3" tabindex="-1"></a>        <span class="at">freq=</span><span class="cn">TRUE</span>, <span class="co">#show count as discrete number</span></span>
-<span id="cb55-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-4" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Stillwater Reservoir in ADK Park&quot;</span>, <span class="co">#title of plot</span></span>
-<span id="cb55-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-5" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Average annual temperature (degrees C)&quot;</span>, <span class="co">#x axis label</span></span>
-<span id="cb55-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-6" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">&quot;Relative frequency&quot;</span>, <span class="co"># yaxis label</span></span>
-<span id="cb55-7"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-7" tabindex="-1"></a>        <span class="at">col=</span><span class="st">&quot;grey75&quot;</span>, <span class="co">#colors for bars</span></span>
-<span id="cb55-8"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-8" tabindex="-1"></a>        <span class="at">border=</span><span class="st">&quot;white&quot;</span>) <span class="co">#make the border of bars white</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-1" tabindex="-1"></a><span class="co">#make a histogram for Syracuse</span></span>
+<span id="cb50-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-2" tabindex="-1"></a><span class="fu">hist</span>(adk<span class="sc">$</span>TAVE,<span class="co">#data </span></span>
+<span id="cb50-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-3" tabindex="-1"></a>        <span class="at">freq=</span><span class="cn">TRUE</span>, <span class="co">#show count as discrete number</span></span>
+<span id="cb50-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-4" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Stillwater Reservoir in ADK Park&quot;</span>, <span class="co">#title of plot</span></span>
+<span id="cb50-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-5" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Average annual temperature (degrees C)&quot;</span>, <span class="co">#x axis label</span></span>
+<span id="cb50-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-6" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">&quot;Relative frequency&quot;</span>, <span class="co"># yaxis label</span></span>
+<span id="cb50-7"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-7" tabindex="-1"></a>        <span class="at">col=</span><span class="st">&quot;grey75&quot;</span>, <span class="co">#colors for bars</span></span>
+<span id="cb50-8"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb50-8" tabindex="-1"></a>        <span class="at">border=</span><span class="st">&quot;white&quot;</span>) <span class="co">#make the border of bars white</span></span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>You can see that annual average temperature varies between 2-7 °C in at the Stillwater Reservoir. The distribution is also fairly <em>symmetrical</em> with very high and low temperature values occurring at similar rates and most observations in the middle of the data range.</p>
 <p>To get a better idea of how the summary statistics describe the data, let’s take a closer look at the plot. I’ll add a red solid line for the mean and red dashed lines for the standard deviation from the mean. I’ll add a dotted line to mark the values that are within two standard deviations of the mean.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="816" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-34-1.png" width="816" /></p>
 <p>You can see that the mean is fairly close to the center of the distribution and the observations that occur most frequently are within 1 standard deviation of the mean. Most of the data is within 2 standard deviations of the mean. These properties are meaningful statistically, in the next section, you will learn about more formal, mathematical ways to describe data distributions.</p>
 </div>
 </div>
@@ -538,118 +519,118 @@ using the `.groups` argument.</code></pre>
 <div id="normal-distributions" class="section level3 hasAnchor" number="3.7.1">
 <h3><span class="header-section-number">3.7.1</span> <em>Normal distributions</em><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#normal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The data distribution that we just viewed has a very particular shape. The temperature observations are most frequent around the mean and we rarely observe data 2 standard deviations from the mean. The distribution is also symmetrical. We can describe this occurrence of different values of data more formally with a <strong>probability distribution</strong>. Probability distributions have a lot of mathematical properties that are useful. We use <strong>parameters</strong> to help describe the shape of the data distribution. This temperature data follows a <strong>normal distribution</strong>. This type of distribution is very common and relies on <strong>two parameters: the mean and standard deviation</strong> to describe the data distribution. Let’s take a look at a normal distribution assuming the mean and standard deviation parameters are equal to the ones observed in the Adirondack data:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>The distribution describes the probability density which is the relative occurrence of all values of data. The probability density is not a probability. The bell curve of the normal distribution follows a very specific shape. In fact, let’s look at a special case of the normal distribution to better understand the shape. Below is an image of the normal distribution where zero represents the value at the mean of the data and tick marks are designated with standard deviations. This is called a <strong>standard normal</strong> or a <strong>z distribution</strong>. Data can be converted to this scale using the calculation: <code>(data - mean)/standard deviation</code></p>
 <center>
 <img src="photos/tutorial_2/Standard_Normal_Distribution.png" />
 </center>
 <p>Probability distributions all have functions in R. Below, you can see the <code>dnorm</code> function is used to generate the probability density for a range of temperature values in the plot. Remember this probability density alone just gives us the overall shape and relative occurrence, but the density at any given value is not an actual probability. The arguments for <code>dnorm</code>, values to calculate the probability density, the mean, and the standard deviation. You can <strong>plot</strong> a normal distribution like the one above by making a sequence of numbers (<code>seq</code>) to draw the curve for. A plot will require basic, x and y data. You can always check the documentation of a function using the <code>help()</code> function. Simply run help with the name of a function to find the arguments and default settings in a function. Below is an example for dnorm:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb56-1" tabindex="-1"></a><span class="fu">help</span>(dnorm)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb51-1" tabindex="-1"></a><span class="fu">help</span>(dnorm)</span></code></pre></div>
 <p>We’ll learn more about plotting soon. For now here are the code basics to plot a normal distribution:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-1" tabindex="-1"></a><span class="co"># make a sequence of temperature values</span></span>
-<span id="cb57-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-2" tabindex="-1"></a>xseq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="co">#starting number</span></span>
-<span id="cb57-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-3" tabindex="-1"></a>            <span class="dv">8</span>,<span class="co">#ending number</span></span>
-<span id="cb57-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-4" tabindex="-1"></a>            <span class="at">by=</span><span class="fl">0.1</span>)<span class="co">#increments for making numbers</span></span>
-<span id="cb57-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-5" tabindex="-1"></a><span class="co"># calculate normal distribution pd</span></span>
-<span id="cb57-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-6" tabindex="-1"></a>xNorm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(xseq,</span>
-<span id="cb57-7"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-7" tabindex="-1"></a>               <span class="at">mean =</span> <span class="fu">mean</span>(adk<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb57-8"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-8" tabindex="-1"></a>             <span class="at">sd=</span>  <span class="fu">sd</span>(adk<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>) )</span>
-<span id="cb57-9"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-9" tabindex="-1"></a><span class="co"># make a plot</span></span>
-<span id="cb57-10"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-10" tabindex="-1"></a><span class="fu">plot</span>(xseq, <span class="co"># x data</span></span>
-<span id="cb57-11"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-11" tabindex="-1"></a>     xNorm, <span class="co"># y data</span></span>
-<span id="cb57-12"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-12" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="co"># make a line plot</span></span>
-<span id="cb57-13"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-13" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Average Annual Temperature&quot;</span>, <span class="co"># label x axis</span></span>
-<span id="cb57-14"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb57-14" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Probability density&quot;</span>) <span class="co"># label y axis</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-1" tabindex="-1"></a><span class="co"># make a sequence of temperature values</span></span>
+<span id="cb52-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-2" tabindex="-1"></a>xseq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="co">#starting number</span></span>
+<span id="cb52-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-3" tabindex="-1"></a>            <span class="dv">8</span>,<span class="co">#ending number</span></span>
+<span id="cb52-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-4" tabindex="-1"></a>            <span class="at">by=</span><span class="fl">0.1</span>)<span class="co">#increments for making numbers</span></span>
+<span id="cb52-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-5" tabindex="-1"></a><span class="co"># calculate normal distribution pd</span></span>
+<span id="cb52-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-6" tabindex="-1"></a>xNorm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(xseq,</span>
+<span id="cb52-7"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-7" tabindex="-1"></a>               <span class="at">mean =</span> <span class="fu">mean</span>(adk<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb52-8"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-8" tabindex="-1"></a>             <span class="at">sd=</span>  <span class="fu">sd</span>(adk<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>) )</span>
+<span id="cb52-9"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-9" tabindex="-1"></a><span class="co"># make a plot</span></span>
+<span id="cb52-10"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-10" tabindex="-1"></a><span class="fu">plot</span>(xseq, <span class="co"># x data</span></span>
+<span id="cb52-11"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-11" tabindex="-1"></a>     xNorm, <span class="co"># y data</span></span>
+<span id="cb52-12"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-12" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="co"># make a line plot</span></span>
+<span id="cb52-13"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-13" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Average Annual Temperature&quot;</span>, <span class="co"># label x axis</span></span>
+<span id="cb52-14"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb52-14" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Probability density&quot;</span>) <span class="co"># label y axis</span></span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>This distribution can be compared to the data observations by overlaying the two graphs:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>You can now see the blue dashed line overlain on the histogram of Adirondack TAVE values. This is the normal distribution using the mean and standard deviation calculated from the data. You’ll notice the normal distribution does a good job of modeling our data. Sometimes it underestimates a data bin and other areas are overestimated, but overall it mirrors the distribution of our data. This means we can rely on properties of the normal to help describe our data statistically! We’ll learn a little more in the coming weeks about all of the functionality this offers.</p>
 </div>
 </div>
 <div id="the-normal-probability-distribution" class="section level2 hasAnchor" number="3.8">
 <h2><span class="header-section-number">3.8</span> <em>The normal probability distribution</em><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#the-normal-probability-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s turn to daily data and think about what an abnormally warm day might entail. For this exercise, let’s look at daily values for Aberdeen, Washington using the <code>aberdeenDaily</code> data frame that you created earlier:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-1" tabindex="-1"></a><span class="co"># preview the first few lines of aberdeen daily</span></span>
-<span id="cb58-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-2" tabindex="-1"></a><span class="fu">head</span>(aberdeenDaily) </span></code></pre></div>
-<pre class="bg-info"><code>      STATION            NAME LATITUDE LONGITUDE ELEVATION       DATE PRCP TMAX
-1 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-01  5.3  5.0
-2 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-02  9.4  5.0
-3 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-03  1.0 -2.2
-4 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-04  9.7 -2.8
-5 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-05  0.0  0.6
-6 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-06 22.1  5.6
-  TMIN YEAR  TAVE
-1 -2.2 1950  1.40
-2 -7.8 1950 -1.40
-3 -7.8 1950 -5.00
-4 -7.2 1950 -5.00
-5 -3.9 1950 -1.65
-6 -1.7 1950  1.95</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-1" tabindex="-1"></a><span class="co"># preview the first few lines of aberdeen daily</span></span>
+<span id="cb53-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb53-2" tabindex="-1"></a><span class="fu">head</span>(aberdeenDaily) </span></code></pre></div>
+<pre class="bg-info"><code>      STATION            NAME LATITUDE LONGITUDE ELEVATION       DATE PRCP
+1 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-01  5.3
+2 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-02  9.4
+3 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-03  1.0
+4 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-04  9.7
+5 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-05  0.0
+6 USC00450008 ABERDEEN, WA US  46.9658 -123.8291         3 1950-01-06 22.1
+  TMAX TMIN YEAR  TAVE
+1  5.0 -2.2 1950  1.40
+2  5.0 -7.8 1950 -1.40
+3 -2.2 -7.8 1950 -5.00
+4 -2.8 -7.2 1950 -5.00
+5  0.6 -3.9 1950 -1.65
+6  5.6 -1.7 1950  1.95</code></pre>
 <p>You can see that the daily values follow a normal distribution. We can use the normal distribution to calculate the probability of different ranges of daily temperature values.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>For a given value of the data, the normal distribution has a probability density associated with observing the value. The probability density doesn’t mean anything at a given value of the data. However, when the normal distribution is integrated across a range of values, it yields a probability for the occurrence of the range of values. For those of you that haven’t had calculus, integrating is essentially taking the area under the curve between a range of numbers. In my graph below, you can see the red shading indicates the area below the value of zero on the curve. We have to keep in mind that the range of the normal distribution extends from -<span class="math inline">\(\infty\)</span> to <span class="math inline">\(\infty\)</span>. Let’s start by taking a look at all values below freezing in the normal distribution for our Aberdeen weather data. Technically this is the probability of all temperatures below freezing from zero to -<span class="math inline">\(\infty\)</span>. Functionally we know some low temperatures would be impossible to observe on earth and the probability of observing values closer to -<span class="math inline">\(\infty\)</span> will be minuscule. You’ll notice that I cut off the axis at -10 and 30 degrees C where the occurrence of values outside of this range is so low, it looks like zero.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>Luckily we don’t have to do any of the work calculating the probability. R has a built in suite of functions for working with probability distributions. You can run the help command documentation for all functions related to the normal distribution. Run the documentation on dnorm to see them all:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-1" tabindex="-1"></a><span class="fu">help</span>(dnorm)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb55-1" tabindex="-1"></a><span class="fu">help</span>(dnorm)</span></code></pre></div>
 <p>R uses p to designate probability. If we use <strong>pnorm</strong>, we can enter a number as the first argument (the next two arguments are always the mean and standard deviation for the normal), the output will be the <strong>probability of observing that value AND all values below it to -<span class="math inline">\(\infty\)</span>.</strong> Let’s calculate the probability of below freezing temperatures. Don’t forget that probabilities always range from 0 to 1. We would have to go integrate across the normal between values of -<span class="math inline">\(\infty\)</span> to <span class="math inline">\(\infty\)</span> to get a probability of 1 in the normal. Below we’ll just focus on all values below freezing:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb61-1" tabindex="-1"></a><span class="co">#pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)</span></span>
-<span id="cb61-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb61-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>,</span>
-<span id="cb61-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb61-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb61-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb61-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb56-1" tabindex="-1"></a><span class="co">#pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)</span></span>
+<span id="cb56-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb56-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>,</span>
+<span id="cb56-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb56-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb56-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb56-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.01617285</code></pre>
 <p>You can see temperatures below freezing are rare at this site and we only expect them to occur about 1.6% of the time. Sometimes it’s easier to think about probability as % occurrence by multiplying the probability x 100.</p>
 <p>You can take advantage of the properties of the distribution and add and subtract areas under the curve to better tailor my ranges of numbers. For example, I might be interested in identifying how often a temperatures between 0-5 degrees occur. First you can find out the probability of all values at 5 degrees or below:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb63-1" tabindex="-1"></a><span class="co">#pnrom with 5 gives me all probability (area of the curve) below 5 </span></span>
-<span id="cb63-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb63-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>,</span>
-<span id="cb63-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb63-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb63-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb63-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-1" tabindex="-1"></a><span class="co">#pnrom with 5 gives me all probability (area of the curve) below 5 </span></span>
+<span id="cb58-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>,</span>
+<span id="cb58-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb58-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb58-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.1307616</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Next, you can subtract the probability for observing values below 0 from your first probability, and you will get the probability of temperatures in the range of 0-5.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-1" tabindex="-1"></a><span class="co">#pnrom with 5 gives me all probability (area of the curve) below 5 </span></span>
-<span id="cb65-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>,</span>
-<span id="cb65-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb65-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">0</span>,</span>
-<span id="cb65-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-5" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb65-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb65-6" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-1" tabindex="-1"></a><span class="co">#pnrom with 5 gives me all probability (area of the curve) below 5 </span></span>
+<span id="cb60-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>,</span>
+<span id="cb60-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-3" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb60-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-4" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">0</span>,</span>
+<span id="cb60-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-5" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb60-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb60-6" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.1145887</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <p>Now let’s evaluate the probability of high temperatures. Knowing that the entire distribution adds up to 1, you can also find the area above a value by subtracting the probability below that given value from 1. For example, let’s look at the probability of temperatures above 20 degrees C.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-1" tabindex="-1"></a><span class="co">#pnrom of 20 gives me all probability (area of the curve) below 20 </span></span>
-<span id="cb67-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-2" tabindex="-1"></a><span class="co">#subtracting from one leaves me with the area above 20</span></span>
-<span id="cb67-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-3" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">20</span>,</span>
-<span id="cb67-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-4" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb67-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-5" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb62-1" tabindex="-1"></a><span class="co">#pnrom of 20 gives me all probability (area of the curve) below 20 </span></span>
+<span id="cb62-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb62-2" tabindex="-1"></a><span class="co">#subtracting from one leaves me with the area above 20</span></span>
+<span id="cb62-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb62-3" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">20</span>,</span>
+<span id="cb62-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb62-4" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb62-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb62-5" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.02685653</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>There <strong>qnorm</strong> function will return the value associated with a probability. This is the value in which all values at or below the value equal that probability. Let’s use this to evaluate extreme weather events. Let’s assume everything that occurs with a probability of less than 10% of the time (either hot or cold so anything above 95% or anything below 5%) is unusual. Let’s examine what unusually high temperatures in Aberdeen start at:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-1" tabindex="-1"></a><span class="co">#qnorm gives me the value at which all values and below equal the probability in my argument</span></span>
-<span id="cb69-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-2" tabindex="-1"></a><span class="co">#Here I&#39;m calculating the value of the 95th quantile or a probability of 0.95</span></span>
-<span id="cb69-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-3" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>,</span>
-<span id="cb69-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-4" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb69-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-5" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb64-1" tabindex="-1"></a><span class="co">#qnorm gives me the value at which all values and below equal the probability in my argument</span></span>
+<span id="cb64-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb64-2" tabindex="-1"></a><span class="co">#Here I&#39;m calculating the value of the 95th quantile or a probability of 0.95</span></span>
+<span id="cb64-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb64-3" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>,</span>
+<span id="cb64-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb64-4" tabindex="-1"></a>      <span class="fu">mean</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb64-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb64-5" tabindex="-1"></a>      <span class="fu">sd</span>(aberdeenDaily<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 18.60274</code></pre>
 <p>This means I expect 95% of the temperature observations to be below this value. Any temperature observations above this value will occur with a probability of 5%.</p>
 <p><strong>Note:</strong> Throughout all of my code examples, you’ll notice that I continued to copy and paste the same code for calculating the mean for site 1: <code>mean(aberdeenDaily$TAVE,na.rm=TRUE)</code>. While I did this to help you remember what was going into the function, it gets confusing and messy in long functions. This is a perfect example of why we name variables (with short clear names!) to refer to later on. As this course progresses, we’ll continue to work on creating clean code once you get more comfortable with R.</p>
 <center>
-<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="768" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-51-1.png" width="768" /></p>
 </center>
 <p>We can also take advantage of the normal distribution to examine whether the distribution of daily average temperature has changed in recent decades. Let’s look at the first 35 years of data (1950-1985) and the recent years (&gt; 1985):</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-1" tabindex="-1"></a><span class="co"># subset before and equal to 1985</span></span>
-<span id="cb71-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-2" tabindex="-1"></a>AberdeenPast <span class="ot">&lt;-</span> aberdeenDaily <span class="sc">%&gt;%</span></span>
-<span id="cb71-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-3" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">&lt;=</span> <span class="dv">1985</span>)</span>
-<span id="cb71-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-4" tabindex="-1"></a><span class="co"># subset years greater than 1985</span></span>
-<span id="cb71-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-5" tabindex="-1"></a>AberdeenRecent <span class="ot">&lt;-</span> aberdeenDaily <span class="sc">%&gt;%</span></span>
-<span id="cb71-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb71-6" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">&gt;</span> <span class="dv">1985</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-1" tabindex="-1"></a><span class="co"># subset before and equal to 1985</span></span>
+<span id="cb66-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-2" tabindex="-1"></a>AberdeenPast <span class="ot">&lt;-</span> aberdeenDaily <span class="sc">%&gt;%</span></span>
+<span id="cb66-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-3" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">&lt;=</span> <span class="dv">1985</span>)</span>
+<span id="cb66-4"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-4" tabindex="-1"></a><span class="co"># subset years greater than 1985</span></span>
+<span id="cb66-5"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-5" tabindex="-1"></a>AberdeenRecent <span class="ot">&lt;-</span> aberdeenDaily <span class="sc">%&gt;%</span></span>
+<span id="cb66-6"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb66-6" tabindex="-1"></a>  <span class="fu">filter</span>(YEAR <span class="sc">&gt;</span> <span class="dv">1985</span>)</span></code></pre></div>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>You can see that the mean is higher in recent decades, shifting the distribution. We can look at the difference probability in each period. For example, let’s look at the probability of daily temperatures exceeding 18 degrees C:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb72-1" tabindex="-1"></a><span class="co"># probability of  daily temeprature above 18 degrees in 1950- 1985</span></span>
-<span id="cb72-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb72-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">18</span>,<span class="fu">mean</span>(AberdeenPast<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb72-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb72-3" tabindex="-1"></a>        <span class="fu">sd</span>(AberdeenPast<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-1" tabindex="-1"></a><span class="co"># probability of  daily temeprature above 18 degrees in 1950- 1985</span></span>
+<span id="cb67-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">18</span>,<span class="fu">mean</span>(AberdeenPast<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb67-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb67-3" tabindex="-1"></a>        <span class="fu">sd</span>(AberdeenPast<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.05969691</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb74-1" tabindex="-1"></a><span class="co"># probability of  daily temeprature above 18 degrees in 1986- 2021</span></span>
-<span id="cb74-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb74-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">18</span>,<span class="fu">mean</span>(AberdeenRecent<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb74-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb74-3" tabindex="-1"></a>        <span class="fu">sd</span>(AberdeenRecent<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-1" tabindex="-1"></a><span class="co"># probability of  daily temeprature above 18 degrees in 1986- 2021</span></span>
+<span id="cb69-2"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">18</span>,<span class="fu">mean</span>(AberdeenRecent<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb69-3"><a href="is-this-normal-evaluating-historical-weather-data-to-understand-extremes-changes-and-climate..html#cb69-3" tabindex="-1"></a>        <span class="fu">sd</span>(AberdeenRecent<span class="sc">$</span>TAVE,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre class="bg-info"><code>[1] 0.06795978</code></pre>
 <p>There is a small increase in probability of daily temperatures at or exceeding 18 degrees in recent decades.</p>
 </div>
@@ -658,16 +639,16 @@ using the `.groups` argument.</code></pre>
 <p>This tutorial only addresses the basics of continuous probability density distributions. Discrete data follows slightly different probability rules and should be treated differently. There are many probability distributions, too many to cover all here. Each probability distribution describes different parameters and ranges of data. Let’s look at a few distributions common to environmental data:</p>
 <p><strong>Exponential</strong>
 The exponential distribution describes data that has the most frequent observations at a value of zero, with a rapid non-linear decline in probability density. The distribution describes data between zero (including) and <span class="math inline">\(\infty\)</span>. There is a single parameter (the rate, <span class="math inline">\(\lambda\)</span>). The functions <code>dexp</code>, <code>pexp</code>, and <code>qexp</code> can all be used to call the</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <p><strong>Student’s t distribution</strong>
 The Student’s t distribution is a symmetrical, bell shaped distribution similar to the normal distribution. The main difference is the t distribution has heavier tails. This means that more extreme values further from the center of the distribution occur a little more frequently than the normal. The main parameter is the <strong>degrees of freedom</strong>, often abbreviated with <span class="math inline">\(\nu\)</span> or <em>n</em>. The distribution is typically centered at zero, but can be specified to be centered at a different value in R. You can refer to the function in R with <code>dt</code>, <code>pt</code>, and <code>qt</code>.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <p><strong>Gamma</strong>
 The Gamma distribution describes data ranging from zero (including) to <span class="math inline">\(\infty\)</span>. The function involves two parameters, the shape (<span class="math inline">\(\alpha\)</span>) and the rate (<span class="math inline">\(\beta\)</span>). It can take on a range of forms including asymmetrical distributions and exponential type curves. The function in R ar <code>dgamma</code>, <code>pgamma</code>, and <code>qgamma</code>.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p><strong>Note</strong> There are too many distributions to name. Wikipedia has great overviews of different probability density functions, but beware that I have found occasional mistakes such as in the ranges of x values that the function spans. Wolfram Alpha has great, more accurate resources, but it can be a little dense and jump into more theory. You can take an entire class in probability (it’s so cool!), but this class will only cover the basics needed for environmental applications.</p>
 <center>
-<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="768" /></p>
+<p><img src="Intro-EnvData_files/figure-html/unnamed-chunk-58-1.png" width="768" /></p>
 </center>
 <p>Great work! You just learned how to work with a lot of weather observations (&gt;155,000)! Imagine trying to calculate 72 averages across 26,117 rows of data in Excel or Sheets. You just did that in one line of code! You also learned to use R to describe climate, summarize data, characterize rare events, and calculate a probability of occurrence. You will continue working on these problems throughout your homework to characterize climate and examine changes in temperature and precipitation in different regions of the United States.</p>
 </div>
@@ -715,8 +696,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-data-basic.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,
@@ -726,7 +707,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
